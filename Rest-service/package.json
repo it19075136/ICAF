@@ -1,0 +1,25 @@
+{
+  "name": "icaf",
+  "version": "1.0.0",
+  "description": "International conference on Application Frameworks",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/it19075136/ICAF.git"
+  },
+  "author": "2021S1_REG_WE_12",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/it19075136/ICAF/issues"
+  },
+  "homepage": "https://github.com/it19075136/ICAF#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.7"
+  }
+}
