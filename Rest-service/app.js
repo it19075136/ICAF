@@ -5,7 +5,8 @@ const mongoose = require('mongoose');
 const conferenceRouter = require('./routes/conferenceRoutes');
 const userRouter = require('./routes/userRoutes');
 const workshopRouter = require('./routes/workshopRoutes');
-const documentRouter = require('./routes/documentRoutes')
+const documentRouter = require('./routes/documentRoutes');
+const paymentRouter = require('./routes/paymentRoutes');
 
 mongoose.connect(process.env.DB_KEY||'&w=majority', {
     useNewUrlParser: true,
@@ -29,6 +30,8 @@ app.use('/workshop', workshopRouter); //workshop routes
 
 app.use('/document',documentRouter); //document routes
 
+app.use('/payment', paymentRouter); //payment routes
+
 /**
  * 
  user routes - { - dilmika
@@ -42,23 +45,6 @@ app.use('/document',documentRouter); //document routes
         type,
         phoneNumber
     }
-}
-
-conference routes - { - avantha
-    POST, GET, PUT, DELETE
-
-    model - {
-        con name,
-        venue,
-        keynoteSpeaker- [ {name,designation,bio} ],
-        startDate,
-        endDate,
-        tracks,
-        description,
-        status,
-        other Details
-    }
-
 }
 
 documents routes - { - pasindu
@@ -90,16 +76,6 @@ Workshops routes - { - thisara
         flyerURL,
         resource Persons,
         conferenceId
-    }
-}
-
-Payment routes - { - avantha
-    POST, GET
-    model - {
-        userId,
-        type,
-        amount,
-        date
     }
 }
 
