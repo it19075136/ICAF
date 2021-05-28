@@ -21,10 +21,10 @@ const conferenceSchema = new schema({
         }
     },
     startDate: {
-        type: String
+        type: Date
     },
     endDate: {
-        type: String
+        type: Date
     },
     tracks: {
         type: Array,

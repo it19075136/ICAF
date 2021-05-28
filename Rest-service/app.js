@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const conferenceRouter = require('./routes/conferenceRoutes')
+const conferenceRouter = require('./routes/conferenceRoutes');
+const userRouter = require('./routes/userRoutes');
 
 mongoose.connect(process.env.DB_KEY, {
     useNewUrlParser: true,
@@ -12,7 +14,11 @@ mongoose.connect(process.env.DB_KEY, {
 
 let app = express();
 
+app.use(bodyParser.json());
+
 app.use(cors());
+
+app.use('/user', userRouter);
 
 app.use('/conference',conferenceRouter); // conference routes 
 
