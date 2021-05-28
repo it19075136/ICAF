@@ -1,7 +1,9 @@
 const app = require('../app');
 const supertest = require('supertest');
 
-test('should work', async () => {
+jest.setTimeout(10000);
+
+test('should post insert a new conference', async () => {
     await supertest(app).post('/conference').send({
         conferenceName: "testName1",
         conferenceDescription: "testDesc1",
@@ -12,6 +14,5 @@ test('should work', async () => {
         tracks: [{name:"Application Frameworks", description:"progamming languages"}],
         status: "pending approval",
         other: ""
-    }).expect(201);
-    console.log("test works");
+    }).expect(200);
 });

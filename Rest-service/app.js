@@ -5,9 +5,10 @@ const mongoose = require('mongoose');
 const conferenceRouter = require('./routes/conferenceRoutes');
 const userRouter = require('./routes/userRoutes');
 
-mongoose.connect(process.env.DB_KEY, {
+mongoose.connect(process.env.DB_KEY||'&w=majority', {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 }, () => {
     console.log("Connected to database");
 });
