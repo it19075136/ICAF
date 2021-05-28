@@ -3,6 +3,8 @@ const PORT = process.env.PORT || 5000;
 const cors = require('cors');
 const mongoose = require('mongoose');
 const dbKey = require('./dbConfig/key');
+const bodyParser = require('body-parser');
+const userRouter = require('./routes/userRoutes');
 
 mongoose.connect(dbKey, {
     useNewUrlParser: true,
@@ -13,7 +15,11 @@ mongoose.connect(dbKey, {
 
 let app = express();
 
+app.use(bodyParser.json());
+
 app.use(cors());
+
+app.use('/user', userRouter);
 
 /**
  * 
