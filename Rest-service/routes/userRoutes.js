@@ -6,7 +6,9 @@ router.post('/add', (req,res) =>{
     
     createuser(req.body).then((newUser) => {
         res.json(newUser);
-    });
+    }).catch((err)=>{
+        console.log(err);
+    })
 
 })
 
