@@ -35,6 +35,7 @@ app.use('/document',documentRouter); //document routes
     POST, GET - byId, PUT -updateById, DELETE - byId
 
     model - {
+        
         name,
         email,
         password,
