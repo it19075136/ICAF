@@ -1,16 +1,57 @@
 const router  = require('express').Router();
-const { createuser }  = require('../api/user.api');
+const { createuser, getAllUsers, getUserById ,deleteUserById, updateUserById }  = require('../api/user.api');
 
 //add user
-router.post('/add', (req,res) =>{
-    
+router.post('/add', (req, res) => {
+
     createuser(req.body).then((newUser) => {
         res.json(newUser);
-    }).catch((err)=>{
+    }).catch((err) => {
         console.log(err);
     })
 
 })
 
+//get all users
+router.get('/', (req, res) => {
 
-module.exports = router ;
+    getAllUsers().then((docs) => {
+        res.json(docs);
+    }).catch((err) => {
+        console.log('err: ', err);
+    })
+
+})
+
+//get All users by id
+
+router.get('/:id', (req, res) => {
+    getUserById(req.params.id).then((user) => {
+        res.json(user);
+    })
+})
+
+router.delete('/:id', (req, res) => {
+    deleteUserById(req.params.id).then((user) => {
+        res.json(
+            user.name + ' is deleted'
+        )
+    })
+})
+
+router.post('/update/:id', (req, res) => {
+
+
+    req.body._id = req.params.id;
+
+    updateUserById(req.body)
+        .then((user) => {
+            res.json(
+                user.name + ' has been updated'
+            )
+        })
+})
+
+
+
+module.exports = router;

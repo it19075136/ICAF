@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const conferenceRouter = require('./routes/conferenceRoutes');
 const userRouter = require('./routes/userRoutes');
 const workshopRouter = require('./routes/workshopRoutes');
+const documentRouter = require('./routes/documentRoutes')
 
 mongoose.connect(process.env.DB_KEY||'&w=majority', {
     useNewUrlParser: true,
@@ -20,11 +21,13 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-app.use('/user', userRouter);
+app.use('/user', userRouter);//user routes
 
 app.use('/conference',conferenceRouter); // conference routes 
 
 app.use('/workshop', workshopRouter); //workshop routes
+
+app.use('/document',documentRouter); //document routes
 
 /**
  * 
