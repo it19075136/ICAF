@@ -37,6 +37,15 @@ function deleteDocument(id){
     })
 }
 
+function getDoucmentByUserId(id){
+    return new Promise((resolve,reject)=>{
+        Document.find({userId:id}).then(documents=>{
+            resolve(documents)
+        }).catch(err=>{
+            reject(err)
+        })
+    })
+}
 
-module.exports={addDocument,updateDocument,deleteDocument}
+module.exports={addDocument,updateDocument,deleteDocument,getDoucmentByUserId}
 
