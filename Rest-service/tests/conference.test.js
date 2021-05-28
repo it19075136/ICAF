@@ -1,10 +1,17 @@
 const app = require('../app');
-const supertest = require('supertest');
+const request = require('supertest');
+const Conference = require('../models/conferenceModel')
 
 jest.setTimeout(10000);
 
+const id = '';
+
+beforeAll(async () => {
+    await Conference.remove(); // delete already existing documents
+});
+  
 test('should post insert a new conference', async () => {
-    await supertest(app).post('/conference').send({
+    await request(app).post('/conference').send({
         conferenceName: "testName1",
         conferenceDescription: "testDesc1",
         conferenceVenue: "sliit",
@@ -16,3 +23,28 @@ test('should post insert a new conference', async () => {
         other: ""
     }).expect(200);
 });
+
+test('should get all conferences', async () => {
+    await request(app).get('/conference').expect(200).then(response => {
+        
+        // var data = JSON.parse(response.body);
+        // id = data[0]._id;
+        // console.log(data, id);
+        // assert(response.body.email, 'foo@bar.com')
+        // done();
+    })
+    .catch(err => done(err));
+
+});
+
+// test('should update conference by id', async () => {
+//     await request(app).put(`/conference/${id}`).send({
+//         conferenceDescription: "testDescUpdate",
+//         conferenceVenue: "testVenueUpdate",
+//         status: "Approved"
+//     }).expect(200);
+// });
+
+// test('should delete conference by id', async () => {
+//     await request(app).delete(`/conference/${id}`).expect(200);
+// });
