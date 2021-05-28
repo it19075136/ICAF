@@ -1,5 +1,4 @@
 const document = require('../models/documentModel')
-let document = require('../models/documentModel')
 
 function addDocument(payload){
     return new Promise((resolve,reject)=>{
