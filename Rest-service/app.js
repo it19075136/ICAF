@@ -29,6 +29,7 @@ app.use('/conference',conferenceRouter); // conference routes
     POST, GET - byId, PUT -updateById, DELETE - byId
 
     model - {
+        
         name,
         email,
         password,
