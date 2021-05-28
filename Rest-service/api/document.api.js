@@ -12,5 +12,7 @@ function addDocument(payload){
     })
 }
 
+// function updateDocument(payload)
+
 module.exports={addDocument}
 
