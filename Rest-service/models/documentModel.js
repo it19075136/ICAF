@@ -1,5 +1,5 @@
 const mongosse = require('mongoose');
-const Schema = mongosse.Schema();
+const Schema = mongosse.Schema;
 
 const documentSchema = new Schema({
     userId:{
@@ -24,6 +24,4 @@ const documentSchema = new Schema({
     }
 })
 
-const document = mongosse.module('document',documentSchema);
-
-module.exports =document;
+module.exports =document= mongosse.model('document',documentSchema);
