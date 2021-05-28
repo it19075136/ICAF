@@ -33,14 +33,32 @@ function getAllConferences() {
 
 }
 
-function updateConferenceById(id,payload) {
+function updateConferenceById(id, payload) {
 
     return new Promise((resolve, reject) => {
-        Conference.findByIdAndUpdate(id,{$set: payload}).then((doc) => {
-            resolve(doc);
-        }).catch((err) => {
-            reject(err);
-        })
+        if (payload.conferenceName){
+            Conference.findOne({ conferenceName: payload.conferenceName }).then((doc) => {
+                if (doc == null || doc._id == id) {
+                    Conference.findByIdAndUpdate(id, { $set: payload }).then((doc) => {
+                        resolve(doc);
+                    }).catch((err) => {
+                        reject(err);
+                    })
+                }
+                else
+                    resolve("Conference with same name exists");
+            }).catch((err) => {
+                reject(err);
+            })
+        }
+        else{
+            Conference.findByIdAndUpdate(id, { $set: payload }).then((doc) => {
+                resolve(doc);
+            }).catch((err) => {
+                reject(err);
+            });    
+        }
+
     });
 
 }
