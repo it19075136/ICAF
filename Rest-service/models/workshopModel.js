@@ -33,8 +33,7 @@ const workshopSchema = new schema({
         required: true
     }
 
-    
 });
 
 
-module.exports = workShop = mongoose.module('workShop', workshopSchema); 
+module.exports = workShop = mongoose.model('workShop', workshopSchema); 

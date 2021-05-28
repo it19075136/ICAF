@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const conferenceRouter = require('./routes/conferenceRoutes');
 const userRouter = require('./routes/userRoutes');
+const workshopRouter = require('./routes/workshopRoutes');
 
 mongoose.connect(process.env.DB_KEY||'&w=majority', {
     useNewUrlParser: true,
@@ -22,6 +23,8 @@ app.use(cors());
 app.use('/user', userRouter);
 
 app.use('/conference',conferenceRouter); // conference routes 
+
+app.use('/workshop', workshopRouter); //workshop routes
 
 /**
  * 
