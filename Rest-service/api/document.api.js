@@ -1,8 +1,9 @@
-const document = require('../models/documentModel')
+const Document = require('../models/documentModel')
+// const document = require('../models/documentModel')
 
 function addDocument(payload){
     return new Promise((resolve,reject)=>{
-        const document = new document(payload);
+        const document = new Document(payload);
         document.save().then((document)=>{
             resolve(document);
         }).catch((err)=>{
@@ -11,7 +12,31 @@ function addDocument(payload){
     })
 }
 
-// function updateDocument(payload)
+function updateDocument(payload,id){
+    return new Promise((resolve,reject)=>{
+        Document.findByIdAndUpdate(id).then((document)=>{
+            (payload.userId ?( document.userId = payload.userId):null),
+            (payload.activityId ?(document.activityId = payload.activityId):null),
+            (payload.type ? (document.type = payload.type):null),
+            (payload.status ?(document.status = payload.status):null),
+            (payload.fileUrl?(document.fileUrl = payload.fileUrl ):null)
+            document.save().then((doc)=>resolve(doc)).catch((err)=>reject(err))
+        }).catch(err=>{
+            reject(err)
+        })
+        })
+}
 
-module.exports={addDocument}
+function deleteDocument(id){
+    return new Promise((resolve,reject)=>{
+        Document.findByIdAndDelete(id).then((docu)=>{
+            resolve(docu)
+        }).catch((err)=>{
+            reject(err)
+        })
+    })
+}
+
+
+module.exports={addDocument,updateDocument,deleteDocument}
 
