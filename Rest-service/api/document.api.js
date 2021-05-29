@@ -4,10 +4,14 @@ const Document = require('../models/documentModel')
 function addDocument(payload){
     return new Promise((resolve,reject)=>{
         const document = new Document(payload);
-        document.save().then((document)=>{
-            resolve(document);
-        }).catch((err)=>{
-            reject(err)
+        Document.find({userId:payload.userId,activityId:payload.activityId,type:payload.type}).then((res)=>{
+            reject('err')
+        }).catch(()=>{
+            document.save().then((document)=>{
+                resolve(document);
+            }).catch((err)=>{
+                reject(err)
+            })
         })
     })
 }
@@ -37,6 +41,15 @@ function deleteDocument(id){
     })
 }
 
+function getDoucmentByUserId(id){
+    return new Promise((resolve,reject)=>{
+        Document.find({userId:id}).then(documents=>{
+            resolve(documents)
+        }).catch(err=>{
+            reject(err)
+        })
+    })
+}
 
-module.exports={addDocument,updateDocument,deleteDocument}
+module.exports={addDocument,updateDocument,deleteDocument,getDoucmentByUserId}
 
