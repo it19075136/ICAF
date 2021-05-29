@@ -4,14 +4,15 @@ const Document = require('../models/documentModel')
 function addDocument(payload){
     return new Promise((resolve,reject)=>{
         const document = new Document(payload);
-        Document.find({userId:payload.userId,activityId:payload.activityId,type:payload.type}).then((res)=>{
-            reject('err')
-        }).catch(()=>{
-            document.save().then((document)=>{
+        Document.findOne({userId:payload.userId,activityId:payload.activityId,type:payload.type}).then((res)=>{
+            // reject('err')
+            res ? (resolve('error')):(document.save().then((document)=>{
                 resolve(document);
             }).catch((err)=>{
                 reject(err)
-            })
+            }))
+        }).catch((err)=>{
+            reject(err)
         })
     })
 }
