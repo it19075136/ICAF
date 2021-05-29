@@ -7,6 +7,7 @@ const userRouter = require('./routes/userRoutes');
 const workshopRouter = require('./routes/workshopRoutes');
 const documentRouter = require('./routes/documentRoutes');
 const paymentRouter = require('./routes/paymentRoutes');
+const submissionRouter = require('./routes/submissionRouter');
 
 mongoose.connect(process.env.DB_KEY||'&w=majority', {
     useNewUrlParser: true,
@@ -31,6 +32,8 @@ app.use('/workshop', workshopRouter); //workshop routes
 app.use('/document',documentRouter); //document routes
 
 app.use('/payment', paymentRouter); //payment routes
+
+app.use('/submission' ,submissionRouter);
 
 /**
  * 
