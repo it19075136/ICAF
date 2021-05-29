@@ -2,9 +2,10 @@ const app = require('../app')
 const request = require('supertest')
 const Document =require('../models/documentModel')
 
-jest.setTimeout(30000);
+jest.setTimeout(40000);
 
 let id='';
+let Uid='';
 
 beforeAll(async()=>{
     await Document.deleteMany();
@@ -19,8 +20,9 @@ test('should create a new document ',async()=>{
         fileUrl:"kdsoafa",
     }).expect(200).then((res)=>{
         id = res.body._id;
+        Uid = res.body.userId;
     });
-    await (await request(app).post('/document')).send({
+    await request(app).post('/document').send({
         userId:"U02",
         activityId:"A02",
         type:" research paper",
@@ -39,7 +41,7 @@ test('should update the document by id',async()=>{
                     throw new Error('Failed test  document upate')
             }
     });
-    await request(app).post(`/document/update/${id}`),send({
+    await request(app).post(`/document/update/${id}`).send({
         status:"not approved",
         fileUrl:"jdsfjoj"
     }).expect(200).then((res)=>{
@@ -51,7 +53,7 @@ test('should update the document by id',async()=>{
     
 });
 test('should get all document',async()=>{
-    await request(app).get(`http://localhost:5000/document/${id}`).expect(200).then((res)=>{
+    await request(app).get(`/document/${Uid}`).expect(200).then((res)=>{
         if((res.body[0].fileUrl == null )|| (res.body[0].status == null )|| (res.body[0].type == null) || (res.body[0].activityId == null) || (res.body[0].userId == null)){
                 throw new Error('Failed test get all document')
         }
@@ -60,5 +62,5 @@ test('should get all document',async()=>{
     })
 });
 test('sholud delete the document from id',async()=>{
-    await request(app).delete(`http://localhost:5000/document/delete/${id}`).expect(200);
+    await request(app).delete(`/document/delete/${id}`).expect(200);
 });
