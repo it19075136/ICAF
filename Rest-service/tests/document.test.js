@@ -6,7 +6,7 @@ jest.setTimeout(30000);
 
 let id='';
 
-beforAll(async()=>{
+beforeAll(async()=>{
     await Document.deleteMany();
 })
 
