@@ -1,7 +1,7 @@
 const mongosse = require('mongoose');
-const Schema = mongosse.Schema();
+const schema = mongosse.Schema;
 
-const documentSchema = new Schema({
+const documentSchema = new schema({
     userId:{
         type:String,
         require:true
@@ -24,6 +24,4 @@ const documentSchema = new Schema({
     }
 })
 
-const document = mongosse.module('document',documentSchema);
-
-module.exports =document;
+module.exports =document= mongosse.model('document',documentSchema);
