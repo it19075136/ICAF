@@ -22,6 +22,8 @@ const documentSchema = new schema({
         type:String,
         require:true
     }
+},{
+    timestamps: true
 })
 
 module.exports =document= mongoose.model('document',documentSchema);
