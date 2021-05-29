@@ -32,7 +32,8 @@ const workshopSchema = new schema({
         type: String,
         required: true
     }
-
+},{
+    timestamps:true
 });
 
 
