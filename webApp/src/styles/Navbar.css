@@ -19,7 +19,7 @@
 .navbar__links{
     display: flex;
     list-style: none;
-    margin-left: 10px;
+    padding:20px;
 }
 
 .navbar__links > li{
