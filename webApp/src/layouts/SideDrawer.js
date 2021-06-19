@@ -1,16 +1,16 @@
 import React from 'react';
 import '../styles/SideDrawer.css';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 const SideDrawer = (props) => {
 
     const sideDrawerClass = ["sidedrawer"];
 
-    const {show,click} = props;
+    const { show, click } = props;
 
 
-    if(show){
+    if (show) {
         sideDrawerClass.push("show");
     }
 
@@ -18,8 +18,8 @@ const SideDrawer = (props) => {
         <div className={sideDrawerClass.join(" ")}>
             <ul className="sidedrawer__links" onClick={click}>
                 <li>
-                    <a href="/#">
-                        Item1
+                    <a href="/submission/upload">
+                        Add submission
                     </a>
                 </li>
                 <li>

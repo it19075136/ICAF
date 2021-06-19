@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {BrowserRouter, Switch, Route } from 'react-router-dom'
+import AddSubmissionForm from './components/submissionManagement/AddSubmissionForm';
 import NavBar from './layouts/navbar';
 import SideDrawer from './layouts/SideDrawer';
 
@@ -13,7 +14,7 @@ export default function app(){
             <SideDrawer show={sideToggle} click={() => setSideToggle(false)}/>
             <BrowserRouter>
             <Switch>
-                // add routes here
+                <Route exact path="/submission/upload" component={AddSubmissionForm} />
             </Switch>
             </BrowserRouter>
         </div>
