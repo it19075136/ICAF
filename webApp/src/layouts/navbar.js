@@ -12,8 +12,8 @@ const Navbar = (props) => {
             </div>
             <ul className="navbar__links">
                 <li>
-                    <a href="/#">
-                        Item1
+                    <a href="/submission/upload">
+                        Add submission
                     </a>
                 </li>
                 <li>
