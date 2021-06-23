@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {BrowserRouter, Switch, Route } from 'react-router-dom'
 import NavBar from './layouts/navbar';
 import SideDrawer from './layouts/SideDrawer';
+import './app.css';
 
 export default function app(){
 
