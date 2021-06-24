@@ -1,5 +1,5 @@
 import React from 'react';
-import './SideDrawer.css';
+import '../styles/SideDrawer.css';
 import { Link } from 'react-router-dom';
 
 
