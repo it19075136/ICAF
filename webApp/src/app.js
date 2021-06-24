@@ -5,6 +5,7 @@ import singup from './components/user-singup-login/singup';
 import singin from './components/user-singup-login/singin';
 import NavBar from './layouts/navbar';
 import SideDrawer from './layouts/SideDrawer';
+import './app.css';
 
 export default function app(){
 
