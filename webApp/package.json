@@ -9,7 +9,7 @@
   },
   "author": "2021S1_REG_WE_12",
   "license": "ISC",
-  "dependencies": {
+  "dependencies":{
     "axios": "^0.21.1",
     "bootstrap": "^5.0.1",
     "react": "^17.0.2",
