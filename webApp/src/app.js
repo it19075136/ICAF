@@ -3,6 +3,7 @@ import {BrowserRouter, Switch, Route } from 'react-router-dom'
 import AddSubmissionForm from './components/submissionManagement/AddSubmissionForm';
 import NavBar from './layouts/navbar';
 import SideDrawer from './layouts/SideDrawer';
+import './app.css';
 
 export default function app(){
 
