@@ -41,6 +41,9 @@ class AddSubmissionForm extends Component {
           <div>
             <Form className="container" onSubmit={handleSubmit}>
             <br />
+            {this.state.alert.open ? <Alert key="1" variant="success" className="container">
+              Record added successfully!
+            </Alert> : (null) }
             <Form.Group>
               <Form.Label>Topic</Form.Label>
               <Form.Control type="text" name="topic" placeholder="Enter a topic" onChange={handleChange}/>
@@ -66,9 +69,6 @@ class AddSubmissionForm extends Component {
             <br />  
             <Button type="submit" color="primary">Add Submission</Button>
           </Form>
-            {this.state.alert.open ? <Alert key="1" variant="success" className="container">
-              Record added successfully!
-            </Alert> : (null) }
           </div>
         )
     }
