@@ -1,4 +1,4 @@
-import {GET_ALL_SUBMISSIONS} from '../constants'
+import {ADD_SUBMISSION, GET_ALL_SUBMISSIONS} from '../constants'
 
 const initstate = {
     submissions: []
@@ -12,6 +12,11 @@ export default function (state = initstate,action){
                ...state,
                 submissions: action.payload
             };
+        case ADD_SUBMISSION:
+            return {
+                ...state,
+                submissions: [...state.submissions,action.payload]
+            }
         default:
             return state;
         }
