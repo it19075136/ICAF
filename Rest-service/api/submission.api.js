@@ -50,7 +50,7 @@ function updateSubmissionById(body) {
     console.log("body: ", body);
  
     return new Promise((resolve, reject) => {
-      Submission.findByIdAndUpdate(body._id).then((sub) => {
+      Submission.findByIdAndUpdate(body._id,{$set: body}).then((sub) => {
 
           sub.topic = body.topic,
           sub.deadline = body.deadline,
