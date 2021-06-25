@@ -1,8 +1,10 @@
 import React, {Component} from 'react'
+import {connect} from 'react-redux';
 import { Button, Form } from 'react-bootstrap';
 import './submission.css'
 
-export default class AddSubmissionForm extends Component {
+class AddSubmissionForm extends Component {
+
     render() {
         return (
             <Form className="container">
@@ -45,3 +47,9 @@ export default class AddSubmissionForm extends Component {
         )
     }
 }
+
+const mapStateToProps = (state) => ({
+  submission: state.submission
+});
+
+export default connect(mapStateToProps,null)(AddSubmissionForm)
