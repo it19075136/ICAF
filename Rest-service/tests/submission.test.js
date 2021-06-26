@@ -12,7 +12,7 @@ beforeAll(async () => {
 let id  = '';
 
 test('should post insert a new submission', async () => {
-    await supertest(app).post('/submission/add').send({
+    await supertest(app).post('/submission').send({
 
         topic :"TestTopic1",
         deadline:"test deadline",
@@ -35,7 +35,7 @@ test('should get all submissions', async () => {
 })
 
 test('should update submission by id', async () => {
-    await supertest(app).post(`/submission/update/${id}`).send({
+    await supertest(app).put(`/submission/${id}`).send({
         topic :"TestTopic1Updated",
         deadline:" test deadlineUpdated",
         description:"test descriptionUpdated",
