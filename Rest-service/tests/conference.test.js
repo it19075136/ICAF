@@ -9,16 +9,16 @@ let id = '';
 beforeAll(async () => {
     await Conference.deleteMany(); // delete already existing documents
 });
-  
+
 test('should post a new conference', async () => {
     await request(app).post('/conference').send({
         conferenceName: "testName1",
         conferenceDescription: "testDesc1",
         conferenceVenue: "sliit",
-        keynoteSpeaker: [{name:"keyNote1Name", designation:"keyNoteDes1"},{name:"keyNote2Name", designation:"keyNoteDes2"}] ,
+        keynoteSpeaker: [{ name: "keyNote1Name", designation: "keyNoteDes1" }, { name: "keyNote2Name", designation: "keyNoteDes2" }],
         startDate: new Date("2021-12-25"),
         endDate: new Date("2021-12-30"),
-        tracks: [{name:"Application Frameworks", description:"progamming languages"}],
+        tracks: [{ name: "Application Frameworks", description: "progamming languages" }],
         status: "pending approval",
         other: ""
     }).expect(200).then((response) => {
@@ -29,10 +29,10 @@ test('should post a new conference', async () => {
         conferenceName: "testName2",
         conferenceDescription: "testDesc2",
         conferenceVenue: "sliit",
-        keynoteSpeaker: [{name:"keyNote1Name", designation:"keyNoteDes1"},{name:"keyNote2Name", designation:"keyNoteDes2"}] ,
+        keynoteSpeaker: [{ name: "keyNote1Name", designation: "keyNoteDes1" }, { name: "keyNote2Name", designation: "keyNoteDes2" }],
         startDate: new Date("2021-12-25"),
         endDate: new Date("2021-12-30"),
-        tracks: [{name:"Application Frameworks", description:"progamming languages"}],
+        tracks: [{ name: "Application Frameworks", description: "progamming languages" }],
         status: "pending approval",
         other: ""
     });
@@ -41,13 +41,13 @@ test('should post a new conference', async () => {
 
 test('should get all conferences', async () => {
     await request(app).get('/conference').expect(200).then(response => {
-    if ((response.body[0].conferenceName != "testName1") || (response.body[0].conferenceDescription != "testDesc1") 
-        || (response.body[0].conferenceVenue != "sliit") || (response.body[0].status != "pending approval")) {
+        if ((response.body[0].conferenceName != "testName1") || (response.body[0].conferenceDescription != "testDesc1")
+            || (response.body[0].conferenceVenue != "sliit") || (response.body[0].status != "pending approval")) {
             throw new Error('Failed test');
-          }    
+        }
         id = response.body[0]._id
     })
-    .catch(err => console.log(err));
+        .catch(err => console.log(err));
 
 });
 
@@ -57,11 +57,11 @@ test('should update conference by id', async () => {
         conferenceDescription: "testDescUpdate",
         conferenceVenue: "testVenueUpdate",
         status: "Approved"
-    }).expect(200).then((response)=>{
+    }).expect(200).then((response) => {
         if (response.body.conferenceName == null) {
             console.log(response.body.conferenceName)
             throw new Error('Failed test');
-        }    
+        }
     });
 
     await request(app).put(`/conference/${id}`).send({
@@ -69,11 +69,11 @@ test('should update conference by id', async () => {
         conferenceDescription: "testDescUpdate",
         conferenceVenue: "testVenueUpdate",
         status: "Approved"
-    }).expect(200).then((response)=>{
+    }).expect(200).then((response) => {
         console.log(response.body.conferenceName)
         if (response.body.conferenceName == null) {
             throw new Error('Failed test');
-        }    
+        }
     });
 
     await request(app).put(`/conference/${id}`).send({
@@ -81,11 +81,11 @@ test('should update conference by id', async () => {
         conferenceDescription: "testDescUpdate",
         conferenceVenue: "testVenueUpdate",
         status: "Approved"
-    }).expect(200).then((response)=>{
+    }).expect(200).then((response) => {
         console.log(response.body)
         if (response.body != "Conference with same name exists") {
             throw new Error('Failed test');
-        }    
+        }
     });
 
 });
