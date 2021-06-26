@@ -38,7 +38,7 @@ class AddSubmissionForm extends Component {
       }
 
         return (
-          <div>
+          <div className="body">
             <Form className="container" onSubmit={handleSubmit}>
             <br />
             {this.state.alert.open ? <Alert key="1" variant="success" className="container">
