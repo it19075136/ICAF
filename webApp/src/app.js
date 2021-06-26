@@ -7,6 +7,7 @@ import rootReducer from './redux/reducers';
 import AddSubmissionForm from './components/submissionManagement/AddSubmissionForm';
 import NavBar from './layouts/navbar';
 import SideDrawer from './layouts/SideDrawer';
+import WebNavbar from './layouts/WebNavbar';
 import './app.css';
 
 const initialState = {};
@@ -25,8 +26,9 @@ export default function app(){
 
     return (
         <Provider store={store}>
-            <NavBar click={() => setSideToggle(true)}/>
-            <SideDrawer show={sideToggle} click={() => setSideToggle(false)}/>
+            {/* <NavBar click={() => setSideToggle(true)}/> */}
+            {/* <SideDrawer show={sideToggle} click={() => setSideToggle(false)}/> */}
+            <WebNavbar/>
             <BrowserRouter>
             <Switch>
                 <Route exact path="/submission/upload" component={AddSubmissionForm} />
