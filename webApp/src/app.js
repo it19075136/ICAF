@@ -5,9 +5,8 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import rootReducer from './redux/reducers';
 import AddSubmissionForm from './components/submissionManagement/AddSubmissionForm';
-import NavBar from './layouts/navbar';
-import SideDrawer from './layouts/SideDrawer';
 import WebNavbar from './layouts/WebNavbar';
+import AdminSideNav from './layouts/AdminSideNav';
 import './app.css';
 
 const initialState = {};
@@ -16,22 +15,18 @@ const middleware = [thunk];
 
 const store = createStore(rootReducer,initialState,compose(
     applyMiddleware(...middleware)
-    // check
 )
 );
 
 export default function app(){
 
-    const[sideToggle, setSideToggle] = useState(false);
-
     return (
         <Provider store={store}>
-            {/* <NavBar click={() => setSideToggle(true)}/> */}
-            {/* <SideDrawer show={sideToggle} click={() => setSideToggle(false)}/> */}
             <WebNavbar/>
+            <AdminSideNav />
             <BrowserRouter>
             <Switch>
-                <Route exact path="/submission/upload" component={AddSubmissionForm} />
+                <Route exact path="/submission/add" component={AddSubmissionForm} />
             </Switch>
             </BrowserRouter>
         </Provider>
