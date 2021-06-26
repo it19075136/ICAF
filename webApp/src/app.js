@@ -5,6 +5,7 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import rootReducer from './redux/reducers';
 import AddSubmissionForm from './components/submissionManagement/AddSubmissionForm';
+import WebNavbar from './layouts/WebNavbar';
 import AdminSideNav from './layouts/AdminSideNav';
 import './app.css';
 
@@ -21,6 +22,7 @@ export default function app(){
 
     return (
         <Provider store={store}>
+            <WebNavbar/>
             <AdminSideNav />
             <BrowserRouter>
             <Switch>
