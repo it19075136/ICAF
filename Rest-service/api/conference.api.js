@@ -15,7 +15,7 @@ function addConference(payload) {
                 });
             }
             else
-                reject("Conference with same name exists");
+                resolve("Conference with same name exists");
         })
     });
 

@@ -41,15 +41,11 @@ export default function adminSideNav() {
             },
             {
               title: "Workshop",
-              itemId: "/workshop/add",
+              itemId: "/workshops",
               subNav: [
                 {
                   title: "Add Workshop",
                   itemId: "/workshop/add"
-                },
-                {
-                  title:"View Workshops",
-                  itemId: "/workshops"
                 }
               ]
             },
