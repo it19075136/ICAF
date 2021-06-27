@@ -7,12 +7,13 @@ import rootReducer from './redux/reducers';
 import AddSubmissionForm from './components/submissionManagement/AddSubmissionForm';
 import singup from './components/user-singup-login/singup';
 import singin from './components/user-singup-login/singin';
-// import NavBar from './layouts/navbar';
-// import SideDrawer from './layouts/SideDrawer';
-import AddWorkshopForm from './components/workshopManagement/AddWorkshopForm'
+import AddWorkshopForm from './components/workshopManagement/AddWorkshopForm';
+import WorkshopList from './components/workshopManagement/WorkshopList';
+import AddConferenceForm from './components/conferenceManagement/AddConferenceForm';
 import WebNavbar from './layouts/WebNavbar';
 import AdminSideNav from './layouts/AdminSideNav';
 import './app.css';
+
 
 const initialState = {};
 
@@ -36,6 +37,8 @@ export default function app(){
                 <Route exact path="/singin" component={singin} />
                 <Route exact path="/submission/add" component={AddSubmissionForm} />
                 <Route exact path="/workshop/add" component={AddWorkshopForm} />
+                <Route exact path="/workshops" component={WorkshopList} />
+                <Route exact path="/conference/add" component={AddConferenceForm}/>
             </Switch>
             </BrowserRouter>
         </Provider>

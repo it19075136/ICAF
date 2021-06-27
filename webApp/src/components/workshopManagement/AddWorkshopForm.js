@@ -20,10 +20,18 @@ class AddWorkshopForm extends Component {
             flyerURL: '',
             resourcePersons: [],
             conference: ''
+        },
+        alert: {
+            open: false
         }
     }
 
+
     render() {
+
+        const handleSubmit = (e) => {
+
+        }
 
         return (
             <div className="body">
@@ -31,7 +39,7 @@ class AddWorkshopForm extends Component {
                     <CssBaseline />
                     <div>
                         <center><h2>ADD WORSHOP</h2></center>
-                        <form noValidate>
+                        <form onSubmit={handleSubmit}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <TextField
@@ -45,7 +53,7 @@ class AddWorkshopForm extends Component {
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <TextField 
+                                    <TextField
                                         required
                                         fullWidth
                                         variant="outlined"
@@ -97,4 +105,4 @@ class AddWorkshopForm extends Component {
 const mapStateToProps = (state) => ({
     workshop: state.workshop
 });
-export default connect(mapStateToProps, {addWorkshop})(AddWorkshopForm);
+export default connect(mapStateToProps, { addWorkshop })(AddWorkshopForm);
