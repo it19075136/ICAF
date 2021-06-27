@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import { TextareaAutosize } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
+import Select from '@material-ui/core/Select';
 
 
 
@@ -53,7 +54,7 @@ class AddWorkshopForm extends Component {
                                         name="workshopDescription"
                                     />
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
+                                <Grid item xs={12}>
                                     <TextField
                                         variant="outlined"
                                         required
@@ -63,13 +64,12 @@ class AddWorkshopForm extends Component {
                                         name="flyer"
                                     />
                                 </Grid>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
+                                <Grid item xs={12}>
+                                    <Select
                                         variant="outlined"
                                         required
                                         fullWidth
                                         name="conference"
-                                        label="Conference"
                                         type="text"
                                         id="conference"
                                     />
