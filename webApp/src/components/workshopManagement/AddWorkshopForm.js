@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './workshop.css';
+import { Alert } from 'react-bootstrap';
 import { addWorkshop } from '../../redux/actions/workshopActions'
+import {getAllConference} from '../../redux/actions/conferenceActions'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -26,20 +28,35 @@ class AddWorkshopForm extends Component {
         }
     }
 
+    
+    componentDidMount(){
+        this.props.getAllConference();//Get all conference details available
+    }
 
     render() {
+
+        const conference = this.props.conference 
+        console.log(conference)
+
+        // const conferenceName = conference ? (conference.filter(conf => conf.status == 'Approved')) : null
+        // console.log(conferenceName)
 
         const handleSubmit = (e) => {
             e.preventDefault();
             console.log(this.state.workshop);
+            this.props.addWorkshop(this.state.workshop);
+            this.setState({...this.state, alert: {...this.state.alert, open:true }});
+            setTimeout(() => {
+                this.setState({
+                    ...this.setState, alert: {...this.state.alert, open: false}
+                })
+            },1000);
         }
 
         const handleChange = (e) => {
-            this.state({
-                ...this.setState({
+            this.setState({
                     ...this.state,
-                    workshop: {...this.state.workshop.conference, [e.target.name]: e.target.value}
-                })
+                    workshop: {...this.state.workshop, [e.target.name]: e.target.value}
             })
         }
         return (
@@ -123,4 +140,4 @@ const mapStateToProps = (state) => ({
     workshop: state.workshop,
     conference: state.conference
 });
-export default connect(mapStateToProps, { addWorkshop })(AddWorkshopForm);
+export default connect(mapStateToProps, { addWorkshop, getAllConference })(AddWorkshopForm);

@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import { Button, Form, Alert } from 'react-bootstrap';
-import './submission.css'
+import '../admin.css'
 import {addSubmission} from '../../redux/actions/submissionActions'
 
 class AddSubmissionForm extends Component {
@@ -36,7 +36,6 @@ class AddSubmissionForm extends Component {
             submission: {...this.state.submission,[e.target.name]: e.target.value}
           })
       }
-
         return (
           <div className="body">
             <Form className="container" onSubmit={handleSubmit}>
