@@ -1,17 +1,16 @@
 const router = require('express').Router();
 const {addDocument,updateDocument,deleteDocument,getDoucmentByUserId}=require('../api/document.api');
-const upload = require('../config/storage');
+const upload = require('../config/multer');
 
-router.post('/', upload.single("file"), (req,res)=>{
+router.post('/', async (req,res)=>{
 
-    console.log(req.file)
-    addDocument(req.body,req.file).then((newDoc)=>{
+    addDocument(req.body).then((newDoc)=>{
         res.json(newDoc);
     }).catch((err)=>{
-        console.log(err);
+        res.status(500).json(err);
     })
 });
-router.post('/update/:id', upload.single("doc"), (req,res)=>{
+router.post('/update/:id', (req,res)=>{
 
     updateDocument(req.body,req.params.id).then((doc)=>{
         res.json(doc)
@@ -33,10 +32,5 @@ router.get('/:id',(req,res)=>{
         console.log(err)
     })
 })
-
-// router.post('/upload', upload.single('file'), (req,res) => {
-//  // upload method
-// })
-
 
 module.exports=router;
