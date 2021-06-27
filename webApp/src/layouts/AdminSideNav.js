@@ -40,6 +40,16 @@ export default function adminSideNav() {
               ]
             },
             {
+              title: "Conference",
+              itemId: "/conferences",
+              subNav: [
+                {
+                  title: "Add Conference",
+                  itemId: "/conference/add"
+                }
+              ]
+            },
+            {
               title: "Workshop",
               itemId: "/workshops",
               subNav: [
