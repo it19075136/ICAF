@@ -1,10 +1,9 @@
-import axios from 'axios';
 import React, { Component } from 'react'
 // import { AvForm, AvField } from 'availity-reactstrap-validation';
 import { Button, Form,Col,Alert } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import {postUser} from '../../redux/actions/singupActions'
-
+import '../admin.css'
  class singup extends Component {
     state={
         user:{
@@ -12,33 +11,39 @@ import {postUser} from '../../redux/actions/singupActions'
         email : '',
         password : '',
         gender : '',
-        type : 'ela',
+        type : '',
         phoneNumber : ''
     },
     alert:{
         open:false,
         text: "Record added successfully!"
-    }
+    },
+    originalPassword:""
 }
 // componentDidMount(
     
 // )
     render() {
-        const handlechange=(e)=>{
+        const handleChange=(e)=>{
+            console.log(this.state);
                 this.setState({
                     ...this.state,
                     user:{...this.state.user,[e.target.name]:e.target.value}
                 })
         }
+        const handleChangePassword=(e)=>{
+            this.setState({
+                ...this.state,
+                originalPassword:e.target.value
+            })
+        }
         const handlelSubmit=(e)=>{
             e.preventDefault();
             console.log(this.state);
             console.log(this.state.user);
-            if(this.state.user.name === "" || this.state.user.email === "" || this.state.user.type === "" || this.state.user.phoneNumber === "" || this.state.user.password === "" || !this.state.user.email.includes("@")|| this.state.user.gender === ""){
+            if(this.state.user.name === "" || this.state.user.email === "" || this.state.user.type === "" || this.state.user.phoneNumber === "" || this.state.user.password === "" || !this.state.user.email.includes("@")|| this.state.user.gender === "" ){
                 this.setState({
-                    ...this.state,        
-
-
+                    ...this.state,
                     alert:{...this.state.alert,open:true,text:"fill all the details"}
                 })
                 setTimeout(()=>{
@@ -48,10 +53,22 @@ import {postUser} from '../../redux/actions/singupActions'
                     })
                 },1000)
             } //checking if any field is empty
+            else if(this.state.user.password !== this.state.originalPassword ){
+                this.setState({
+                    ...this.state,        
+                    alert:{...this.state.alert,open:true,text:"password are deferent"}
+                })
+                setTimeout(()=>{
+                    this.setState({
+                        ...this.state,
+                        alert:{...this.state.alert,open:false,text:"password are deferent"}
+                    })
+                },1000)     
+            }
         else{
             this.props.postUser(this.state.user).then(res=>{
                 
-                if(res.email == this.state.user.email){
+                if(res.email === this.state.user.email){
                     this.setState({
                         ...this.state,
                         alert:{...this.state.alert,open:true,text:"Record added successfully!"}
@@ -63,8 +80,20 @@ import {postUser} from '../../redux/actions/singupActions'
                         })
                     },1000)
                 }
-                const {token} = res;
-                localStorage.setItem('user',token);
+                else{
+                    this.setState({
+                        ...this.state,        
+                        alert:{...this.state.alert,open:true,text:"email already exist"}
+                    })
+                    setTimeout(()=>{
+                        this.setState({
+                            ...this.state,
+                            alert:{...this.state.alert,open:false,text:"email already exist"}
+                        })
+                    },1000)
+                }
+                // const {token} = res;
+                // localStorage.setItem('user',token);
                 // this.setState({
                 //     ...this.state,
                 //     alert:true
@@ -77,12 +106,14 @@ import {postUser} from '../../redux/actions/singupActions'
                 // },1000)
                 console.log(res)
             }).catch((err)=>{
+
                 console.log(err)
             })
         }
             
         }
         return (
+            <div  className="body">
             <Form>
                 {this.state.alert.open ? <Alert key="1" variant="success" className="container">
                 {this.state.alert.text}
@@ -92,7 +123,7 @@ import {postUser} from '../../redux/actions/singupActions'
                     Name
                     </Form.Label>
                     <Col sm={10}>
-                        <Form.Control type="name" name="name" placeholder="name" onChange={handlechange}/>
+                        <Form.Control type="name" name="name" placeholder="name" onChange={handleChange}/>
                     </Col>
                     {/* <AvForm>
                         <AvField name="originalEmail" label="Email" type="email" />
@@ -104,7 +135,7 @@ import {postUser} from '../../redux/actions/singupActions'
                         Email
                     </Form.Label>
                     <Col sm={10}>
-                        <Form.Control type="email" name="email" placeholder="Email" onChange={handlechange} />
+                        <Form.Control type="email" name="email" placeholder="Email" onChange={handleChange} />
                     </Col>
                     {/* <AvForm>
                         <AvField name="originalEmail" label="Email" type="email" />
@@ -117,7 +148,19 @@ import {postUser} from '../../redux/actions/singupActions'
                         Password
                     </Form.Label>
                     <Col sm={10}>
-                        <Form.Control type="password" name="password" placeholder="Password" onChange={handlechange} />
+                        <Form.Control type="password" name="originalPassword" placeholder="Password" onChange={handleChangePassword} />
+                    </Col>
+                    {/* <AvForm >
+                        <AvField name="originalpassword" label="password" type="email" />
+                        <AvField name="password" label="password" type="password" validate={{ match: { value: 'originalpassword' } }} />
+                    </AvForm> */}
+                </Form.Group>
+                <Form.Group  controlId="formHorizontalPassword">
+                    <Form.Label  sm={2}>
+                        Re Enter Password
+                    </Form.Label>
+                    <Col sm={10}>
+                        <Form.Control type="password" name="password" placeholder="Password" onChange={handleChange} />
                     </Col>
                     {/* <AvForm >
                         <AvField name="originalpassword" label="password" type="email" />
@@ -129,13 +172,13 @@ import {postUser} from '../../redux/actions/singupActions'
                         phoneNumber
                     </Form.Label>
                     <Col sm={10}>
-                        <Form.Control type="Number" name="phoneNumber" placeholder="phoneNumber" onChange={handlechange}/>
+                        <Form.Control type="Number" name="phoneNumber" placeholder="phoneNumber" onChange={handleChange} />
                     </Col>
                 </Form.Group>
                 <fieldset>
                     <Form.Group>
                         <Form.Label as="legend"  sm={2}>
-                            Radios
+                            Gender
                         </Form.Label>
                         <Col sm={10} >
                             <Form.Check
@@ -144,7 +187,7 @@ import {postUser} from '../../redux/actions/singupActions'
                                 name="gender"
                                 id="Male"
                                 value="Male"
-                                onChange={handlechange}
+                                onChange={handleChange}
                             />
                             <Form.Check
                                 type="radio"
@@ -152,7 +195,40 @@ import {postUser} from '../../redux/actions/singupActions'
                                 name="gender"
                                 id="female"
                                 value="female"
-                                onChange={handlechange}
+                                onChange={handleChange}
+                            />
+                        </Col>
+                    </Form.Group>
+                </fieldset>
+                <fieldset>
+                    <Form.Group>
+                        <Form.Label as="legend"  sm={2}>
+                            Type
+                        </Form.Label>
+                        <Col sm={10} >
+                            <Form.Check
+                                type="radio"
+                                label="reseracher"
+                                name="type"
+                                id="reseracher"
+                                value="reseracher"
+                                onChange={handleChange}
+                            />
+                            <Form.Check
+                                type="radio"
+                                label="presenter"
+                                name="type"
+                                id="presenter"
+                                value="presenter"
+                                onChange={handleChange}
+                            />
+                            <Form.Check
+                                type="radio"
+                                label="vister"
+                                name="type"
+                                id="vister"
+                                value="vister"
+                                onChange={handleChange}
                             />
                         </Col>
                     </Form.Group>
@@ -168,6 +244,7 @@ import {postUser} from '../../redux/actions/singupActions'
                     </Col>
                 </Form.Group>
             </Form>
+            </div>
         )
     }
 }
