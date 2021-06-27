@@ -9,7 +9,6 @@ const userSchema  = new Schema ({
         gender : {type : String, required : true},
         type : {type : String , required :true},
         phoneNumber : {type : Number, required : true}
-
 },{
     timestamps:true
 });
