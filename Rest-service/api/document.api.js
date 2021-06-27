@@ -1,9 +1,8 @@
-const Document = require('../models/documentModel')
-// const document = require('../models/documentModel')
+const Document = require('../models/documentModel');
 
-function addDocument(payload){
+function addDocument(payload,file){
     return new Promise((resolve,reject)=>{
-        const document = new Document(payload);
+        const document = new Document({userId:payload.userId,activityId:payload.activityId,type:payload.type,status:payload.status,file:file.originalname});
         Document.findOne({userId:payload.userId,activityId:payload.activityId,type:payload.type}).then((res)=>{
             // reject('err')
             res ? (resolve('error')):(document.save().then((document)=>{
@@ -24,7 +23,7 @@ function updateDocument(payload,id){
             (payload.activityId ?(document.activityId = payload.activityId):null),
             (payload.type ? (document.type = payload.type):null),
             (payload.status ?(document.status = payload.status):null),
-            (payload.fileUrl?(document.fileUrl = payload.fileUrl ):null)
+            (payload.file?(document.file = payload.file.originalname ):null)
             document.save().then((doc)=>resolve(doc)).catch((err)=>reject(err))
         }).catch(err=>{
             reject(err)
@@ -51,6 +50,29 @@ function getDoucmentByUserId(id){
         })
     })
 }
+
+// function uploadFile(payload){
+
+//     let obj = {
+//         name: payload.name,
+//         desc: payload.desc,
+//         file: {
+//             data: payload.data,
+//             contentType: payload.contentType
+//         }
+//     }
+//     return new Promise((resolve,reject) => {
+//         File.create(obj, (err, item) => {
+//         if (err) {
+//             resolve(err);
+//         }
+//         else {
+//             // item.save();
+//             resolve(item)
+//         }
+//     });
+// })
+// }
 
 module.exports={addDocument,updateDocument,deleteDocument,getDoucmentByUserId}
 
