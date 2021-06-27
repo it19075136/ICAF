@@ -9,7 +9,6 @@ import AddWorkshopForm from './components/workshopManagement/AddWorkshopForm';
 import SubmitDocumet from './components/documentManagement/submitDocument';
 import singup from './components/user-singup-login/singup';
 import singin from './components/user-singup-login/singin';
-import AddWorkshopForm from './components/workshopManagement/AddWorkshopForm';
 import WorkshopList from './components/workshopManagement/WorkshopList';
 import AddConferenceForm from './components/conferenceManagement/AddConferenceForm';
 import WebNavbar from './layouts/WebNavbar';
