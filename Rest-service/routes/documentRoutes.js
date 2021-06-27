@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const {addDocument,updateDocument,deleteDocument,getDoucmentByUserId}=require('../api/document.api');
-const upload = require('../config/multer');
 
 router.post('/', async (req,res)=>{
 

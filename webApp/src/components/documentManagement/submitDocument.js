@@ -1,43 +1,40 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import {Button} from 'react-bootstrap'
+import { connect } from 'react-redux';
+import { Button } from 'react-bootstrap'
 import DocumentUploader from './documentUploader';
-import './document.css'
-import axios from 'axios'
+import './document.css';
+import {addDocuments} from '../../redux/actions/documentActions';
 
 class submitDocument extends Component {
 
     state = {
-        userId:"test2u",
-        activityId:"test2av",
-        type:"type2",
-        status:"pending",
+        userId: "test3u",
+        activityId: "test3av",
+        type: "type3",
+        status: "pending",
+        file: ''
     }
 
-    handleUpload = (e) => {
+    handleUpload = async (e) => {
 
         e.preventDefault();
         console.log(this.state);
 
-        const formData = new FormData();
+        const reader = new FileReader();
 
-        console.log(this.props.documents[0]);
+        reader.readAsDataURL(this.props.documents[0]);
+        reader.onloadend = () => {
+            this.setState({ file: reader.result }, () => {
+                this.props.addDocuments(this.state);
+            });
+        }
 
-        formData.append("userId", this.state.userId);
-        formData.append("activityId", this.state.activityId);
-        formData.append("type", this.state.type);
-        formData.append("status", this.state.status);
-        formData.append("file", this.props.documents[0]);
-
-        axios.post('http://localhost:5000/document',formData).then((res) => { // redux action will be added later instead of this
-            console.log("File uploaded!")
-        })
     }
 
     render() {
 
         return (
-            <form className="main" encType="multipart/form-data" onSubmit={this.handleUpload} >
+            <form className="main" onSubmit={this.handleUpload} >
                 <DocumentUploader />
                 <Button type="submit" className="btn btn-primary">Upload</Button>
             </form>
@@ -49,4 +46,4 @@ const mapStateToProps = (state) => ({
     documents: state.document.documents
 })
 
-export default connect(mapStateToProps,null)(submitDocument)
+export default connect(mapStateToProps, {addDocuments})(submitDocument)
