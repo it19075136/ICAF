@@ -1,25 +1,28 @@
  let User = require("../models/userModel");
 
  function createuser(body) {
-   // const user  = {
-   //     name : body.name,
-   //     email : body.email,
-   //     password : body.password,
-   //     gender : body.gender,
-   //     type : body.type,
-   //     phoneNumber : body.phoneNumber
-   // }
+ 
    return new Promise((resolve, reject) => {
      const newUser = new User(body);
 
-     newUser
-       .save()
-       .then((user) => {
-         resolve(user);
-       })
-       .catch((err) => {
-         reject(err);
-       });
+     User.findOne({
+       email : body.email
+     }).then(user => {
+       if(user){
+         resolve('Email Already Exists')
+       }else{
+        newUser
+        .save()
+        .then((user) => {
+          resolve(user);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+       } 
+     })
+
+    
    });
  }
 
