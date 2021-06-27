@@ -12,7 +12,7 @@ export default function adminSideNav() {
           activeItemId={window.location.pathname}
           onSelect={({ itemId }) => {
               console.log(itemId)
-            window.location.href = itemId
+            itemId ? window.location.href = itemId : (null)
           }}
           items={[
             {
@@ -23,7 +23,7 @@ export default function adminSideNav() {
             },
             {
               title: "Submission",
-              itemId: "/submission/add",
+              itemId: null,
             //   elemBefore: () => <Icon name="user" />,
               subNav: [
                 {
