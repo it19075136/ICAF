@@ -9,6 +9,7 @@ export default function adminSideNav() {
     return (
       <div className="sideSection">
         <Navigation
+          className="select-nav"
           activeItemId={window.location.pathname}
           onSelect={({ itemId }) => {
               console.log(itemId)
@@ -35,6 +36,20 @@ export default function adminSideNav() {
                 {
                     title: "View Submission Topics",
                     itemId: "/test"
+                }
+              ]
+            },
+            {
+              title: "Workshop",
+              itemId: "/workshop/add",
+              subNav: [
+                {
+                  title: "Add Workshop",
+                  itemId: "/workshop/add"
+                },
+                {
+                  title:"View Workshops",
+                  itemId: "/workshops"
                 }
               ]
             },
