@@ -18,15 +18,7 @@ const workshopSchema = new schema({
     },
     resourcePersons: {
         type:Array,
-        required:true,
-        personName: {
-            type: String,
-            required: true
-        },
-        designation: {
-            type: String,
-            required: true
-        }
+        required:true
     },
     conferenceId: {
         type: String,

@@ -9,6 +9,9 @@ import singup from './components/user-singup-login/singup';
 import singin from './components/user-singup-login/singin';
 import NavBar from './layouts/navbar';
 import SideDrawer from './layouts/SideDrawer';
+import AddWorkshopForm from './components/workshopManagement/AddWorkshopForm'
+import WebNavbar from './layouts/WebNavbar';
+import AdminSideNav from './layouts/AdminSideNav';
 import './app.css';
 
 const initialState = {};
@@ -17,23 +20,22 @@ const middleware = [thunk];
 
 const store = createStore(rootReducer,initialState,compose(
     applyMiddleware(...middleware)
-    // check
 )
 );
 
 export default function app(){
 
-    const[sideToggle, setSideToggle] = useState(false);
-
     return (
         <Provider store={store}>
-            <NavBar click={() => setSideToggle(true)}/>
-            <SideDrawer show={sideToggle} click={() => setSideToggle(false)}/>
+            <WebNavbar/>
+            <AdminSideNav />
             <BrowserRouter>
             <Switch>
                 <Route exact path="/submission/upload" component={AddSubmissionForm} />
                 <Route exact path="/singup" component={singup} />
                 <Route exact path="/singin" component={singin} />
+                <Route exact path="/submission/add" component={AddSubmissionForm} />
+                <Route exact path="/workshop/add" component={AddWorkshopForm} />
             </Switch>
             </BrowserRouter>
         </Provider>
