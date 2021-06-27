@@ -30,9 +30,18 @@ class AddWorkshopForm extends Component {
     render() {
 
         const handleSubmit = (e) => {
-
+            e.preventDefault();
+            console.log(this.state.workshop);
         }
 
+        const handleChange = (e) => {
+            this.state({
+                ...this.setState({
+                    ...this.state,
+                    workshop: {...this.state.workshop.conference, [e.target.name]: e.target.value}
+                })
+            })
+        }
         return (
             <div className="body">
                 <Container component="main" maxWidth="sm">
@@ -40,6 +49,10 @@ class AddWorkshopForm extends Component {
                     <div>
                         <center><h2>ADD WORSHOP</h2></center>
                         <form onSubmit={handleSubmit}>
+                            <br />
+                            {this.state.alert.open ? <Alert key="1" variant="success" className="container">
+                                Record added successfully!
+                            </Alert> : (null)}
                             <Grid container spacing={2}>
                                 <Grid item xs={12}>
                                     <TextField
@@ -50,6 +63,7 @@ class AddWorkshopForm extends Component {
                                         id="workshopName"
                                         label="Workshop Name"
                                         autoFocus
+                                        onChange={handleChange}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -60,6 +74,7 @@ class AddWorkshopForm extends Component {
                                         id="workshopDescription"
                                         label="Workshop Description"
                                         name="workshopDescription"
+                                        onChange={handleChange}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -67,9 +82,10 @@ class AddWorkshopForm extends Component {
                                         variant="outlined"
                                         required
                                         fullWidth
-                                        id="flyer"
+                                        id="flyerURL"
                                         label="Flyer URL"
-                                        name="flyer"
+                                        name="flyerURL"
+                                        onChange={handleChange}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -80,6 +96,7 @@ class AddWorkshopForm extends Component {
                                         name="conference"
                                         type="text"
                                         id="conference"
+                                        onChange={handleChange}
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
@@ -103,6 +120,7 @@ class AddWorkshopForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    workshop: state.workshop
+    workshop: state.workshop,
+    conference: state.conference
 });
 export default connect(mapStateToProps, { addWorkshop })(AddWorkshopForm);
