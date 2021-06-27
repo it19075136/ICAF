@@ -7,8 +7,8 @@ import rootReducer from './redux/reducers';
 import AddSubmissionForm from './components/submissionManagement/AddSubmissionForm';
 import singup from './components/user-singup-login/singup';
 import singin from './components/user-singup-login/singin';
-import NavBar from './layouts/navbar';
-import SideDrawer from './layouts/SideDrawer';
+// import NavBar from './layouts/navbar';
+// import SideDrawer from './layouts/SideDrawer';
 import AddWorkshopForm from './components/workshopManagement/AddWorkshopForm'
 import WebNavbar from './layouts/WebNavbar';
 import AdminSideNav from './layouts/AdminSideNav';
