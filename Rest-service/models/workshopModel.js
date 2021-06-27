@@ -28,6 +28,10 @@ const workshopSchema = new schema({
             required: true
         }
     },
+    status:{
+        type:String,
+        required: true
+    },
     conferenceId: {
         type: String,
         required: true
