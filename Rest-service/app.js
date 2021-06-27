@@ -57,7 +57,7 @@ documents routes - { - pasindu
         userId,
         type ( research paper/ workshop proposals),
         status,
-        FileUrl,
+        FileId,
         activityId (submission or workshop)
     }
 }

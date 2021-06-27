@@ -5,6 +5,8 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 import rootReducer from './redux/reducers';
 import AddSubmissionForm from './components/submissionManagement/AddSubmissionForm';
+import AddWorkshopForm from './components/workshopManagement/AddWorkshopForm';
+import SubmitDocumet from './components/documentManagement/submitDocument';
 import singup from './components/user-singup-login/singup';
 import singin from './components/user-singup-login/singin';
 import AddWorkshopForm from './components/workshopManagement/AddWorkshopForm';
@@ -39,6 +41,7 @@ export default function app(){
                 <Route exact path="/workshop/add" component={AddWorkshopForm} />
                 <Route exact path="/workshops" component={WorkshopList} />
                 <Route exact path="/conference/add" component={AddConferenceForm}/>
+                <Route exact path="/document/submit" component={SubmitDocumet} />
             </Switch>
             </BrowserRouter>
         </Provider>

@@ -18,7 +18,7 @@ const documentSchema = new schema({
         type:String,
         require:true
     },
-    fileUrl:{
+    file:{
         type:String,
         require:true
     }
