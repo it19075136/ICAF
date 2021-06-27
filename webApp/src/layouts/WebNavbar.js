@@ -9,7 +9,15 @@ class WebNavbar extends Component {
     handleClick = () => {
         this.setState({ clicked: !this.state.clicked })
     }
+    
     render() {
+        const handleSingup=()=>{
+            // Window.href();
+            window.location.href ='/singup';
+        }
+        const handleSingin=()=>{
+            window.location.href='/singin';
+        }
         return (
             <nav className="NavbarItems">
                 <h1 className="navbar-logo">ICAF LANKA</h1>
@@ -28,13 +36,11 @@ class WebNavbar extends Component {
                     })}
                 </ul>
                 <div className="btn-list">
-                    <Button>Sign Up</Button>
+                    <Button onclick={handleSingup}>Sign Up</Button>
                 </div>
                 <div className="btn-list">
-                    <Button>Log In</Button>
+                    <Button onclick={handleSingin}>Log In</Button>
                 </div>
-
-
             </nav>
         )
     }

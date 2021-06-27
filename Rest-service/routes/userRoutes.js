@@ -1,5 +1,5 @@
 const router  = require('express').Router();
-const { createuser, getAllUsers, getUserById ,deleteUserById, updateUserById }  = require('../api/user.api');
+const { createuser, getAllUsers, getUserById ,deleteUserById, updateUserById,getUsetByEmailAndPassword }  = require('../api/user.api');
 
 //add user
 router.post('/add', (req, res) => {
@@ -31,7 +31,16 @@ router.get('/:id', (req, res) => {
     })
 })
 
+router.get('/getUser',(req,res)=>{
+    console.log('router getuser');
+    getUsetByEmailAndPassword(req.body).then(user=>{
+        console.log('in router get');
+        res.json(user);
+    })
+})
+
 router.delete('/:id', (req, res) => {
+    
     deleteUserById(req.params.id).then((user) => {
         res.json(
             user.name + ' is deleted'
