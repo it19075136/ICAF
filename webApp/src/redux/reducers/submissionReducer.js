@@ -1,4 +1,4 @@
-import {ADD_SUBMISSION, GET_ALL_SUBMISSIONS} from '../constants'
+import {ADD_SUBMISSION, GET_ALL_SUBMISSIONS, REMOVE_SUBMISSION} from '../constants'
 
 const initstate = {
     submissions: [],
@@ -18,6 +18,11 @@ export default function (state = initstate,action){
                 ...state,
                 submissions: [...state.submissions,action.payload],
                 success: true
+            }
+        case REMOVE_SUBMISSION:
+            return {
+                ...state,
+                submissions: state.submissions.filter(submission => submission._id != action.payload._id)
             }
         default:
             return state;

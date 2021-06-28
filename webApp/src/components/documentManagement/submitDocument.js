@@ -12,7 +12,7 @@ class submitDocument extends Component {
 
     state = {
         document: {
-            userId: "test1",
+            userId: "test3",
             activityId: "",
             type: "",
             file: ''

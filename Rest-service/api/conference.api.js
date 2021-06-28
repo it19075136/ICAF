@@ -40,6 +40,7 @@ function updateConferenceById(id, payload) {
             Conference.findOne({ conferenceName: payload.conferenceName }).then((doc) => {
                 if (doc == null || doc._id == id) {
                     Conference.findByIdAndUpdate(id, { $set: payload }).then((doc) => {
+                        console.log(doc)
                         resolve(doc);
                     }).catch((err) => {
                         reject(err);
