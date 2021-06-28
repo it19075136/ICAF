@@ -24,7 +24,7 @@ export default function adminSideNav() {
             },
             {
               title: "Submission",
-              itemId: null,
+              itemId: "/submission",
             //   elemBefore: () => <Icon name="user" />,
               subNav: [
                 {
@@ -32,24 +32,26 @@ export default function adminSideNav() {
                   itemId: "/submission/add",
                   // Optional
                 //   elemBefore: () => <Icon name="cloud-snow" />
-                },
+                }
+              ]
+            },
+            {
+              title: "Conference",
+              itemId: "/conferences",
+              subNav: [
                 {
-                    title: "View Submission Topics",
-                    itemId: "/test"
+                  title: "Add Conference",
+                  itemId: "/conference/add"
                 }
               ]
             },
             {
               title: "Workshop",
-              itemId: "/workshop/add",
+              itemId: "/workshops",
               subNav: [
                 {
                   title: "Add Workshop",
                   itemId: "/workshop/add"
-                },
-                {
-                  title:"View Workshops",
-                  itemId: "/workshops"
                 }
               ]
             },

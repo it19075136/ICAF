@@ -1,5 +1,5 @@
  let User = require("../models/userModel");
-
+const passwordHash = require('password-hash')
  function createuser(body) {
  
    return new Promise((resolve, reject) => {
@@ -80,10 +80,29 @@
    });
  }
 
+ function getUsetByEmailAndPassword(user) {
+   return new Promise((resolve,reject)=>{
+    //  passwordHash.verify(req.body.password,user.password)
+    //  user.password = passwordHash.generate(user.password);
+    console.log('in getUsetByEmailAndPassword');
+     User.findOne({email:user.email}).then((res)=>{
+       if(passwordHash.verify(user.password,res.password)){
+        console.log('in findone if');
+         resolve(res)
+       }
+       console.log('in findone');
+     }).catch((err)=>{
+      console.log('in getUsetByEmailAndPassword err');
+       reject(err)
+     })
+   })
+ }
+
  module.exports = {
    createuser,
    getAllUsers,
    getUserById,
    deleteUserById,
    updateUserById,
+   getUsetByEmailAndPassword
  };

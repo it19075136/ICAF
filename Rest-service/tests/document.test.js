@@ -17,7 +17,7 @@ test('should create a new document ',async()=>{
         activityId:"A01",
         type:" research paper",
         status:"not approved",
-        fileUrl:"kdsoafa",
+        fileId:"kdsoafa",
     }).expect(200).then((res)=>{
         id = res.body._id;
         Uid = res.body.userId;
@@ -27,7 +27,7 @@ test('should create a new document ',async()=>{
         activityId:"A02",
         type:" research paper",
         status:"not approved",
-        fileUrl:"kdsoafcvfa",
+        fileId:"kdsoafcvfa",
     }).expect(200).then((response)=>{
 
     });
@@ -35,7 +35,7 @@ test('should create a new document ',async()=>{
 test('should update the document by id',async()=>{
     await request(app).post(`/document/update/${id}`).send({
         status:"not approved",
-        fileUrl:"koasla"
+        fileId:"koasla"
     }).expect(200).then((res)=>{
             if(res.body.status==null){
                     throw new Error('Failed test  document upate')
@@ -43,7 +43,7 @@ test('should update the document by id',async()=>{
     });
     await request(app).post(`/document/update/${id}`).send({
         status:"not approved",
-        fileUrl:"jdsfjoj"
+        fileId:"jdsfjoj"
     }).expect(200).then((res)=>{
         if(res.body.status == null){
             throw new Error('Failed test document upate');
@@ -54,7 +54,7 @@ test('should update the document by id',async()=>{
 });
 test('should get all document',async()=>{
     await request(app).get(`/document/${Uid}`).expect(200).then((res)=>{
-        if((res.body[0].fileUrl == null )|| (res.body[0].status == null )|| (res.body[0].type == null) || (res.body[0].activityId == null) || (res.body[0].userId == null)){
+        if((res.body[0].fileId == null )|| (res.body[0].status == null )|| (res.body[0].type == null) || (res.body[0].activityId == null) || (res.body[0].userId == null)){
                 throw new Error('Failed test get all document')
         }
     }).catch(err=>{

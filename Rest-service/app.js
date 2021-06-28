@@ -19,7 +19,9 @@ mongoose.connect(process.env.DB_KEY||'&w=majority', {
 
 let app = express();
 
-app.use(bodyParser.json());
+app.use(express.json({limit: '50mb'}));
+
+app.use(express.urlencoded({limit: '50mb', extended: true}))
 
 app.use(cors());
 
@@ -57,7 +59,7 @@ documents routes - { - pasindu
         userId,
         type ( research paper/ workshop proposals),
         status,
-        FileUrl,
+        FileId,
         activityId (submission or workshop)
     }
 }

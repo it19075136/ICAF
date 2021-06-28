@@ -17,7 +17,7 @@ const documentSchema = new schema({
     status:{
         type:String,
         require:true
-    },
+    },  
     fileUrl:{
         type:String,
         require:true

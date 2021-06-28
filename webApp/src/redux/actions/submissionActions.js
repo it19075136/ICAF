@@ -14,9 +14,12 @@ export const getAllSubmissions = () => dispatch => {
 export const addSubmission = (payload) => dispatch => {
     axios.post('http://localhost:5000/submission',payload)
     .then(res => {
+        if(res.status == 200)
         dispatch({
             type: ADD_SUBMISSION,
             payload: res.data
         })
+        else
+            console.log(res)
     })
 }
