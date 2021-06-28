@@ -45,7 +45,7 @@ class singin extends Component {
                     })
                 },1000) 
                 console.log('in');
-                window.location.href='/singup';
+                window.location.href='/submission/add';
             }).catch((err)=>{
                     console.log('err');
                     console.log(err);
