@@ -12,7 +12,7 @@ function addDocument(payload){
                 upload_preset: 'ml_default'
             }).then((res) => {
                 console.log(res);
-                document = new Document({userId:payload.userId,activityId:payload.activityId,type:payload.type,status:payload.status,fileUrl:res.secure_url})
+                document = new Document({userId:payload.userId,activityId:payload.activityId,type:payload.type,status:"PENDING",fileUrl:res.secure_url})
                 console.log(document)
                 document.save().then((document)=>{
                     resolve(document);

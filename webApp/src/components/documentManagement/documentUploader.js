@@ -5,6 +5,8 @@ import {addDocuments} from '../../redux/actions/documentActions';
 import {Jumbotron} from 'react-bootstrap';
 import {FileEarmarkPlus} from 'react-bootstrap-icons';
 import './documentUploader.css';
+import {store} from '../../redux/store'
+import {ADD_DOCUMENTS} from '../../redux/constants'
 
 function MyDropzone(props) {
 
@@ -18,7 +20,10 @@ function MyDropzone(props) {
         files: [...state.files,...acceptedFiles]
     });
     console.log(acceptedFiles)
-    props.addDocuments(acceptedFiles);
+    store.dispatch({
+      type: ADD_DOCUMENTS,
+      payload: acceptedFiles
+    });
   }, []);
 
   const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
