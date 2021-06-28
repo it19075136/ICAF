@@ -30,7 +30,7 @@ class WorkshopList extends Component {
                             <div className="card">
                                 <div className="row">
                                     <div className="col-md-2">
-                                        <img src="http://bit.ly/2tMBBTd" className="img-fluid" />
+                                        <img src={workshop.flyerURL} className="img-fluid" />
                                     </div>
                                     <div className="col-md-8">
                                         <h2 className="card-title mt-2">{workshop.workshopName} - {this.props.conferences.filter(conf => conf._id == workshop.conferenceId)[0].conferenceName}</h2>

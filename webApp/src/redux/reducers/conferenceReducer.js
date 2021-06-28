@@ -19,7 +19,7 @@ export default function (state = initstate, action){
         case EDIT_CONFERENCE:
             return{
                 ...state,
-                conferences: action.payload
+                conferences: [...state.conferences,action.payload]
             }
         default:
             return state;
