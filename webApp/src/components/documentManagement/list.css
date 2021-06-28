@@ -1,0 +1,16 @@
+.root {
+      max-width: 345px;
+}
+
+.media {
+      height: 0;
+      padding-top: 56.25%
+}
+
+.main{
+    display: flex;
+    justify-items: center;
+    position: absolute;
+    margin-left: 20%;
+
+}

@@ -32,17 +32,17 @@ class viewSubmissions extends Component {
             <div className="body">
                 <div className="main">
                 <h1>All submission topics</h1>
-                {this.props.submissions.map(submission => {
+                {this.props.submissions && this.props.conferences ? this.props.submissions.map(submission => {
                     return  (<Card style={{ width: '18rem' }}>
                     <Card.Body>
-                        <Card.Title>{submission.topic} - {this.props.conferences.filter(conference => conference._id == submission.conferenceId)[0].conferenceName}</Card.Title>
+                        <Card.Title>{submission.topic} - {this.props.conferences ? this.props.conferences.filter(conference => conference._id == submission.conferenceId)[0].conferenceName:(null)}</Card.Title>
                         <Card.Text>
                             <h5>{submission.deadline}</h5>
                             <p>{submission.description}</p>
     </Card.Text>
                     </Card.Body>
                 </Card>)
-                })}
+                }) : <h1>Loading...</h1>}
             </div>
             </div>
         )

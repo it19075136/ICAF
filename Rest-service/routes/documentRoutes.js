@@ -7,7 +7,7 @@ router.post('/', async (req,res)=>{
 
 
     addDocument(req.body).then((newDoc)=>{
-        res.json(newDoc);
+        newDoc._id ? res.json(newDoc) : res.status(400).json(newDoc);
     }).catch((err)=>{
         res.status(500).json(err);
     })
