@@ -20,6 +20,7 @@ import ViewSubmissions from './components/submissionManagement/viewSubmissions';
 import SubmitDocument from './components/documentManagement/submitDocument';
 import AddTemplate from './components/documentManagement/addTemplate';
 import Templates from './components/documentManagement/templates';
+import DocumentList from './components/documentManagement/documentList';
 
 export default function app(){
 
@@ -39,6 +40,7 @@ export default function app(){
                 <Route exact path="/template/upload" component={AddTemplate} />
                 <Route exact path="/templates" component={Templates} />
                 <Route exact path="/submission" component={ViewSubmissions} />
+                <Route exact path="/mySubmissions" component={DocumentList} />
 
                 <Route exact path="/workshop/add" component={AddWorkshopForm} />
                 <Route exact path="/workshops" component={WorkshopList} />

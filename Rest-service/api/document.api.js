@@ -10,7 +10,8 @@ function addDocument(payload){
         Document.findOne({userId:payload.userId,activityId:payload.activityId,type:payload.type}).then((res)=>{
             // reject('err')
             res && payload.activityId != "TEMPLATE" ? (resolve('file exist')):(result = cloudinary.uploader.upload(payload.file,{
-                upload_preset: 'ml_default'
+                upload_preset: 'ml_default',
+                resource_type: 'auto'
             }).then((res) => {
                 console.log(res);
                 document = new Document({userId:payload.userId,activityId:payload.activityId,type:payload.type,status:"PENDING",fileUrl:res.secure_url})
