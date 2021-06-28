@@ -21,7 +21,7 @@ class AddWorkshopForm extends Component {
             workshopDescription: '',
             flyerURL: '',
             resourcePersons: [],
-            conference: ''
+            conferenceId: ''
         },
         alert: {
             open: false
@@ -35,8 +35,8 @@ class AddWorkshopForm extends Component {
 
     render() {
 
-        const conference = this.props.conference 
-        console.log(conference)
+        // const conference = this.props.conference 
+        console.log(this.props.conference)
 
         // const conferenceName = conference ? (conference.filter(conf => conf.status == 'Approved')) : null
         // console.log(conferenceName)
@@ -84,9 +84,11 @@ class AddWorkshopForm extends Component {
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <TextField
+                                <label htmlFor="description" className="form-label">Workshop description</label>
+                                    <TextareaAutosize
                                         required
                                         fullWidth
+                                        className="form-control"
                                         variant="outlined"
                                         id="workshopDescription"
                                         label="Workshop Description"
@@ -106,15 +108,21 @@ class AddWorkshopForm extends Component {
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <Select
+                                    <select
                                         variant="outlined"
                                         required
                                         fullWidth
                                         name="conference"
+                                        className="form-control"
                                         type="text"
                                         id="conference"
-                                        onChange={handleChange}
-                                    />
+                                        onChange={(e) => this.setState({...this.state, workshop: {...this.state.workshop, conferenceId: e.target.value}})}
+                                    >
+                                        <option>Select Conference</option>
+                                        {this.props.conference ? this.props.conference.filter(conf => conf.status == "Approved").map(conference => {
+                                            return <option key={conference._id} value={conference._id}>{conference.conferenceName}</option>
+                                        }):(null)}
+                                    </select>
                                 </Grid>
                                 <Grid item xs={12}>
                                 </Grid>
@@ -138,6 +146,6 @@ class AddWorkshopForm extends Component {
 
 const mapStateToProps = (state) => ({
     workshop: state.workshop,
-    conference: state.conference
+    conference: state.conference.conferences
 });
 export default connect(mapStateToProps, { addWorkshop, getAllConference })(AddWorkshopForm);
