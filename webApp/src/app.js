@@ -14,6 +14,7 @@ import AddConferenceForm from './components/conferenceManagement/AddConferenceFo
 import WebNavbar from './layouts/WebNavbar';
 import AdminSideNav from './layouts/AdminSideNav';
 import './app.css';
+import ViewSubmissions from './components/submissionManagement/viewSubmissions';
 
 
 const initialState = {};
@@ -37,6 +38,7 @@ export default function app(){
                 <Route exact path="/singup" component={singup} />
                 <Route exact path="/singin" component={singin} />
                 <Route exact path="/submission/add" component={AddSubmissionForm} />
+                <Route exact path="/submission" component={ViewSubmissions} />
                 <Route exact path="/workshop/add" component={AddWorkshopForm} />
                 <Route exact path="/workshops" component={WorkshopList} />
                 <Route exact path="/conference/add" component={AddConferenceForm}/>
