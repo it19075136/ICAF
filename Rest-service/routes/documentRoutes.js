@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const {addDocument,updateDocument,deleteDocument,getDoucmentByUserId,getAllDocuments}=require('../api/document.api')
+const {addDocument,updateDocument,deleteDocument,getDoucmentByUserId,getAllDocuments,updateDocumentIsApprove}=require('../api/document.api')
 
 
 router.post('/', async (req,res)=>{
@@ -15,6 +15,14 @@ router.post('/', async (req,res)=>{
 router.post('/update/:id', (req,res)=>{
 
     updateDocument(req.body,req.params.id).then((doc)=>{
+        res.json(doc)
+    }).catch((err)=>{
+        console.log(err)
+    })
+})
+router.post('/update/isApprove/:id', (req,res)=>{
+
+    updateDocumentIsApprove(req.body,req.params.id).then((doc)=>{
         res.json(doc)
     }).catch((err)=>{
         console.log(err)

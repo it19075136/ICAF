@@ -1,8 +1,11 @@
 const initstate = {
-    documents : []
+    documents : [],
+    updateDocumentApprove : {}
 }
 
 const GET_ALL_DOCUMENTS = "GET_ALL_DOCUMENTS";
+const UPDATE_DOCUMENT_APPROVE = "UPDATE_DOCUMENT_APPROVE";
+
 
 export default function (state = initstate, action){
     switch(action.type){
@@ -11,6 +14,12 @@ export default function (state = initstate, action){
                 ...state,
                 documents : action.payload
             };
+        case UPDATE_DOCUMENT_APPROVE:
+            return {
+                ...state,
+                updateDocumentApprove : action.payload
+
+            }    
         default : 
             return state;    
     }

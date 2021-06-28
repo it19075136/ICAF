@@ -1,19 +1,26 @@
 import React, { Component } from 'react';
 import './admin.css'
 import { connect } from 'react-redux';
-import { getAllDocuments } from '../../redux/actions/adminActions';
+import { getAllDocuments, postDocumentApprove } from '../../redux/actions/adminActions';
 import axios from 'axios';
 import { Button, Card, Container, Row, Col, Modal, Table } from 'react-bootstrap';
+import { NutFill } from 'react-bootstrap-icons';
+import FilePreviewer from 'react-file-previewer';
+
 class adminDashboard extends Component {
     constructor(props) {
         super(props);
 
         this.setShow = this.setShow.bind(this);
+        this.approveOrRefuse = this.approveOrRefuse.bind(this);
+        this.setShowMiniModal = this.setShowMiniModal.bind(this);
 
         this.state = {
             docs: [],
             show: false,
-            modalData : []
+            modalData: [],
+            showMiniModal: false,
+            modalUrl : ''
 
 
         }
@@ -33,20 +40,35 @@ class adminDashboard extends Component {
         // )
     }
 
-    setShow(data, info, type, status) {
-        console.log('status: ', status);
-        console.log('type: ', type);
-        console.log('info: ', info);
+    setShow(data, info, type, status) {    
         this.setState({
-            modalData : info,
+            modalData: info,
             show: data
         })
     }
 
-    render() {
-        const { docs, show, fullscreen, modalData } = this.state;
-        const { documents } = this.props.admin;
+    setShowMiniModal(data,url) {
+        console.log('url: ', url);
+        this.setState({
 
+            showMiniModal: data,
+            modalUrl : url
+        })
+    }
+
+    approveOrRefuse(data) {
+        console.log('data approveOrRefuse: ', data);
+        const { postDocumentApprove } = this.props;
+        let values = {};
+
+        values.id = data._id;
+        values.status = 'APPROVED';
+        postDocumentApprove(values);
+    }
+
+    render() {
+        const { docs, show, fullscreen, modalData, showMiniModal,modalUrl } = this.state;
+        const { documents } = this.props.admin;
         let researchArray = documents.filter((e) => {
             return e.type == 'RESEARCH'
         })
@@ -62,7 +84,7 @@ class adminDashboard extends Component {
         let workshopArrayApproved = workshopArray.filter((e) => {
             return e.type == 'W_PROPOSAL' && e.status == 'APPROVED'
         })
-        
+
         let researchArrayPending = researchArray.filter((e) => {
             return e.type == 'RESEARCH' && e.status == 'PENDING'
         })
@@ -70,7 +92,7 @@ class adminDashboard extends Component {
         let researchArrayApproved = researchArray.filter((e) => {
             return e.type == 'RESEARCH' && e.status == 'APPROVED'
         })
-        
+
         return (
             <div className="body">
 
@@ -78,33 +100,74 @@ class adminDashboard extends Component {
                 <Modal
                     show={show}
                     onHide={() => this.setShow(false)}
-                    fullscreen={true}
-                    className="modal-style-custom"
+                    size="xl"
+                // dialogClassName="modal-style-custom"
                 >
                     <Modal.Header closeButton>
                         <Modal.Title>Modal</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
+                    <Modal.Body >
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
-                                    <th>First Name</th>
-                                    <th>Last Name</th>
-                                    <th>Username</th>
+                                    <th>Status</th>
+                                    <th>Type</th>
+                                    <th>Preview</th>
+                                    <th>Action</th>
+
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>                                  
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                </tr>
-                              
+                                {modalData ? modalData.map(e =>
+
+                                    <tr>
+                                        <td>{e.status}</td>
+                                        <td>{e.type}</td>
+                                        <td>
+                                            <Button
+                                                // onClick={() =>
+                                                //  <FilePreviewer file={{
+                                                //     url:e.fileUrl }}
+                                                // />
+                                                //  }
+                                                onClick={() => this.setShowMiniModal(true,e.fileUrl)}
+                                            >View File</Button>
+
+                                        </td>
+                                        <td>{e.status == 'APPROVED' ? 'Already Approved' : <Button variant="primary" onClick={() => this.approveOrRefuse(e)}>{e.status == 'PENDING' ? 'Approve' : 'Refuse'}</Button>}</td>
+                                    </tr>
+
+                                )
+                                    :
+                                    <tr>
+                                        <td>No Data</td>
+                                        <td>No Data</td>
+
+                                    </tr>
+                                }
                             </tbody>
                         </Table>
 
                     </Modal.Body>
                 </Modal>
+
+                <Modal
+                    show={showMiniModal}
+                    onHide={() => this.setShowMiniModal(false,'')}
+                    size="xl"
+                // dialogClassName="modal-style-custom"
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Preview</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body >
+                        <FilePreviewer file={{
+                            url: modalUrl
+                        }}
+                        />
+                    </Modal.Body>
+                </Modal>
+
 
                 <div>
                     <Container>
@@ -119,7 +182,7 @@ class adminDashboard extends Component {
                                                 workshopArrayPending.length
                                             }
                                         </Card.Text>
-                                        <Button variant="primary" onClick={() => this.setShow(true, workshopArrayPending,'W_PROPOSAL','PENDING')}>Go somewhere</Button>
+                                        <Button variant="primary" onClick={() => this.setShow(true, workshopArrayPending, 'W_PROPOSAL', 'PENDING')}>Go somewhere</Button>
                                     </Card.Body>
                                     {/* <Card.Footer className="text-muted">2 days ago</Card.Footer> */}
                                 </Card>
@@ -131,10 +194,10 @@ class adminDashboard extends Component {
                                         <Card.Title>Approved</Card.Title>
                                         <Card.Text className="card-text-style">
                                             {
-                                               workshopArrayApproved.length
+                                                workshopArrayApproved.length
                                             }
                                         </Card.Text>
-                                        <Button variant="primary" onClick={() => this.setShow(true, workshopArrayApproved,'W_PROPOSAL','APPROVED')}>Go somewhere</Button>
+                                        <Button variant="primary" onClick={() => this.setShow(true, workshopArrayApproved, 'W_PROPOSAL', 'APPROVED')}>Go somewhere</Button>
                                     </Card.Body>
                                     {/* <Card.Footer className="text-muted">2 days ago</Card.Footer> */}
                                 </Card>
@@ -148,10 +211,10 @@ class adminDashboard extends Component {
                                         <Card.Title>Pending</Card.Title>
                                         <Card.Text className="card-text-style">
                                             {
-                                               researchArrayPending.length
+                                                researchArrayPending.length
                                             }
                                         </Card.Text>
-                                        <Button variant="primary"  onClick={() => this.setShow(true, researchArrayPending,'RESEARCH','PENDING')}>Go somewhere</Button>
+                                        <Button variant="primary" onClick={() => this.setShow(true, researchArrayPending, 'RESEARCH', 'PENDING')}>Go somewhere</Button>
                                     </Card.Body>
                                     {/* <Card.Footer className="text-muted">2 days ago</Card.Footer> */}
                                 </Card>
@@ -166,7 +229,7 @@ class adminDashboard extends Component {
                                                 researchArrayApproved.length
                                             }
                                         </Card.Text>
-                                        <Button variant="primary" onClick={() => this.setShow(true, researchArrayApproved,'RESEARCH','APPROVED')}>Go somewhere</Button>
+                                        <Button variant="primary" onClick={() => this.setShow(true, researchArrayApproved, 'RESEARCH', 'APPROVED')}>Go somewhere</Button>
                                     </Card.Body>
                                     {/* <Card.Footer className="text-muted">2 days ago</Card.Footer> */}
                                 </Card>
@@ -186,4 +249,4 @@ class adminDashboard extends Component {
 const mapStateToProps = (state) => ({
     admin: state.admin
 });
-export default connect(mapStateToProps, { getAllDocuments })(adminDashboard);
+export default connect(mapStateToProps, { getAllDocuments, postDocumentApprove })(adminDashboard);

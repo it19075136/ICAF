@@ -43,6 +43,17 @@ function updateDocument(payload,id){
         })
 }
 
+function updateDocumentIsApprove(payload,id){
+    return new Promise((resolve,reject) => {
+        Document.findByIdAndUpdate(id).then((document)=>{
+          
+            (payload.status ?(document.status = payload.status):null),
+          
+            document.save().then((doc)=>resolve(doc)).catch((err)=>reject(err))
+        })
+    })
+}
+
 function deleteDocument(id){
     return new Promise((resolve,reject)=>{
         Document.findByIdAndDelete(id).then((docu)=>{
@@ -71,5 +82,5 @@ function getAllDocuments() {
     });
   }
 
-module.exports={addDocument,updateDocument,deleteDocument,getDoucmentByUserId,getAllDocuments}
+module.exports={addDocument,updateDocument,deleteDocument,getDoucmentByUserId,getAllDocuments,updateDocumentIsApprove}
 
