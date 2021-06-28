@@ -11,6 +11,7 @@ import Grid from '@material-ui/core/Grid';
 import { TextareaAutosize } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
 import Select from '@material-ui/core/Select';
+import DocumentUploader from '../documentManagement/documentUploader';
 
 
 
@@ -19,7 +20,7 @@ class AddWorkshopForm extends Component {
         workshop: {
             workshopName: '',
             workshopDescription: '',
-            flyerURL: '',
+            file: '',
             resourcePersons: [],
             conferenceId: ''
         },
@@ -44,13 +45,21 @@ class AddWorkshopForm extends Component {
         const handleSubmit = (e) => {
             e.preventDefault();
             console.log(this.state.workshop);
-            this.props.addWorkshop(this.state.workshop);
-            this.setState({...this.state, alert: {...this.state.alert, open:true }});
-            setTimeout(() => {
-                this.setState({
-                    ...this.setState, alert: {...this.state.alert, open: false}
+            console.log(this.props.documents[0])
+            const reader = new FileReader();
+            reader.readAsDataURL(this.props.documents[0]);
+            reader.onloadend = () => {
+                this.setState({...this.state,workshop: {...this.state.workshop,file:reader.result}},() => {
+                    this.props.addWorkshop(this.state.workshop);
+                    this.setState({...this.state, alert: {...this.state.alert, open:true }});
+                    setTimeout(() => {
+                        this.setState({
+                            ...this.setState, alert: {...this.state.alert, open: false}
+                        })
+                    },1000);
                 })
-            },1000);
+            }
+
         }
 
         const handleChange = (e) => {
@@ -97,15 +106,7 @@ class AddWorkshopForm extends Component {
                                     />
                                 </Grid>
                                 <Grid item xs={12}>
-                                    <TextField
-                                        variant="outlined"
-                                        required
-                                        fullWidth
-                                        id="flyerURL"
-                                        label="Flyer URL"
-                                        name="flyerURL"
-                                        onChange={handleChange}
-                                    />
+                                  <DocumentUploader />
                                 </Grid>
                                 <Grid item xs={12}>
                                     <select
@@ -146,6 +147,8 @@ class AddWorkshopForm extends Component {
 
 const mapStateToProps = (state) => ({
     workshop: state.workshop,
-    conference: state.conference.conferences
+    conference: state.conference.conferences,
+    documents: state.document.documents
 });
+
 export default connect(mapStateToProps, { addWorkshop, getAllConference })(AddWorkshopForm);

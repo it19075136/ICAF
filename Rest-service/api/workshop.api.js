@@ -1,17 +1,32 @@
 const Workshop = require('../models/workshopModel');
+const cloudinary = require('../config/cloudinary')
 
 
 function addWorkshop(payload) {
     return new Promise((resolve, reject) => {
-        const workshop = new Workshop(payload);
 
         Workshop.findOne({workshopName: payload.workshopName }).then((docs) => {
             if(docs == null) {
-                workshop.save().then((workshop) => {
-                    resolve(workshop);
-                }).catch((err) => {
-                    reject(err);
-                });
+                cloudinary.uploader.upload(payload.file,{
+                    upload_preset: 'ml_default'
+                }).then((result) => {
+                    console.log(result);
+                    const workS = {
+                        workshopName: payload.workshopName,
+                        workshopDescription: payload.workshopDescription,
+                        flyerURL: result.secure_url,
+                        resourcePersons: payload.resourcePersons,
+                        conferenceId: payload.conferenceId
+                    }
+                    const workshop = new Workshop(workS);
+    
+                    workshop.save().then((workshop) => {
+                        resolve(workshop);
+                    }).catch((err) => {
+                        reject(err);
+                    });
+                })
+
             }
             else{
                 reject("Workshop with same name exists")
