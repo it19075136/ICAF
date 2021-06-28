@@ -31,7 +31,7 @@ router.get('/:id', (req, res) => {
     })
 })
 
-router.get('/getUser',(req,res)=>{
+router.post('/getUser',(req,res)=>{
     console.log('router getuser');
     getUsetByEmailAndPassword(req.body).then(user=>{
         console.log('in router get');

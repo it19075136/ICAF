@@ -86,7 +86,7 @@ const passwordHash = require('password-hash')
     //  user.password = passwordHash.generate(user.password);
     console.log('in getUsetByEmailAndPassword');
      User.findOne({email:user.email}).then((res)=>{
-       if(passwordHash.verify(res.password,user.password)){
+       if(passwordHash.verify(user.password,res.password)){
         console.log('in findone if');
          resolve(res)
        }
