@@ -10,7 +10,12 @@
 .main{
     display: flex;
     justify-items: center;
+    justify-content: space-around;
     position: absolute;
     margin-left: 20%;
 
+}
+
+.center{
+      align-content: center;
 }
