@@ -1,8 +1,11 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux';
 import { Button, Form, Alert } from 'react-bootstrap';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import '../admin.css'
 import {addSubmission} from '../../redux/actions/submissionActions'
+import {getAllConference} from '../../redux/actions/conferenceActions'
 
 class AddSubmissionForm extends Component {
 
@@ -10,24 +13,32 @@ class AddSubmissionForm extends Component {
       submission:{
         topic: '',
         description: '',
-        conferenceId: '1',
-        deadline: ''
+        conferenceId: '',
+        deadline: null
       },
       alert: {
         open: false
       }
     }
 
+    componentDidMount(){
+      this.props.getAllConference();
+    }
+
     render() {
+      console.log(this.props.conferences)
 
       const handleSubmit = (e) => {
         e.preventDefault();
         console.log(this.state.submission);
         this.props.addSubmission(this.state.submission);
-        this.setState({...this.state,alert: {...this.state.alert,open: true}});
-        setTimeout(() => {
-          this.setState({...this.state,alert: {...this.state.alert,open: false}})
-        }, 1000);
+        console.log(this.props.submission.success);
+        this.props.submission.success == true ? this.setState({...this.state,alert: {...this.state.alert,open: true}}, () => {
+          setTimeout(() => {
+            this.setState({...this.state,alert: {...this.state.alert,open: false}})
+          }, 3000)
+        }):null
+
       }
 
       const handleChange = (e) => {
@@ -35,6 +46,7 @@ class AddSubmissionForm extends Component {
             ...this.state,
             submission: {...this.state.submission,[e.target.name]: e.target.value}
           })
+
       }
         return (
           <div className="body">
@@ -49,12 +61,11 @@ class AddSubmissionForm extends Component {
             </Form.Group>
             <Form.Group>
               <Form.Label>Select conference</Form.Label>
-              <Form.Control as="select" name="conferenceId" onChange={handleChange}>
-                <option key="1">1</option>
-                <option key="2">2</option>
-                <option key="3">3</option>
-                <option key="4">4</option>
-                <option key="5">5</option>
+              <Form.Control as="select" name="conferenceId" onChange={(e) => this.setState({...this.state,submission: {...this.state.submission,conferenceId: e.target.value}})}>
+                <option>Select a conference</option>
+                {this.props.conferences ? this.props.conferences.filter(conf => conf.status == "Approved").map(conference => {
+                  return <option key={conference._id} value={conference._id}>{conference.conferenceName}</option>
+                }):(null)}
               </Form.Control>
             </Form.Group>
             <Form.Group>
@@ -62,8 +73,8 @@ class AddSubmissionForm extends Component {
               <Form.Control as="textarea" rows={3} name="description" onChange={handleChange} />
             </Form.Group>
             <Form.Group>
-              <Form.Label>Deadline</Form.Label>
-              <Form.Control type="datetime" placeholder="Enter the deadline" name="deadline" onChange={handleChange} />
+              <Form.Label>Deadline</Form.Label><br/>
+              <DatePicker selected={this.state.submission.deadline ? this.state.submission.deadline : new Date() } name="deadline" onChange={(date) => this.setState({...this.state,submission:{...this.state.submission,deadline: date}})} />
             </Form.Group>
             <br />  
             <Button type="submit" color="primary">Add Submission</Button>
@@ -74,7 +85,8 @@ class AddSubmissionForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  submission: state.submission
+  submission: state.submission,
+  conferences: state.conference.conferences
 });
 
-export default connect(mapStateToProps,{addSubmission})(AddSubmissionForm)
+export default connect(mapStateToProps,{addSubmission,getAllConference})(AddSubmissionForm)

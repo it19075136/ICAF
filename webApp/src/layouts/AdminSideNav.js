@@ -24,7 +24,7 @@ export default function adminSideNav() {
             },
             {
               title: "Submission",
-              itemId: null,
+              itemId: "/submission",
             //   elemBefore: () => <Icon name="user" />,
               subNav: [
                 {
@@ -32,10 +32,6 @@ export default function adminSideNav() {
                   itemId: "/submission/add",
                   // Optional
                 //   elemBefore: () => <Icon name="cloud-snow" />
-                },
-                {
-                    title: "View Submission Topics",
-                    itemId: "/test"
                 }
               ]
             },
