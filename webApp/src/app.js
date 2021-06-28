@@ -18,6 +18,8 @@ import AdminSideNav from './layouts/AdminSideNav';
 import './app.css';
 import ViewSubmissions from './components/submissionManagement/viewSubmissions';
 import SubmitDocument from './components/documentManagement/submitDocument';
+import AddTemplate from './components/documentManagement/addTemplate';
+import Templates from './components/documentManagement/templates';
 
 export default function app(){
 
@@ -34,6 +36,8 @@ export default function app(){
                 <Route exact path="/admin/dashboard" component={adminDashboard} />
 
                 <Route exact path="/document/upload" component={SubmitDocument} />
+                <Route exact path="/template/upload" component={AddTemplate} />
+                <Route exact path="/templates" component={Templates} />
                 <Route exact path="/submission" component={ViewSubmissions} />
 
                 <Route exact path="/workshop/add" component={AddWorkshopForm} />
