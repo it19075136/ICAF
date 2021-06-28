@@ -13,7 +13,7 @@ export default combineReducers({
     user:userReducer,
     workshop: workshopReducer,
 
-    admin : adminReducer
+    admin : adminReducer,
 
     conference: conferenceReducer,
     document: documentReducer
