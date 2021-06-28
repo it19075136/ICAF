@@ -12,9 +12,7 @@ export default combineReducers({
     submission: submissionReducer,
     user:userReducer,
     workshop: workshopReducer,
-
-    admin : adminReducer
-
+    admin : adminReducer,
     conference: conferenceReducer,
     document: documentReducer
 
