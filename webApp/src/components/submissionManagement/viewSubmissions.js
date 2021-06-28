@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { Card, Button, Badge } from 'react-bootstrap';
+import { Jumbotron, Table } from 'react-bootstrap';
+import { Pencil, Trash } from 'react-bootstrap-icons';
 import "react-datepicker/dist/react-datepicker.css";
 import '../admin.css'
 import '../submissionManagement/submission.css'
-import { getAllSubmissions } from '../../redux/actions/submissionActions'
+import { getAllSubmissions, deleteSubmission } from '../../redux/actions/submissionActions'
 import { getAllConference } from '../../redux/actions/conferenceActions'
 
 class viewSubmissions extends Component {
@@ -30,20 +31,29 @@ class viewSubmissions extends Component {
 
         return (
             <div className="body">
-                <div className="main">
+                <Jumbotron className="main">
                 <h1>All submission topics</h1>
-                {this.props.submissions && this.props.conferences ? this.props.submissions.map(submission => {
-                    return  (<Card style={{ width: '18rem' }}>
-                    <Card.Body>
-                        <Card.Title>{submission.topic} - {this.props.conferences ? this.props.conferences.filter(conference => conference._id == submission.conferenceId)[0].conferenceName:(null)}</Card.Title>
-                        <Card.Text>
-                            <h5>{submission.deadline}</h5>
-                            <p>{submission.description}</p>
-    </Card.Text>
-                    </Card.Body>
-                </Card>)
-                }) : <h1>Loading...</h1>}
-            </div>
+                    <Table striped bordered hover>
+                        <thead>
+                            <tr>
+                                <th>Conference Name</th>
+                                <th>Topic</th>
+                                <th>Deadline</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {this.props.submissions && this.props.conferences ? this.props.submissions.map(submission => {
+                                return (<tr>
+                                    <td>{this.props.conferences.find(conference => conference._id == submission.conferenceId).conferenceName}</td>
+                                    <td>{submission.topic}</td>
+                                    <td>{submission.deadline}</td>
+                                    <td><Pencil className="actions" onClick={() => console.log("edit")}/>   |  <Trash className="actions" onClick={() => this.props.deleteSubmission(submission._id)} /></td>
+                                </tr>)
+                            }) : <h1>Loading...</h1>}
+                        </tbody>
+                    </Table>
+                </Jumbotron>
             </div>
         )
     }
@@ -54,4 +64,4 @@ const mapStateToProps = (state) => ({
     conferences: state.conference.conferences
 });
 
-export default connect(mapStateToProps, { getAllSubmissions, getAllConference })(viewSubmissions)
+export default connect(mapStateToProps, { getAllSubmissions, getAllConference, deleteSubmission })(viewSubmissions)

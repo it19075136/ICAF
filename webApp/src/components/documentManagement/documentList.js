@@ -53,7 +53,7 @@ class templates extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    documents: state.document.documents.filter(doc => doc.userId == "test1")
+    documents: state.document.documents.filter(doc => doc.userId == "test3")
 })
 
 export default connect(mapStateToProps, { getAllDocuments })(templates)
