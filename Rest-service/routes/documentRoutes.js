@@ -1,17 +1,18 @@
 const router = require('express').Router();
-const {addDocument,updateDocument,deleteDocument,getDoucmentByUserId}=require('../api/document.api');
-const upload = require('../config/storage');
 
-router.post('/', upload.single("file"), (req,res)=>{
+const {addDocument,updateDocument,deleteDocument,getDoucmentByUserId,getAllDocuments}=require('../api/document.api')
 
-    console.log(req.file)
-    addDocument(req.body,req.file).then((newDoc)=>{
-        res.json(newDoc);
+
+router.post('/', async (req,res)=>{
+
+
+    addDocument(req.body).then((newDoc)=>{
+        newDoc._id ? res.json(newDoc) : res.status(400).json(newDoc);
     }).catch((err)=>{
-        console.log(err);
+        res.status(500).json(err);
     })
 });
-router.post('/update/:id', upload.single("doc"), (req,res)=>{
+router.post('/update/:id', (req,res)=>{
 
     updateDocument(req.body,req.params.id).then((doc)=>{
         res.json(doc)
@@ -34,9 +35,14 @@ router.get('/:id',(req,res)=>{
     })
 })
 
-// router.post('/upload', upload.single('file'), (req,res) => {
-//  // upload method
-// })
+router.get('/', (req, res) => {
 
+    getAllDocuments().then((docs) => {
+        res.json(docs);
+    }).catch((err) => {
+        console.log('err: ', err);
+    })
+
+})
 
 module.exports=router;

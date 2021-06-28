@@ -13,3 +13,9 @@ export const EDIT_CONFERENCE = "EDIT_CONFERENCE";
 
 /**DOCUMENT CONSTANTS */
 export const ADD_DOCUMENTS = "ADD_DOCUMENTS";
+export const RESEARCH = "RESEARCH";
+export const W_PROPOSAL = "W_PROPOSAL";
+export const PENDING = "PENDING"
+
+export const ADMIN = "ADMIN"
+export const TEMPLATE = "TEMPLATE"

@@ -1,7 +1,8 @@
 import {ADD_SUBMISSION, GET_ALL_SUBMISSIONS} from '../constants'
 
 const initstate = {
-    submissions: []
+    submissions: [],
+    success: false
 }
 
 export default function (state = initstate,action){
@@ -15,7 +16,8 @@ export default function (state = initstate,action){
         case ADD_SUBMISSION:
             return {
                 ...state,
-                submissions: [...state.submissions,action.payload]
+                submissions: [...state.submissions,action.payload],
+                success: true
             }
         default:
             return state;

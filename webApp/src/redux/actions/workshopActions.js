@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { GET_ALL_WORKSHOPS, ADD_WORKSHOP } from '../constants';
 
-export const getAllWorkshops = () => {
+export const getAllWorkshops = () => dispatch => {
     axios.get('http://localhost:5000/workshop')
     .then(res => {
         dispatch({

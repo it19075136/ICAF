@@ -1,15 +1,28 @@
 const Document = require('../models/documentModel');
+const cloudinary = require('../config/cloudinary');
 
-function addDocument(payload,file){
+function addDocument(payload){
+
     return new Promise((resolve,reject)=>{
-        const document = new Document({userId:payload.userId,activityId:payload.activityId,type:payload.type,status:payload.status,file:file.originalname});
+        let result = null;
+        let document = null;
+
         Document.findOne({userId:payload.userId,activityId:payload.activityId,type:payload.type}).then((res)=>{
             // reject('err')
-            res ? (resolve('error')):(document.save().then((document)=>{
-                resolve(document);
-            }).catch((err)=>{
-                reject(err)
-            }))
+            res && payload.activityId != "TEMPLATE" ? (resolve('file exist')):(result = cloudinary.uploader.upload(payload.file,{
+                upload_preset: 'ml_default'
+            }).then((res) => {
+                console.log(res);
+                document = new Document({userId:payload.userId,activityId:payload.activityId,type:payload.type,status:"PENDING",fileUrl:res.secure_url})
+                console.log(document)
+                document.save().then((document)=>{
+                    resolve(document);
+                }).catch((err)=>{
+                    reject(err)
+                })
+            }).catch((err) => {
+                resolve(err);
+            }));
         }).catch((err)=>{
             reject(err)
         })
@@ -51,28 +64,13 @@ function getDoucmentByUserId(id){
     })
 }
 
-// function uploadFile(payload){
+function getAllDocuments() {
+    return new Promise((resolve, reject) => {
+      Document.find((err, docs) => {
+        err ? reject(err) : resolve(docs);
+      });
+    });
+  }
 
-//     let obj = {
-//         name: payload.name,
-//         desc: payload.desc,
-//         file: {
-//             data: payload.data,
-//             contentType: payload.contentType
-//         }
-//     }
-//     return new Promise((resolve,reject) => {
-//         File.create(obj, (err, item) => {
-//         if (err) {
-//             resolve(err);
-//         }
-//         else {
-//             // item.save();
-//             resolve(item)
-//         }
-//     });
-// })
-// }
-
-module.exports={addDocument,updateDocument,deleteDocument,getDoucmentByUserId}
+module.exports={addDocument,updateDocument,deleteDocument,getDoucmentByUserId,getAllDocuments}
 

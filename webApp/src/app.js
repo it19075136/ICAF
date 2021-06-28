@@ -1,12 +1,14 @@
 import React, {useState} from 'react';
 import {BrowserRouter, Switch, Route } from 'react-router-dom'
-import { createStore, applyMiddleware, compose } from 'redux';
 import {Provider} from 'react-redux';
-import thunk from 'redux-thunk';
-import rootReducer from './redux/reducers';
+import {store} from './redux/store'
 import AddSubmissionForm from './components/submissionManagement/AddSubmissionForm';
+
+import adminDashboard from './components/adminManagement/adminDashboard';
+
 import AddWorkshopForm from './components/workshopManagement/AddWorkshopForm';
 import SubmitDocumet from './components/documentManagement/submitDocument';
+
 import singup from './components/user-singup-login/singup';
 import singin from './components/user-singup-login/singin';
 import WorkshopList from './components/workshopManagement/WorkshopList';
@@ -14,16 +16,10 @@ import AddConferenceForm from './components/conferenceManagement/AddConferenceFo
 import WebNavbar from './layouts/WebNavbar';
 import AdminSideNav from './layouts/AdminSideNav';
 import './app.css';
-
-
-const initialState = {};
-
-const middleware = [thunk];
-
-const store = createStore(rootReducer,initialState,compose(
-    applyMiddleware(...middleware)
-)
-);
+import ViewSubmissions from './components/submissionManagement/viewSubmissions';
+import SubmitDocument from './components/documentManagement/submitDocument';
+import AddTemplate from './components/documentManagement/addTemplate';
+import Templates from './components/documentManagement/templates';
 
 export default function app(){
 
@@ -33,10 +29,17 @@ export default function app(){
             <AdminSideNav />
             <BrowserRouter>
             <Switch>
-                <Route exact path="/submission/upload" component={AddSubmissionForm} />
                 <Route exact path="/singup" component={singup} />
                 <Route exact path="/singin" component={singin} />
                 <Route exact path="/submission/add" component={AddSubmissionForm} />
+
+                <Route exact path="/admin/dashboard" component={adminDashboard} />
+
+                <Route exact path="/document/upload" component={SubmitDocument} />
+                <Route exact path="/template/upload" component={AddTemplate} />
+                <Route exact path="/templates" component={Templates} />
+                <Route exact path="/submission" component={ViewSubmissions} />
+
                 <Route exact path="/workshop/add" component={AddWorkshopForm} />
                 <Route exact path="/workshops" component={WorkshopList} />
                 <Route exact path="/conference/add" component={AddConferenceForm}/>

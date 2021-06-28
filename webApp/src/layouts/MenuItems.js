@@ -5,8 +5,13 @@ export const MenuItems = [
         cName: 'nav-links'
     },
     {
-        title: 'Services',
-        url:'#',
+        title: 'Submission',
+        url:'/document/upload',
+        cName: 'nav-links'
+    },
+    {
+        title: 'Downloads',
+        url:'/templates',
         cName: 'nav-links'
     },
     {
