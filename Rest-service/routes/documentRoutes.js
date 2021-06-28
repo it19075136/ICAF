@@ -1,10 +1,13 @@
 const router = require('express').Router();
-const {addDocument,updateDocument,deleteDocument,getDoucmentByUserId}=require('../api/document.api');
+
+const {addDocument,updateDocument,deleteDocument,getDoucmentByUserId,getAllDocuments}=require('../api/document.api')
+
 
 router.post('/', async (req,res)=>{
 
+
     addDocument(req.body).then((newDoc)=>{
-        res.json(newDoc);
+        newDoc._id ? res.json(newDoc) : res.status(400).json(newDoc);
     }).catch((err)=>{
         res.status(500).json(err);
     })
@@ -30,6 +33,16 @@ router.get('/:id',(req,res)=>{
     }).catch(err=>{
         console.log(err)
     })
+})
+
+router.get('/', (req, res) => {
+
+    getAllDocuments().then((docs) => {
+        res.json(docs);
+    }).catch((err) => {
+        console.log('err: ', err);
+    })
+
 })
 
 module.exports=router;
