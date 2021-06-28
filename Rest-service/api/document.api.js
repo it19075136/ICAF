@@ -52,5 +52,13 @@ function getDoucmentByUserId(id){
     })
 }
 
-module.exports={addDocument,updateDocument,deleteDocument,getDoucmentByUserId}
+function getAllDocuments() {
+    return new Promise((resolve, reject) => {
+      Document.find((err, docs) => {
+        err ? reject(err) : resolve(docs);
+      });
+    });
+  }
+
+module.exports={addDocument,updateDocument,deleteDocument,getDoucmentByUserId,getAllDocuments}
 
