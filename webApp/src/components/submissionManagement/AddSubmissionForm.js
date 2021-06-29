@@ -26,7 +26,10 @@ class AddSubmissionForm extends Component {
     }
 
     render() {
+      
       console.log(this.props.conferences)
+      console.log(this.props.user);
+
 
       const handleSubmit = (e) => {
         e.preventDefault();
@@ -89,7 +92,9 @@ class AddSubmissionForm extends Component {
 
 const mapStateToProps = (state) => ({
   submission: state.submission,
-  conferences: state.conference.conferences
+  conferences: state.conference.conferences,
+  user:state.user.user
+
 });
 
 export default connect(mapStateToProps,{addSubmission,getAllConference})(AddSubmissionForm)

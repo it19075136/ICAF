@@ -16,6 +16,7 @@ class singin extends Component {
     }
 }
     render() {
+        console.log(this.props.user);
         const handleChange=(e)=>{
             console.log(this.state);
             this.setState({
@@ -102,4 +103,9 @@ class singin extends Component {
         )
     }
 }
-export default  connect(null,{findUser}) (singin)
+const mapStateToProps = (state) => ({
+    submission: state.submission,
+    conferences: state.conference.conferences,
+    user:state.user.user
+  });
+export default  connect(mapStateToProps,{findUser}) (singin)

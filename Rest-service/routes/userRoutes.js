@@ -52,10 +52,10 @@ router.post('/getUser',(req,res)=>{
             gender : user.gender,
             type : user.type,
             phoneNumber :user.phoneNumber,
-            password:user.password
         },"jwtSecret")
+        const password = user.password;
         console.log('in router get');
-        res.json(token);
+        res.json({token,password});
         
     }).catch(err=>{
         console.log('err pasindu');

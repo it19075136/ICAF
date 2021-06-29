@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {BrowserRouter, Switch, Route } from 'react-router-dom'
 import {Provider} from 'react-redux';
 import {store} from './redux/store'
@@ -23,10 +23,15 @@ import Templates from './components/documentManagement/templates';
 import DocumentList from './components/documentManagement/documentList';
 import forgetPassword from './components/user-singup-login/forgetPassword';
 import updatePassword from './components/user-singup-login/updatePassword';
+import jwt from 'jsonwebtoken';
+
 
 export default function app(){
-
+    useEffect(() => {
+        store.dispatch({type:'ADD_USER',payload:jwt.decode(localStorage.getItem("user"))._id ? jwt.decode(localStorage.getItem("user")):null});
+     }, [])
     return (
+       
         <Provider store={store}>
             <WebNavbar/>
             <AdminSideNav />

@@ -7,24 +7,26 @@ export const  findUser=(user)=>dispatch=>{
         console.log(user);
         axios.post('http://localhost:5000/user/getUser',user).then((res)=>{
             console.log('in dispathc');
-            const token= res.data;
-            console.log(token);
-            const userResponds=jwt.decode(token)
+            
+            const {password} = res.data;
+            // password = jwt.decode(password);
+            console.log('res.data', res.data);
+            // console.log('token', token);
+            console.log('password',password);
             console.log(user.password);
-            console.log(userResponds.password);
-            if(passwordHash.verify(user.password,userResponds.password)){
+            if(passwordHash.verify(user.password,password)){
                 // const userResponds =jwt.decode(token);
-            const userDetails ={
-                _id:userResponds._id,
-                name :userResponds.name,
-                email : userResponds.email,
-                gender : userResponds.gender,
-                type : userResponds.type,
-                phoneNumber :userResponds.phoneNumber
-            }
+            // const userDetails ={
+            //     _id:userResponds._id,
+            //     name :userResponds.name,
+            //     email : userResponds.email,
+            //     gender : userResponds.gender,
+            //     type : userResponds.type,
+            // }
+            const {token}= res.data;
+            const userResponds=jwt.decode(token)
             console.log('decode token userRespond',userResponds);
-            console.log('send details to redux',userDetails)
-                dispatch({type:'ADD_USER',payload: userDetails})
+                dispatch({type:'ADD_USER',payload: userResponds})
                 localStorage.setItem('user',token);
                 console.log('in findUser');
                 resolve(token);
