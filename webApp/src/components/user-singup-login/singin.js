@@ -28,8 +28,9 @@ class singin extends Component {
         e.preventDefault();
         // e.preventdefault();
         console.log('in in in');
-        const {findUser} = this.props;
-            findUser(this.state.user).then((res)=>{
+        // const {findUser} = this.props;
+        console.log('in in in');
+           this.props.findUser(this.state.user).then((res)=>{
                 console.log('in in');
                 // const {token} = res;
                 // localStorage.setItem('user',token);
@@ -45,7 +46,7 @@ class singin extends Component {
                     })
                 },1000) 
                 console.log('in');
-                window.location.href='/submission/add';
+                // window.location.href='/submission/add';
             }).catch((err)=>{
                     console.log('err');
                     console.log(err);
