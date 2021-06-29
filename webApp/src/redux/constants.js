@@ -19,6 +19,7 @@ export const ADD_DOCUMENTS = "ADD_DOCUMENTS";
 export const RESEARCH = "RESEARCH";
 export const W_PROPOSAL = "W_PROPOSAL";
 export const PENDING = "PENDING"
+export const SET_IN_PROGRESS = "SET_IN_PROGRESS"
 
 export const ADMIN = "ADMIN"
 export const TEMPLATE = "TEMPLATE"

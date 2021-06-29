@@ -37,7 +37,7 @@ class viewSubmissions extends Component {
     render() {
 
         console.log(this.props.submissions);
-        
+
         const handleSubmit = (e) => {
             e.preventDefault();
             console.log(this.state.submission);
@@ -46,7 +46,7 @@ class viewSubmissions extends Component {
                     setTimeout(() => {
                         this.setState({ ...this.state, alert: { ...this.state.alert, open: false } })
                     }, 1500)
-                }): this.setState({ ...this.state, alert: { ...this.state.alert, openError: true }, show: false }, () => {
+                }) : this.setState({ ...this.state, alert: { ...this.state.alert, openError: true }, show: false }, () => {
                     setTimeout(() => {
                         this.setState({ ...this.state, alert: { ...this.state.alert, openError: false } })
                     }, 1500)
@@ -68,11 +68,11 @@ class viewSubmissions extends Component {
         const handleDelete = (id) => {
             this.props.deleteSubmission(id).then((res) => {
                 console.log(res);
-                res ? this.setState({ ...this.state, alert: { ...this.state.alert, open: true }}, () => {
+                res ? this.setState({ ...this.state, alert: { ...this.state.alert, open: true } }, () => {
                     setTimeout(() => {
                         this.setState({ ...this.state, alert: { ...this.state.alert, open: false } })
                     }, 1500)
-                }): this.setState({ ...this.state, alert: { ...this.state.alert, openError: true }}, () => {
+                }) : this.setState({ ...this.state, alert: { ...this.state.alert, openError: true } }, () => {
                     setTimeout(() => {
                         this.setState({ ...this.state, alert: { ...this.state.alert, openError: false } })
                     }, 1500)
@@ -115,7 +115,7 @@ class viewSubmissions extends Component {
                                             conferenceName: this.props.conferences.find(conference => conference._id == submission.conferenceId).conferenceName,
                                             deadline: submission.deadline
                                         }
-                                    }, () => this.setState({ ...this.state, show: true }))} />   |  <Trash className="actions" onClick={handleDelete.bind(this,submission._id)} /></td>
+                                    }, () => this.setState({ ...this.state, show: true }))} />   |  <Trash className="actions" onClick={handleDelete.bind(this, submission._id)} /></td>
                                 </tr>)
                             }) : <span className="container">No data</span>}
                         </tbody>

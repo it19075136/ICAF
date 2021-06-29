@@ -24,13 +24,13 @@ class templates extends Component {
   }
 
 
-  SetShow(show,url) {
+  SetShow(show, url) {
     console.log('url: ', url);
     this.setState({
-        fileUrl : url,
-        show: show
+      fileUrl: url,
+      show: show
     })
-}
+  }
 
   render() {
 
@@ -47,32 +47,32 @@ class templates extends Component {
                 </IconButton>
               }
               title={document.type == "TEMPLATE_RESEARCH" ? "Research Template" : "Proposal Template"}
-              subheader="September 14, 2016"
+              subheader={document.createdAt.split('T')[0]}
             />
             <FileWord size={XLg} />
             <CardActions disableSpacing>
               <IconButton aria-label="download" >
-                <a download><Download /></a>
+                <a href={document.fileUrl} target="_blank" download><Download /></a>
               </IconButton>
               <IconButton
-                onClick={() => this.SetShow(true,document.fileUrl)}
+                onClick={() => this.SetShow(true, document.fileUrl)}
               >View File</IconButton>
             </CardActions>
             <Modal
-                    show={this.state.show}
-                    onHide={() => this.SetShow(false,'')}
-                    size="xl"
-                >
-                    <Modal.Header closeButton>
-                        <Modal.Title>Preview</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body >
-                        <FilePreviewer file={{
-                            url: this.state.fileUrl
-                        }}
-                        />
-                    </Modal.Body>
-                </Modal>
+              show={this.state.show}
+              onHide={() => this.SetShow(false, '')}
+              size="xl"
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>Preview</Modal.Title>
+              </Modal.Header>
+              <Modal.Body >
+                <FilePreviewer file={{
+                  url: this.state.fileUrl
+                }}
+                />
+              </Modal.Body>
+            </Modal>
 
           </Card>)
         }) : (<h1>Loading...</h1>)}
