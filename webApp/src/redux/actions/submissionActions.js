@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GET_ALL_SUBMISSIONS,ADD_SUBMISSION,REMOVE_SUBMISSION} from '../constants';
+import {GET_ALL_SUBMISSIONS,ADD_SUBMISSION,REMOVE_SUBMISSION,UPDATE_SUBMISSION} from '../constants';
 
 export const getAllSubmissions = () => dispatch => {
     axios.get('http://localhost:5000/submission')
@@ -29,13 +29,33 @@ export const addSubmission = (payload) => dispatch => {
 }
 
 export const deleteSubmission = (id) => dispatch => {
-    axios.delete(`http://localhost:5000/submission/${id}`).then((res) => {
-        if(res.status == 200)
+    return new Promise((resolve,reject) => {
+        axios.delete(`http://localhost:5000/submission/${id}`).then((res) => {
+        if(res.status == 200){
         dispatch({
             type: REMOVE_SUBMISSION,
             payload: res.data
         })
+        resolve(res.data)
+    }
         else
-            console.log(res)
+        resolve(res)
     })
+    });
 } 
+
+export const updateSubmission = (payload) => dispatch => {
+    return new Promise((resolve,reject) => {
+        axios.put(`http://localhost:5000/submission/${payload.id}`,payload).then((res) => {
+        if(res.status == 200){
+        dispatch({
+            type: UPDATE_SUBMISSION,
+            payload: res.data
+        })
+        resolve(res.data)
+    }
+        else
+        resolve(res)
+    })
+    });
+}
