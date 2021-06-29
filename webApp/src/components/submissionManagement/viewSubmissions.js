@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { Jumbotron, Table, Form, Modal, Button } from 'react-bootstrap';
+import { Jumbotron, Table, Form, Modal, Button, Alert } from 'react-bootstrap';
 import DatePicker from 'react-datepicker';
 import { Pencil, Trash } from 'react-bootstrap-icons';
 import "react-datepicker/dist/react-datepicker.css";
@@ -20,8 +20,9 @@ class viewSubmissions extends Component {
             deadline: null
         },
         show: false,
-        alert:{
-            open: false
+        alert: {
+            open: false,
+            openError: false
         }
     }
 
@@ -32,37 +33,65 @@ class viewSubmissions extends Component {
         this.props.getAllSubmissions();
     }
 
-    
+
     render() {
 
+        console.log(this.props.submissions);
+        
         const handleSubmit = (e) => {
             e.preventDefault();
             console.log(this.state.submission);
             this.props.updateSubmission(this.state.submission).then((res) => {
-               console.log(res);
-              this.setState({...this.state,alert: {...this.state.alert,open: true},show:false}, () => {
-                setTimeout(() => {
-                  this.setState({...this.state,alert: {...this.state.alert,open: false}})
-                }, 3000)
-              })
+                res ? this.setState({ ...this.state, alert: { ...this.state.alert, open: true }, show: false }, () => {
+                    setTimeout(() => {
+                        this.setState({ ...this.state, alert: { ...this.state.alert, open: false } })
+                    }, 1500)
+                }): this.setState({ ...this.state, alert: { ...this.state.alert, openError: true }, show: false }, () => {
+                    setTimeout(() => {
+                        this.setState({ ...this.state, alert: { ...this.state.alert, openError: false } })
+                    }, 1500)
+                })
             }).catch((err) => {
-              console.log(err);
+                console.log(err);
             });
-    
-          }
-    
-          const handleChange = (e) => {
-              this.setState({
+
+        }
+
+        const handleChange = (e) => {
+            this.setState({
                 ...this.state,
-                submission: {...this.state.submission,[e.target.name]: e.target.value}
-              })
-    
-          }
+                submission: { ...this.state.submission, [e.target.name]: e.target.value }
+            })
+
+        }
+
+        const handleDelete = (id) => {
+            this.props.deleteSubmission(id).then((res) => {
+                console.log(res);
+                res ? this.setState({ ...this.state, alert: { ...this.state.alert, open: true }}, () => {
+                    setTimeout(() => {
+                        this.setState({ ...this.state, alert: { ...this.state.alert, open: false } })
+                    }, 1500)
+                }): this.setState({ ...this.state, alert: { ...this.state.alert, openError: true }}, () => {
+                    setTimeout(() => {
+                        this.setState({ ...this.state, alert: { ...this.state.alert, openError: false } })
+                    }, 1500)
+                })
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
 
         return (
             <div className="body">
                 <Jumbotron className="main">
                     <h1>All submission topics</h1>
+                    {this.state.alert.open ? <Alert key="1" variant="success" className="container">
+                        Action successful!
+                    </Alert> : (null)}
+                    {this.state.alert.openError ? <Alert key="1" variant="error" className="container">
+                        Action failed!
+                    </Alert> : (null)}
                     <Table striped bordered hover>
                         <thead>
                             <tr>
@@ -78,19 +107,21 @@ class viewSubmissions extends Component {
                                     <td>{this.props.conferences.find(conference => conference._id == submission.conferenceId).conferenceName}</td>
                                     <td>{submission.topic}</td>
                                     <td>{submission.deadline}</td>
-                                    <td><Pencil className="actions" onClick={() => this.setState({...this.state,submission: {
-                                                    id: submission._id,
-                                                    topic: submission.topic,
-                                                    description: submission.description,
-                                                    conferenceName: this.props.conferences.find(conference => conference._id == submission.conferenceId).conferenceName,
-                                                    deadline: submission.deadline
-                                    }},() => this.setState({...this.state,show: true}))} />   |  <Trash className="actions" onClick={() => this.props.deleteSubmission(submission._id).then((res) => console.log(res))} /></td>
+                                    <td><Pencil className="actions" onClick={() => this.setState({
+                                        ...this.state, submission: {
+                                            id: submission._id,
+                                            topic: submission.topic,
+                                            description: submission.description,
+                                            conferenceName: this.props.conferences.find(conference => conference._id == submission.conferenceId).conferenceName,
+                                            deadline: submission.deadline
+                                        }
+                                    }, () => this.setState({ ...this.state, show: true }))} />   |  <Trash className="actions" onClick={handleDelete.bind(this,submission._id)} /></td>
                                 </tr>)
                             }) : <span className="container">No data</span>}
                         </tbody>
                     </Table>
                 </Jumbotron>
-                <Modal show={this.state.show} onHide={() => this.setState({...this.state,show: false})} animation={false}>
+                <Modal show={this.state.show} onHide={() => this.setState({ ...this.state, show: false })} animation={false}>
                     <Modal.Header closeButton>
                         <Modal.Title>Update submission topic- {this.state.submission.topic}</Modal.Title>
                     </Modal.Header>
@@ -110,7 +141,7 @@ class viewSubmissions extends Component {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={() => this.setState({...this.state,show: false})}>
+                        <Button variant="secondary" onClick={() => this.setState({ ...this.state, show: false })}>
                             Close
                         </Button>
                     </Modal.Footer>
