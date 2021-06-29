@@ -35,11 +35,12 @@ class WorkshopList extends Component {
                                     <div className="col-md-8">
                                         <h2 className="card-title mt-2">{workshop.workshopName} - {this.props.conferences.filter(conf => conf._id == workshop.conferenceId)[0].conferenceName}</h2>
                                         <p>{workshop.workshopDescription}</p>
-                                        <h5 class="card-title">Speakers</h5>
+                                        {/* <h5 class="card-title">Speakers</h5> */}
+                                        {/* {workshop}
                                         <ul class="list-group list-group-horizontal">
                                             <li class="list-group-item">An item</li>
                                             <li class="list-group-item">A second item</li>
-                                        </ul>
+                                        </ul> */}
                                         
                                     </div>
                                 </div>
