@@ -1,11 +1,20 @@
 const router  = require('express').Router();
 const { createuser, getAllUsers, getUserById ,deleteUserById, updateUserById,getUsetByEmailAndPassword }  = require('../api/user.api');
-
+const jsonwebtoken = require('jsonwebtoken');
 //add user
 router.post('/add', (req, res) => {
 
     createuser(req.body).then((newUser) => {
-        res.json(newUser);
+        const token = jsonwebtoken.sign({
+            _id:newUser._id,
+            name :newUser.name,
+            email : newUser.email,
+            gender : newUser.gender,
+            type : newUser.type,
+            phoneNumber :newUser.phoneNumber
+        },"jwtSecret")
+        res.json(token);
+
     }).catch((err) => {
         console.log(err);
     })
@@ -35,7 +44,22 @@ router.post('/getUser',(req,res)=>{
     console.log('router getuser');
     getUsetByEmailAndPassword(req.body).then(user=>{
         console.log('in router get');
-        res.json(user);
+        console.log(user);
+        const token = jsonwebtoken.sign({
+            _id:user._id,
+            name :user.name,
+            email : user.email,
+            gender : user.gender,
+            type : user.type,
+            phoneNumber :user.phoneNumber,
+            password:user.password
+        },"jwtSecret")
+        console.log('in router get');
+        res.json(token);
+        
+    }).catch(err=>{
+        console.log('err pasindu');
+        console.log(err);
     })
 })
 

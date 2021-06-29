@@ -84,16 +84,18 @@ const passwordHash = require('password-hash')
    return new Promise((resolve,reject)=>{
     //  passwordHash.verify(req.body.password,user.password)
     //  user.password = passwordHash.generate(user.password);
+    console.log(user);
     console.log('in getUsetByEmailAndPassword');
      User.findOne({email:user.email}).then((res)=>{
-       if(passwordHash.verify(user.password,res.password)){
-        console.log('in findone if');
-         resolve(res)
-       }
-       console.log('in findone');
+      //  if(passwordHash.verify(user.password,res.password)){
+      //   console.log('in findone if');
+      console.log('in findone');
+         resolve(res);
+      //  }
+       
      }).catch((err)=>{
       console.log('in getUsetByEmailAndPassword err');
-       reject(err)
+       reject(err);
      })
    })
  }
