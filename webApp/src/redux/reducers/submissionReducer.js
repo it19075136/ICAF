@@ -25,7 +25,7 @@ export default function (state = initstate,action){
         case UPDATE_SUBMISSION:
             return {
                 ...state,
-                submissions: [...state.submissions.filter(submission => submission._id != action.payload._id).push(action.payload)]
+                submissions: [...state.submissions.filter(submission => submission._id != action.payload._id),action.payload]
             }
         default:
             return state;
