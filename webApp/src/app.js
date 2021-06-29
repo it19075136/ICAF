@@ -21,6 +21,8 @@ import SubmitDocument from './components/documentManagement/submitDocument';
 import AddTemplate from './components/documentManagement/addTemplate';
 import Templates from './components/documentManagement/templates';
 import DocumentList from './components/documentManagement/documentList';
+import forgetPassword from './components/user-singup-login/forgetPassword';
+import updatePassword from './components/user-singup-login/updatePassword';
 
 export default function app(){
 
@@ -32,6 +34,8 @@ export default function app(){
             <Switch>
                 <Route exact path="/singup" component={singup} />
                 <Route exact path="/singin" component={singin} />
+                <Route exact path="/forgetPassword" component={forgetPassword} />
+                <Route exact path="/updatePassword" component={updatePassword} />
                 <Route exact path="/submission/add" component={AddSubmissionForm} />
 
                 <Route exact path="/admin/dashboard" component={adminDashboard} />

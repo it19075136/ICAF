@@ -1,5 +1,5 @@
 const router  = require('express').Router();
-const { createuser, getAllUsers, getUserById ,deleteUserById, updateUserById,getUsetByEmailAndPassword }  = require('../api/user.api');
+const { createuser, getAllUsers, getUserById ,deleteUserById, updateUserById,getUsetByEmailAndPassword,getEmailAndPassCode }  = require('../api/user.api');
 const jsonwebtoken = require('jsonwebtoken');
 //add user
 router.post('/add', (req, res) => {
@@ -79,12 +79,33 @@ router.post('/update/:id', (req, res) => {
 
     updateUserById(req.body)
         .then((user) => {
+            const token = jsonwebtoken.sign({
+                _id:user._id,
+                name :user.name,
+                email : user.email,
+                gender : user.gender,
+                type : user.type,
+                phoneNumber :user.phoneNumber
+            },"jwtSecret")
             res.json(
-                user.name + ' has been updated'
+                token
             )
         })
 })
 
+router.post('/getCode',(req,res)=>{
+    console.log('router post')
+    getEmailAndPassCode(req.body).then(details=>{
+        console.log('router post in getEmail')
+        res.json(details);
+    }).catch((err)=>{
+        console.log('err');
+        console.log(err);
+    })
+})
+// router.put('/updatePassword',(req,res)=>{
+
+// })
 
 
 module.exports = router;
