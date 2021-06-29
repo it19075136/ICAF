@@ -29,9 +29,9 @@ import EditConferenceForm from './components/conferenceManagement/EditConference
 
 
 export default function app(){
-    // useEffect(() => {
-    //     store.dispatch({type:'ADD_USER',payload:jwt.decode(localStorage.getItem("user"))._id ? jwt.decode(localStorage.getItem("user")):null});
-    //  }, [])
+    useEffect(() => {
+        store.dispatch({type:'ADD_USER',payload:jwt.decode(localStorage.getItem("user"))});
+     }, [])
     return (
        
         <Provider store={store}>
