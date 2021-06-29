@@ -24,6 +24,7 @@ import DocumentList from './components/documentManagement/documentList';
 import forgetPassword from './components/user-singup-login/forgetPassword';
 import updatePassword from './components/user-singup-login/updatePassword';
 import jwt from 'jsonwebtoken';
+import EditConferenceForm from './components/conferenceManagement/EditConferenceForm';
 
 
 export default function app(){
@@ -55,6 +56,7 @@ export default function app(){
                 <Route exact path="/workshops" component={WorkshopList} />
                 <Route exact path="/conference/add" component={AddConferenceForm}/>
                 <Route exact path="/document/submit" component={SubmitDocumet} />
+                <Route exact path="/conferences" component={EditConferenceForm}/>
             </Switch>
             </BrowserRouter>
         </Provider>

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ALL_CONFERENCE, EDIT_CONFERENCE, ADD_CONFERENCE } from '../constants';
+import { GET_ALL_CONFERENCE, EDIT_CONFERENCE, ADD_CONFERENCE, DELETE_CONFERENCE } from '../constants';
 
 export const getAllConference = () => dispatch => {
     axios.get('http://localhost:5000/conference')
@@ -30,3 +30,15 @@ export const editConference = (id, payload) => dispatch => {
             })
         })
 }
+
+export const deleteConference = (id) => dispatch => {
+    axios.delete(`http://localhost:5000/conference/${id}`).then((res) => {
+        if(res.status == 200)
+        dispatch({
+            type: DELETE_CONFERENCE,
+            payload: res.data
+        })
+        else
+            console.log(res)
+    })
+} 

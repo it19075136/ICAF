@@ -24,7 +24,7 @@ class WorkshopList extends Component {
         return (
             <div className="body">
                 <center><h2>ALL WORSHOPS</h2></center>
-                {this.props.workshops.map(workshop => {
+                {this.props.workshops && this.props.conferences.length !=0 ? this.props.workshops.map(workshop => {
                     return (
                         <div className="container mt-5">
                             <div className="card">
@@ -46,7 +46,7 @@ class WorkshopList extends Component {
                             </div>
                         </div>
                     )
-                })}
+                }): <span className="container">No Workshop Found!!!</span>}
 
             </div>
         )
