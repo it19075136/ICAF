@@ -5,7 +5,8 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Download, FileWord, XLg } from 'react-bootstrap-icons';
-import { Badge } from 'react-bootstrap';
+import { Badge, Modal } from 'react-bootstrap';
+import FilePreviewer from 'react-file-previewer';
 import { connect } from 'react-redux';
 import { getAllDocuments } from '../../redux/actions/documentActions'
 import './list.css'
@@ -13,8 +14,21 @@ import { RESEARCH } from '../../redux/constants';
 
 class templates extends Component {
 
+    state = {
+        show: false,
+        fileUrl: ''
+    }
+
     componentDidMount() {
         this.props.getAllDocuments();
+    }
+
+    SetShow(show, url) {
+        console.log('url: ', url);
+        this.setState({
+            fileUrl: url,
+            show: show
+        })
     }
 
     render() {
@@ -42,6 +56,24 @@ class templates extends Component {
                             <IconButton aria-label="download" >
                                 <a href={document.fileUrl} download><Download /></a>
                             </IconButton>
+                            <IconButton
+                                onClick={() => this.SetShow(true, document.fileUrl)}
+                            >View File</IconButton>
+                            <Modal
+                                show={this.state.show}
+                                onHide={() => this.SetShow(false, '')}
+                                size="xl"
+                            >
+                                <Modal.Header closeButton>
+                                    <Modal.Title>Preview</Modal.Title>
+                                </Modal.Header>
+                                <Modal.Body >
+                                    <FilePreviewer file={{
+                                        url: this.state.fileUrl
+                                    }}
+                                    />
+                                </Modal.Body>
+                            </Modal>
                         </CardActions>
                     </Card>)
                 }) : (<h1>Loading...</h1>)}
@@ -53,7 +85,7 @@ class templates extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    documents: state.document.documents.filter(doc => doc.userId == "test3")
+    documents: state.document.documents.filter(doc => doc.userId == "test1")
 })
 
 export default connect(mapStateToProps, { getAllDocuments })(templates)

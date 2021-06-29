@@ -1,8 +1,7 @@
-import {ADD_SUBMISSION, GET_ALL_SUBMISSIONS, REMOVE_SUBMISSION} from '../constants'
+import {ADD_SUBMISSION, GET_ALL_SUBMISSIONS, REMOVE_SUBMISSION, UPDATE_SUBMISSION} from '../constants'
 
 const initstate = {
     submissions: [],
-    success: false
 }
 
 export default function (state = initstate,action){
@@ -17,12 +16,16 @@ export default function (state = initstate,action){
             return {
                 ...state,
                 submissions: [...state.submissions,action.payload],
-                success: true
             }
         case REMOVE_SUBMISSION:
             return {
                 ...state,
                 submissions: state.submissions.filter(submission => submission._id != action.payload._id)
+            }
+        case UPDATE_SUBMISSION:
+            return {
+                ...state,
+                submissions: [...state.submissions.filter(submission => submission._id != action.payload._id).push(action.payload)]
             }
         default:
             return state;

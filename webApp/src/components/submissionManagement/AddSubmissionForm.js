@@ -26,18 +26,24 @@ class AddSubmissionForm extends Component {
     }
 
     render() {
+      
       console.log(this.props.conferences)
+      console.log(this.props.user);
+
 
       const handleSubmit = (e) => {
         e.preventDefault();
         console.log(this.state.submission);
-        this.props.addSubmission(this.state.submission);
-        console.log(this.props.submission.success);
-        this.props.submission.success == true ? this.setState({...this.state,alert: {...this.state.alert,open: true}}, () => {
-          setTimeout(() => {
-            this.setState({...this.state,alert: {...this.state.alert,open: false}})
-          }, 3000)
-        }):null
+        this.props.addSubmission(this.state.submission).then((res) => {
+          console.log(this.props.submission.success);
+          this.setState({...this.state,alert: {...this.state.alert,open: true}}, () => {
+            setTimeout(() => {
+              this.setState({...this.state,alert: {...this.state.alert,open: false}})
+            }, 3000)
+          })
+        }).catch((err) => {
+          console.log(err);
+        });
 
       }
 
@@ -86,7 +92,9 @@ class AddSubmissionForm extends Component {
 
 const mapStateToProps = (state) => ({
   submission: state.submission,
-  conferences: state.conference.conferences
+  conferences: state.conference.conferences,
+  user:state.user.user
+
 });
 
 export default connect(mapStateToProps,{addSubmission,getAllConference})(AddSubmissionForm)
