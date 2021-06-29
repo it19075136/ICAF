@@ -56,6 +56,16 @@ export default function adminSideNav() {
               ]
             },
             {
+              title: "Workshop",
+              itemId: "/workshops",
+              subNav: [
+                {
+                  title: "Add Workshop",
+                  itemId: "/workshop/add"
+                }
+              ]
+            },
+            {
                 title: "My Profile",
                 itemId: "/profile"
             },
@@ -66,7 +76,12 @@ export default function adminSideNav() {
             {
                 title: "Sign Out",
                 itemId: "/sign"
-            }
+            },
+            {
+              title: "Dashboard",
+              itemId: "/admin/dashboard"
+          }
+
           ]}
         />
         </div>
