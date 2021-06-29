@@ -29,7 +29,7 @@ import EditConferenceForm from './components/conferenceManagement/EditConference
 
 export default function app(){
     useEffect(() => {
-        store.dispatch({type:'ADD_USER',payload:jwt.decode(localStorage.getItem("user"))._id ? jwt.decode(localStorage.getItem("user")):null});
+        store.dispatch({type:'ADD_USER',payload:jwt.decode(localStorage.getItem("user"))});
      }, [])
     return (
        
