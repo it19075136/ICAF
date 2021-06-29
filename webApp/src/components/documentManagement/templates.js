@@ -5,25 +5,41 @@ import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { Download, FileWord, XLg } from 'react-bootstrap-icons';
-import {connect} from 'react-redux';
-import {getAllDocuments} from '../../redux/actions/documentActions'
+import { Modal } from 'react-bootstrap';
+import FilePreviewer from 'react-file-previewer';
+import { connect } from 'react-redux';
+import { getAllDocuments } from '../../redux/actions/documentActions'
 import './list.css'
 import { TEMPLATE } from '../../redux/constants'
 
 class templates extends Component {
 
-    componentDidMount(){
-        this.props.getAllDocuments();
-    }
+  state = {
+    show: false,
+    fileUrl: ''
+  }
 
-    render(){
+  componentDidMount() {
+    this.props.getAllDocuments();
+  }
 
-        console.log(this.props.documents)
 
-  return (
+  SetShow(show,url) {
+    console.log('url: ', url);
+    this.setState({
+        fileUrl : url,
+        show: show
+    })
+}
+
+  render() {
+
+    console.log(this.props.documents)
+
+    return (
       <div className="main">
         {this.props.documents ? this.props.documents.map(document => {
-            return     (<Card className='root'>
+          return (<Card className='root'>
             <CardHeader
               action={
                 <IconButton aria-label="settings">
@@ -36,20 +52,39 @@ class templates extends Component {
             <FileWord size={XLg} />
             <CardActions disableSpacing>
               <IconButton aria-label="download" >
-              <a download><Download /></a>
+                <a download><Download /></a>
               </IconButton>
+              <IconButton
+                onClick={() => this.SetShow(true,document.fileUrl)}
+              >View File</IconButton>
             </CardActions>
-          </Card>)
-        }):(<h1>Loading...</h1>)}
+            <Modal
+                    show={this.state.show}
+                    onHide={() => this.SetShow(false,'')}
+                    size="xl"
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title>Preview</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body >
+                        <FilePreviewer file={{
+                            url: this.state.fileUrl
+                        }}
+                        />
+                    </Modal.Body>
+                </Modal>
 
-    </div>
-  );
-}
+          </Card>)
+        }) : (<h1>Loading...</h1>)}
+
+      </div>
+    );
+  }
 
 }
 
 const mapStateToProps = (state) => ({
-    documents: state.document.documents.filter(doc => doc.activityId == TEMPLATE)
+  documents: state.document.documents.filter(doc => doc.activityId == TEMPLATE)
 })
 
-export default connect(mapStateToProps,{getAllDocuments})(templates)
+export default connect(mapStateToProps, { getAllDocuments })(templates)

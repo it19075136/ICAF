@@ -2,7 +2,6 @@ import {ADD_SUBMISSION, GET_ALL_SUBMISSIONS, REMOVE_SUBMISSION} from '../constan
 
 const initstate = {
     submissions: [],
-    success: false
 }
 
 export default function (state = initstate,action){
@@ -17,7 +16,6 @@ export default function (state = initstate,action){
             return {
                 ...state,
                 submissions: [...state.submissions,action.payload],
-                success: true
             }
         case REMOVE_SUBMISSION:
             return {

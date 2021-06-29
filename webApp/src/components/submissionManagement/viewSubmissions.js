@@ -45,13 +45,13 @@ class viewSubmissions extends Component {
                         </thead>
                         <tbody>
                             {this.props.submissions && this.props.conferences.length != 0 ? this.props.submissions.map(submission => {
-                                return (<tr>
+                                return (<tr key={submission._id}>
                                     <td>{this.props.conferences.find(conference => conference._id == submission.conferenceId).conferenceName}</td>
                                     <td>{submission.topic}</td>
                                     <td>{submission.deadline}</td>
                                     <td><Pencil className="actions" onClick={() => console.log("edit")}/>   |  <Trash className="actions" onClick={() => this.props.deleteSubmission(submission._id)} /></td>
                                 </tr>)
-                            }) : <h3 className="container">No data</h3>}
+                            }) : <span className="container">No data</span>}
                         </tbody>
                     </Table>
                 </Jumbotron>
