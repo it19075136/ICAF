@@ -19,8 +19,9 @@ class viewSubmissions extends Component {
         }
     }
 
-    componentDidMount() {
+    constructor(props) {
 
+        super(props);
         this.props.getAllConference();
         this.props.getAllSubmissions();
     }
@@ -43,14 +44,14 @@ class viewSubmissions extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.props.submissions && this.props.conferences ? this.props.submissions.map(submission => {
+                            {this.props.submissions && this.props.conferences.length != 0 ? this.props.submissions.map(submission => {
                                 return (<tr>
                                     <td>{this.props.conferences.find(conference => conference._id == submission.conferenceId).conferenceName}</td>
                                     <td>{submission.topic}</td>
                                     <td>{submission.deadline}</td>
                                     <td><Pencil className="actions" onClick={() => console.log("edit")}/>   |  <Trash className="actions" onClick={() => this.props.deleteSubmission(submission._id)} /></td>
                                 </tr>)
-                            }) : <h1>Loading...</h1>}
+                            }) : <h3 className="container">No data</h3>}
                         </tbody>
                     </Table>
                 </Jumbotron>
