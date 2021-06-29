@@ -15,6 +15,7 @@ import WorkshopList from './components/workshopManagement/WorkshopList';
 import AddConferenceForm from './components/conferenceManagement/AddConferenceForm';
 import WebNavbar from './layouts/WebNavbar';
 import AdminSideNav from './layouts/AdminSideNav';
+import WebSlider from './layouts/WebSlider';
 import './app.css';
 import ViewSubmissions from './components/submissionManagement/viewSubmissions';
 import SubmitDocument from './components/documentManagement/submitDocument';
@@ -28,14 +29,15 @@ import EditConferenceForm from './components/conferenceManagement/EditConference
 
 
 export default function app(){
-    useEffect(() => {
-        store.dispatch({type:'ADD_USER',payload:jwt.decode(localStorage.getItem("user"))._id ? jwt.decode(localStorage.getItem("user")):null});
-     }, [])
+    // useEffect(() => {
+    //     store.dispatch({type:'ADD_USER',payload:jwt.decode(localStorage.getItem("user"))._id ? jwt.decode(localStorage.getItem("user")):null});
+    //  }, [])
     return (
        
         <Provider store={store}>
             <WebNavbar/>
-            <AdminSideNav />
+            {/* <AdminSideNav /> */}
+            <WebSlider/>
             <BrowserRouter>
             <Switch>
                 <Route exact path="/singup" component={singup} />
