@@ -14,3 +14,16 @@ export const addDocuments = (data) => dispatch => {
     });
 
 }
+
+export const getAllDocuments = () => dispatch => {
+
+    axios.get('http://localhost:5000/document').then((res) => {
+        console.log(res.data);
+        dispatch({
+                type: ADD_DOCUMENTS,
+                payload: res.data
+            })
+    }).catch((err) => {
+        console.log(err);
+    })
+}

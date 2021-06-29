@@ -6,10 +6,12 @@ function addDocument(payload){
     return new Promise((resolve,reject)=>{
         let result = null;
         let document = null;
+
         Document.findOne({userId:payload.userId,activityId:payload.activityId,type:payload.type}).then((res)=>{
             // reject('err')
-            res ? (resolve('file exist')):(result = cloudinary.uploader.upload(payload.file,{
-                upload_preset: 'ml_default'
+            res && payload.activityId != "TEMPLATE" ? (resolve('file exist')):(result = cloudinary.uploader.upload(payload.file,{
+                upload_preset: 'ml_default',
+                resource_type: 'auto'
             }).then((res) => {
                 console.log(res);
                 document = new Document({userId:payload.userId,activityId:payload.activityId,type:payload.type,status:"PENDING",fileUrl:res.secure_url})
@@ -43,6 +45,17 @@ function updateDocument(payload,id){
         })
 }
 
+function updateDocumentIsApprove(payload,id){
+    return new Promise((resolve,reject) => {
+        Document.findByIdAndUpdate(id).then((document)=>{
+          
+            (payload.status ?(document.status = payload.status):null),
+          
+            document.save().then((doc)=>resolve(doc)).catch((err)=>reject(err))
+        })
+    })
+}
+
 function deleteDocument(id){
     return new Promise((resolve,reject)=>{
         Document.findByIdAndDelete(id).then((docu)=>{
@@ -63,5 +76,13 @@ function getDoucmentByUserId(id){
     })
 }
 
-module.exports={addDocument,updateDocument,deleteDocument,getDoucmentByUserId}
+function getAllDocuments() {
+    return new Promise((resolve, reject) => {
+      Document.find((err, docs) => {
+        err ? reject(err) : resolve(docs);
+      });
+    });
+  }
+
+module.exports={addDocument,updateDocument,deleteDocument,getDoucmentByUserId,getAllDocuments,updateDocumentIsApprove}
 
