@@ -16,6 +16,7 @@ class singin extends Component {
     }
 }
     render() {
+        console.log(this.props.user);
         const handleChange=(e)=>{
             console.log(this.state);
             this.setState({
@@ -87,6 +88,11 @@ class singin extends Component {
                         <Form.Check label="Remember me" />
                     </Col>
                 </Form.Group>
+                <Form.Group >
+                    <Col sm={{ span: 10, offset: 2 }}>
+                       <a href="/forgetPassword">forget password?</a>
+                    </Col>
+                </Form.Group>
                     <Form.Group >
                     <Col sm={{ span: 10, offset: 2 }}>
                         <Button type="submit" onClick={handleSubmit}>Sign in</Button>
@@ -97,4 +103,9 @@ class singin extends Component {
         )
     }
 }
-export default  connect(null,{findUser}) (singin)
+const mapStateToProps = (state) => ({
+    submission: state.submission,
+    conferences: state.conference.conferences,
+    user:state.user.user
+  });
+export default  connect(mapStateToProps,{findUser}) (singin)
