@@ -31,13 +31,16 @@ class AddSubmissionForm extends Component {
       const handleSubmit = (e) => {
         e.preventDefault();
         console.log(this.state.submission);
-        this.props.addSubmission(this.state.submission);
-        console.log(this.props.submission.success);
-        this.props.submission.success == true ? this.setState({...this.state,alert: {...this.state.alert,open: true}}, () => {
-          setTimeout(() => {
-            this.setState({...this.state,alert: {...this.state.alert,open: false}})
-          }, 3000)
-        }):null
+        this.props.addSubmission(this.state.submission).then((res) => {
+          console.log(this.props.submission.success);
+          this.setState({...this.state,alert: {...this.state.alert,open: true}}, () => {
+            setTimeout(() => {
+              this.setState({...this.state,alert: {...this.state.alert,open: false}})
+            }, 3000)
+          })
+        }).catch((err) => {
+          console.log(err);
+        });
 
       }
 
