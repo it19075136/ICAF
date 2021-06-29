@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import {BrowserRouter, Switch, Route } from 'react-router-dom'
 import {Provider} from 'react-redux';
 import {store} from './redux/store'
@@ -21,10 +21,18 @@ import SubmitDocument from './components/documentManagement/submitDocument';
 import AddTemplate from './components/documentManagement/addTemplate';
 import Templates from './components/documentManagement/templates';
 import DocumentList from './components/documentManagement/documentList';
+import forgetPassword from './components/user-singup-login/forgetPassword';
+import updatePassword from './components/user-singup-login/updatePassword';
+import jwt from 'jsonwebtoken';
+import EditConferenceForm from './components/conferenceManagement/EditConferenceForm';
+
 
 export default function app(){
-
+    useEffect(() => {
+        store.dispatch({type:'ADD_USER',payload:jwt.decode(localStorage.getItem("user"))._id ? jwt.decode(localStorage.getItem("user")):null});
+     }, [])
     return (
+       
         <Provider store={store}>
             <WebNavbar/>
             <AdminSideNav />
@@ -32,6 +40,8 @@ export default function app(){
             <Switch>
                 <Route exact path="/singup" component={singup} />
                 <Route exact path="/singin" component={singin} />
+                <Route exact path="/forgetPassword" component={forgetPassword} />
+                <Route exact path="/updatePassword" component={updatePassword} />
                 <Route exact path="/submission/add" component={AddSubmissionForm} />
 
                 <Route exact path="/admin/dashboard" component={adminDashboard} />
@@ -46,6 +56,7 @@ export default function app(){
                 <Route exact path="/workshops" component={WorkshopList} />
                 <Route exact path="/conference/add" component={AddConferenceForm}/>
                 <Route exact path="/document/submit" component={SubmitDocumet} />
+                <Route exact path="/conferences" component={EditConferenceForm}/>
             </Switch>
             </BrowserRouter>
         </Provider>

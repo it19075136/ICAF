@@ -1,4 +1,4 @@
-import { ADD_CONFERENCE, GET_ALL_CONFERENCE, EDIT_CONFERENCE } from "../constants";
+import { ADD_CONFERENCE, GET_ALL_CONFERENCE, EDIT_CONFERENCE, DELETE_CONFERENCE } from "../constants";
 
 const initstate = {
     conferences: []
@@ -20,6 +20,11 @@ export default function (state = initstate, action){
             return{
                 ...state,
                 conferences: [...state.conferences,action.payload]
+            }
+        case DELETE_CONFERENCE:
+            return{
+                ...state,
+                conferences: state.conferences.filter(conference => conference._id != action.payload._id)
             }
         default:
             return state;
