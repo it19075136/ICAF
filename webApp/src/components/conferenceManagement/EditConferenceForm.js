@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { getAllConference, editConference, deleteConference } from '../../redux/actions/conferenceActions';
+import { Alert } from 'react-bootstrap';
 import { connect } from 'react-redux'
 import './conference.css'
 
@@ -8,22 +9,68 @@ class EditConferenceForm extends Component {
 
     state = {
         conference: {
+            id: '',
             status: ''
+        },
+        show: false,
+        alert: {
+            open: false,
+            openError: false
         }
     }
 
-    // componentDidMount() {
-    //     this.props.getAllConference();
-    // }
     constructor(props) {
         super(props);
         this.props.getAllConference();
     }
     render() {
+
+        const handleStatus = (e) => {
+            e.preventDefault();
+            console.log(this.state.conference);
+            this.props.editConference(...this.state, conference.id,this.state.conference).then((res) => {
+                res ? this.setState({ ...this.state, alert: { ...this.state.alert, open: true }, show: false }, () => {
+                    setTimeout(() => {
+                        this.setState({ ...this.state, alert: { ...this.state.alert, open: false } })
+                    }, 1500)
+                }) : this.setState({ ...this.state, alert: { ...this.state.alert, openError: true }, show: false }, () => {
+                    setTimeout(() => {
+                        this.setState({ ...this.state, alert: { ...this.state.alert, openError: false } })
+                    }, 1500)
+                })
+            }).catch((err) => {
+                console.log(err);
+            });
+
+        }
+
+        const handleDelete = (id) => {
+            this.props.deleteConference(id).then((res) => {
+                console.log(res);
+                res ? this.setState({ ...this.state, alert: { ...this.state.alert, open: true } }, () => {
+                    setTimeout(() => {
+                        this.setState({ ...this.state, alert: { ...this.state.alert, open: false } })
+                    }, 1500)
+                }) : this.setState({ ...this.state, alert: { ...this.state.alert, openError: true } }, () => {
+                    setTimeout(() => {
+                        this.setState({ ...this.state, alert: { ...this.state.alert, openError: false } })
+                    }, 1500)
+                })
+            }).catch((err) => {
+                console.log(err);
+            })
+        }
+        
         console.log(this.props.conferences)
         return (
             <div className="body">
                 <center><h1>ALL CONFERENCES</h1></center>
+                {this.state.alert.open ? <Alert key="1" variant="success" className="container">
+                    Action successful!
+                </Alert> : (null)}
+                {this.state.alert.openError ? <Alert key="1" variant="error" className="container">
+                    Action failed!
+                </Alert> : (null)}
                 <br />
                 <div className="edit-table">
                     <table>
@@ -56,8 +103,8 @@ class EditConferenceForm extends Component {
 
                                         )
                                     })}
-                                    <td>{conf.startDate}</td>
-                                    <td>{conf.endDate}</td>
+                                    <td>{conf.startDate.split('T')[0]}</td>
+                                    <td>{conf.endDate.split('T')[0]}</td>
                                     {conf.tracks.map(track => {
                                         return (
 
@@ -68,11 +115,26 @@ class EditConferenceForm extends Component {
 
                                         )
                                     })}
-                                    
+
                                     <td>{conf.other}</td>
                                     <td>{conf.status}</td>
-                                    <td>{conf.status == 'Approved' ? 
-                                        <button type="button" className="btn btn-success" onChange={() => this.props.deleteConference(conf._id)}><i className="fas fa-thumbs-up"></i></button> : <button type="button" className="btn btn-primary" onClick={() => this.props.editConference(conf._id, conf.status)}><i className="fas fa-thumbs-down"></i></button>}</td>
+                                    <td>{conf.status == 'Approved' ?
+                                        <button
+                                            type="button"
+                                            className="btn btn-success"
+                                            onClick={handleDelete.bind(this, conf._id)}>
+                                            <i className="fas fa-thumbs-up"></i>
+                                        </button> : <button
+                                            type="button"
+                                            onSubmit={handleStatus}
+                                            className="btn btn-primary"
+                                            onClick={() => this.setState({
+                                                ...this.state, conference: {
+                                                    id: conf._id,
+                                                    status: 'Approved'
+                                                }
+                                            }, () => this.setState({ ...this.state, show: true }))}>
+                                            <i className="fas fa-thumbs-down"></i></button>}</td>
                                 </tr>
                             )
                         }) : <strong>No Conference Found!!!</strong>}

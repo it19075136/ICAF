@@ -28,9 +28,9 @@ class WebSlider extends Component {
                                 <Carousel.Caption>
                                     <h3>{conf.conferenceName}</h3>
                                     <p>{conf.conferenceDescription}</p>
-                                    <button type="button" class="btn btn-secondary btn-lg btn-block">Start Date: {conf.startDate}</button>
+                                    <button type="button" class="btn btn-secondary btn-lg btn-block">Start Date: {conf.startDate.split('T')[0]}</button>
                                     <br/>
-                                    <button type="button" class="btn btn-secondary btn-lg btn-block">End Date: {conf.endDate}</button>
+                                    <button type="button" class="btn btn-secondary btn-lg btn-block">End Date: {conf.endDate.split('T')[0]}</button>
                                 </Carousel.Caption>
                             </Carousel.Item>
                     )
