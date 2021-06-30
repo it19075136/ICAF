@@ -68,7 +68,7 @@ class singup extends Component {
             else {
                 this.props.postUser(this.state.user).then(res => {
                     console.log('inside postuser action in singup component');
-                    if (res.email === this.state.user.email) {
+                   
                         console.log('Record added successfully!')
                         this.setState({
                             ...this.state,
@@ -80,32 +80,7 @@ class singup extends Component {
                                 alert: { ...this.state.alert, open: false, text: "Record added successfully!" }
                             })
                         }, 6000)
-                        window.location.href='/';
-                    }
-                    else {
-                        this.setState({
-                            ...this.state,
-                            alert: { ...this.state.alert, open: true, text: "email already exist" }
-                        })
-                        setTimeout(() => {
-                            this.setState({
-                                ...this.state,
-                                alert: { ...this.state.alert, open: false, text: "email already exist" }
-                            })
-                        }, 6000)
-                    }
-                    // const {token} = res;
-                    // localStorage.setItem('user',token);
-                    // this.setState({
-                    //     ...this.state,
-                    //     alert:true
-                    // })
-                    // setTimeout(()=>{
-                    //     this.setState({
-                    //         ...this.state,
-                    //         alert:false
-                    //     })
-                    // },1000)
+                        window.location.href='/singin';
                     console.log(res)
                 }).catch((err) => {
 
