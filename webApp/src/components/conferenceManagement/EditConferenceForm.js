@@ -9,7 +9,6 @@ class EditConferenceForm extends Component {
 
     state = {
         conference: {
-            id: '',
             status: ''
         },
         show: false,
@@ -25,10 +24,9 @@ class EditConferenceForm extends Component {
     }
     render() {
 
-        const handleStatus = (e) => {
-            e.preventDefault();
+        const handleStatus = (id) => {
             console.log(this.state.conference);
-            this.props.editConference(...this.state, conference.id,this.state.conference).then((res) => {
+            this.props.editConference(id,{status: 'Approved'}).then((res) => {
                 res ? this.setState({ ...this.state, alert: { ...this.state.alert, open: true }, show: false }, () => {
                     setTimeout(() => {
                         this.setState({ ...this.state, alert: { ...this.state.alert, open: false } })
@@ -74,14 +72,14 @@ class EditConferenceForm extends Component {
                 <br />
                 <div className="edit-table">
                     <table>
-                        <tr className="table-primary">
+                        <tr className="table-primary col-sm">
                             <th>Conference</th>
                             <th>Description</th>
                             <th>Venue</th>
-                            <th>Speaker | Designation</th>
+                            <th>Speaker - Designation</th>
                             <th>Start Date</th>
                             <th>End Date</th>
-                            <th>Track | Description</th>
+                            <th>Track - Description</th>
                             <th>Other</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -97,10 +95,10 @@ class EditConferenceForm extends Component {
                                         return (
 
                                             <div>
-                                                <td>{speaker.name}</td>
-                                                <td>{speaker.designation}</td>
+                                                <td>{speaker.speakerName}-{speaker.speakerDesignation}</td>
+                                                {/* <td>{speaker.speakerDesignation}</td> */}
                                             </div>
-
+                                            
                                         )
                                     })}
                                     <td>{conf.startDate.split('T')[0]}</td>
@@ -109,8 +107,8 @@ class EditConferenceForm extends Component {
                                         return (
 
                                             <div>
-                                                <td>{track.name}</td>
-                                                <td>{track.description}</td>
+                                                <td>{track.trackName}-{track.trackDescription}</td>
+                                                {/* <td></td> */}
                                             </div>
 
                                         )
@@ -126,14 +124,8 @@ class EditConferenceForm extends Component {
                                             <i className="fas fa-thumbs-up"></i>
                                         </button> : <button
                                             type="button"
-                                            onSubmit={handleStatus}
-                                            className="btn btn-primary"
-                                            onClick={() => this.setState({
-                                                ...this.state, conference: {
-                                                    id: conf._id,
-                                                    status: 'Approved'
-                                                }
-                                            }, () => this.setState({ ...this.state, show: true }))}>
+                                            onClick={handleStatus.bind(this,conf._id)}
+                                            className="btn btn-primary">
                                             <i className="fas fa-thumbs-down"></i></button>}</td>
                                 </tr>
                             )

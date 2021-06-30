@@ -54,7 +54,10 @@ function updateConferenceById(id, payload) {
         }
         else{
             Conference.findByIdAndUpdate(id, { $set: payload }).then((doc) => {
+                doc.status = 'Approved'
+                console.log(doc)
                 resolve(doc);
+                
             }).catch((err) => {
                 reject(err);
             });    
