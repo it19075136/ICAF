@@ -16,7 +16,7 @@ function adminSideNav(props) {
         onSelect={({ itemId }) => {
             console.log(itemId)
           itemId ==='/sign' ? localStorage.removeItem('user'):(null)
-          itemId ? window.location.href = itemId : (null)
+          itemId ? window.location.href = '/' : (null)
         }}
         items={[
           {
