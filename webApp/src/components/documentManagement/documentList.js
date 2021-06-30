@@ -145,7 +145,7 @@ class templates extends Component {
 
     render() {
 
-        console.log(this.props.documents)
+        console.log(this.props.user)
 
         return (
           <div className="main">
@@ -298,8 +298,7 @@ class templates extends Component {
                 <Button onClick = {() => this.paymentComplete()}>Pay Now</Button>
               </Modal.Footer>
             </Modal>
-
-            {this.props.documents ? (
+            {this.props.user && this.props.user != {} ? this.props.documents ? (
               this.props.documents.map((document) => {
                 return (
                   <div className="card-style-custom">
@@ -358,7 +357,7 @@ class templates extends Component {
               })
             ) : (
               <h1>Loading...</h1>
-            )}
+            ) : null}
           </div>
         );
     }
@@ -367,7 +366,7 @@ class templates extends Component {
 
 const mapStateToProps = (state) => ({
     user: state.user.user,
-    documents: state.document.documents.filter(doc => doc.userId == state.user.user._id)
+    documents: state.document.documents
 })
 
 export default connect(mapStateToProps, { getAllDocuments })(templates)

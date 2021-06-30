@@ -68,7 +68,7 @@ class adminDashboard extends Component {
         values.status = 'APPROVED';
         postDocumentApprove(values);
         this.setShow(false, []);
-        // window.location.reload();
+        window.location.reload();
 
 
     }
