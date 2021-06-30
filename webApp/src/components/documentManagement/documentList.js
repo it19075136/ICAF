@@ -46,7 +46,7 @@ class templates extends Component {
         ExpirationMonth : '',
         ExpirationYear : '',
         CVC :'',
-        orderId : '',
+        
         paymentMethod : 'card',
         pinNumber : ''
     }
