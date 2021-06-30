@@ -29,6 +29,8 @@ class updatePassword extends Component {
         })
     }
     render() {
+        const item = localStorage.getItem('updatePasswordDetails');
+        const decodeItem = jwt.decode(item);
         const handleChange = (e) => {
             console.log(this.state);
             this.setState({
@@ -83,11 +85,12 @@ class updatePassword extends Component {
                 }, 6000)
             }
             else{
+                console.log('add new password');
                 this.props.addNewPassword(this.state.user).then(res => {
 
                     console.log('inside postuser action in singup component');
                     console.log(res.data);
-                    // if (res) {
+                    if (res) {
                         console.log('Record added successfully!')
                         this.setState({
                             ...this.state,
@@ -99,19 +102,9 @@ class updatePassword extends Component {
                                 alert: { ...this.state.alert, open: false, text: "Record added successfully!" }
                             })
                         }, 6000)
-                    // }
-                    // else {
-                    //     this.setState({
-                    //         ...this.state,
-                    //         alert: { ...this.state.alert, open: true, text: "Record added Unsuccessfully!" }
-                    //     })
-                    //     setTimeout(() => {
-                    //         this.setState({
-                    //             ...this.state,
-                    //             alert: { ...this.state.alert, open: false, text: "Record added Unsuccessfully!" }
-                    //         })
-                    //     }, 6000)
-                    // }
+                        window.location.href="/singin"
+                    }
+                   
                     console.log(res)
                 }).catch((err) => {
                     this.setState({
@@ -142,23 +135,9 @@ class updatePassword extends Component {
                     <Col sm={10}>
                         <Form.Control type="text" name="code" placeholder="code" onChange={handleChange} />
                     </Col>
-                    {/* <AvForm>
-                    <AvField name="originalEmail" label="Email" type="email" />
-                    <AvField name="confirmationEmail" label="Email" type="email" validate={{ match: { value: 'originalEmail' } }} />
-                </AvForm> */}
+                  
                 </Form.Group>
-                {/* <Form.Group controlId="formHorizontalEmail">
-                    <Form.Label sm={2}>
-                        Email
-                    </Form.Label>
-                    <Col sm={10}>
-                        <Form.Control type="email" name="email" placeholder="Email" onChange={handleChange} />
-                    </Col> */}
-                    {/* <AvForm>
-                    <AvField name="originalEmail" label="Email" type="email" />
-                    <AvField name="confirmationEmail" label="Email" type="email" validate={{ match: { value: 'originalEmail' } }} />
-                </AvForm> */}
-                {/* </Form.Group> */}
+               
 
                 <Form.Group controlId="formHorizontalPassword">
                     <Form.Label sm={2}>
@@ -167,10 +146,7 @@ class updatePassword extends Component {
                     <Col sm={10}>
                         <Form.Control type="password" name="originalPassword" placeholder="Password" onChange={handleChangePassword} />
                     </Col>
-                    {/* <AvForm >
-                    <AvField name="originalpassword" label="password" type="email" />
-                    <AvField name="password" label="password" type="password" validate={{ match: { value: 'originalpassword' } }} />
-                </AvForm> */}
+                    
                 </Form.Group>
                 <Form.Group controlId="formHorizontalPassword">
                     <Form.Label sm={2}>
@@ -179,14 +155,11 @@ class updatePassword extends Component {
                     <Col sm={10}>
                         <Form.Control type="password" name="password" placeholder="Password" onChange={handleChange} />
                     </Col>
-                    {/* <AvForm >
-                    <AvField name="originalpassword" label="password" type="email" />
-                    <AvField name="password" label="password" type="password" validate={{ match: { value: 'originalpassword' } }} />
-                </AvForm> */}
+                  
                 </Form.Group>
                 <Form.Group >
                     <Col sm={{ span: 10, offset: 2 }}>
-                        <Button type="submit" onClick={handlelSubmit}>Sign up</Button>
+                        <Button type="submit" onClick={handlelSubmit}>change password</Button>
                     </Col>
                 </Form.Group>
             </Form>
