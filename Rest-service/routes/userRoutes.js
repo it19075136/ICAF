@@ -76,9 +76,11 @@ router.post('/update/:id', (req, res) => {
 
 
     req.body._id = req.params.id;
-
+ console.log('in router post')
+ console.log(req.body)
     updateUserById(req.body)
         .then((user) => {
+            console.log('in router post in then')
             const token = jsonwebtoken.sign({
                 _id:user._id,
                 name :user.name,
