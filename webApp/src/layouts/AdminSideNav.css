@@ -1,7 +1,7 @@
 .sideSection{
     position: absolute;
     width: 20%;
-    height: 100%;
+    height: max-content !important;
     background: #6d76f7;
     color: #fff;
 }

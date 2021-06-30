@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './admin.css'
 import { connect } from 'react-redux';
-import { getAllDocuments, postDocumentApprove } from '../../redux/actions/adminActions';
+import { getAllDocuments, postDocumentApprove, getAllUsers } from '../../redux/actions/adminActions';
 import axios from 'axios';
 import { Button, Card, Container, Row, Col, Modal, Table } from 'react-bootstrap';
 import { NutFill } from 'react-bootstrap-icons';
@@ -20,15 +20,16 @@ class adminDashboard extends Component {
             show: false,
             modalData: [],
             showMiniModal: false,
-            modalUrl : ''
+            modalUrl: ''
 
 
         }
     }
 
     componentDidMount() {
-        const { getAllDocuments } = this.props;
+        const { getAllDocuments, getAllUsers } = this.props;
         getAllDocuments();
+        getAllUsers();
 
 
         // axios.get('http://localhost:5000/document/').then(
@@ -40,41 +41,63 @@ class adminDashboard extends Component {
         // )
     }
 
-    setShow(data, info, type, status) {    
+    setShow(data, info, type, status) {
         this.setState({
             modalData: info,
             show: data
         })
     }
 
-    setShowMiniModal(data,url) {
+    setShowMiniModal(data, url) {
         console.log('url: ', url);
         this.setState({
 
             showMiniModal: data,
-            modalUrl : url
+            modalUrl: url
         })
     }
 
     approveOrRefuse(data) {
-        console.log('data approveOrRefuse: ', data);
         const { postDocumentApprove } = this.props;
         let values = {};
 
         values.id = data._id;
+        values.userId = data.userId;
+        values.type  = data.type;
+        values.activityId = data.activityId;
         values.status = 'APPROVED';
         postDocumentApprove(values);
+        this.setShow(false, []);
+        // window.location.reload();
+
+
     }
 
     render() {
-        const { docs, show, fullscreen, modalData, showMiniModal,modalUrl } = this.state;
-        const { documents } = this.props.admin;
-        let researchArray = documents.filter((e) => {
-            return e.type == 'RESEARCH'
+        const { docs, show, fullscreen, modalData, showMiniModal, modalUrl } = this.state;
+        const { documents, users } = this.props.admin;
+
+            const filteredArray = documents.map((d) => ({
+                activityId: d.activityId,
+                createdAt: d.createdAt,
+                fileUrl: d.fileUrl,
+                status: d.status,
+                type: d.type,
+                updatedAt: d.updatedAt,
+                userId: d.userId,
+                __v: d.__v,
+                _id: d._id,
+                name: users.map(u =>  u._id === d.userId ? u.name : null), 
+                match: users.some((u) => u._id === d.userId),
+            }))
+
+            console.log('filteredArray: ', filteredArray);
+            let researchArray = filteredArray.filter((e) => {
+            return e.type == 'RESEARCH' && e.match == true
         })
 
-        let workshopArray = documents.filter((e) => {
-            return e.type == 'W_PROPOSAL'
+        let workshopArray = filteredArray.filter((e) => {
+            return e.type == 'W_PROPOSAL' && e.match == true
         })
 
         let workshopArrayPending = workshopArray.filter((e) => {
@@ -95,11 +118,9 @@ class adminDashboard extends Component {
 
         return (
             <div className="body">
-
-
                 <Modal
                     show={show}
-                    onHide={() => this.setShow(false)}
+                    onHide={() => this.setShow(false, [])}
                     size="xl"
                 // dialogClassName="modal-style-custom"
                 >
@@ -110,6 +131,7 @@ class adminDashboard extends Component {
                         <Table striped bordered hover>
                             <thead>
                                 <tr>
+                                    <th>Name</th>
                                     <th>Status</th>
                                     <th>Type</th>
                                     <th>Preview</th>
@@ -118,28 +140,27 @@ class adminDashboard extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                {modalData ? modalData.map(e =>
+                                {modalData.length !== 0 ? modalData.map(e =>
 
                                     <tr>
+                                        <td>{e.name[0] !== null ? e.name[0] : 'No Name'}</td>
                                         <td>{e.status}</td>
                                         <td>{e.type}</td>
                                         <td>
                                             <Button
-                                                // onClick={() =>
-                                                //  <FilePreviewer file={{
-                                                //     url:e.fileUrl }}
-                                                // />
-                                                //  }
-                                                onClick={() => this.setShowMiniModal(true,e.fileUrl)}
+                                             
+                                                onClick={() => this.setShowMiniModal(true, e.fileUrl)}
                                             >View File</Button>
 
                                         </td>
                                         <td>{e.status == 'APPROVED' ? 'Already Approved' : <Button variant="primary" onClick={() => this.approveOrRefuse(e)}>{e.status == 'PENDING' ? 'Approve' : 'Refuse'}</Button>}</td>
                                     </tr>
-
                                 )
                                     :
                                     <tr>
+                                        <td>No Data</td>
+                                        <td>No Data</td>
+                                        <td>No Data</td>
                                         <td>No Data</td>
                                         <td>No Data</td>
 
@@ -153,7 +174,7 @@ class adminDashboard extends Component {
 
                 <Modal
                     show={showMiniModal}
-                    onHide={() => this.setShowMiniModal(false,'')}
+                    onHide={() => this.setShowMiniModal(false, '')}
                     size="xl"
                 // dialogClassName="modal-style-custom"
                 >
@@ -247,6 +268,7 @@ class adminDashboard extends Component {
 
 
 const mapStateToProps = (state) => ({
-    admin: state.admin
+    admin: state.admin,
+    // docs : state.document.documents.filter(document => document.status == "PENDING" && document.type == "RESEARCH")
 });
-export default connect(mapStateToProps, { getAllDocuments, postDocumentApprove })(adminDashboard);
+export default connect(mapStateToProps, { getAllDocuments, postDocumentApprove, getAllUsers })(adminDashboard);

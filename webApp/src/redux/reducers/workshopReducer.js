@@ -1,7 +1,8 @@
-import { ADD_WORKSHOP, GET_ALL_WORKSHOPS } from "../constants";
+import { ADD_WORKSHOP, GET_ALL_WORKSHOPS , UPDATE_WORKSHOP } from "../constants";
 
 const initstate = {
-    workshops: []
+    workshops: [],
+    updateWorkshop: {}
 }
 
 export default function (state = initstate, action){
@@ -15,6 +16,11 @@ export default function (state = initstate, action){
             return{
                 ...state,
                 workshops: [...state.workshops, action.payload]
+            }
+        case UPDATE_WORKSHOP:
+            return {
+                ...state,
+                updateWorkshop : action.payload
             }
         default:
             return state;
