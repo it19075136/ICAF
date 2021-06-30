@@ -26,12 +26,12 @@ export const MenuItems = [
     },
     {
         title: 'Sign up',
-        url:'#',
+        url:'/singin',
         cName: 'nav-links-mobile'
     },
     {
         title: 'Log in',
-        url:'#',
+        url:'/singup',
         cName: 'nav-links-mobile'
     }
 ]

@@ -22,7 +22,7 @@ import updatePassword from './components/user-singup-login/updatePassword';
 import jwt from 'jsonwebtoken';
 import EditConferenceForm from './components/conferenceManagement/EditConferenceForm';
 import LandPage from './layouts/LandPage';
-
+import WebNavbar from './layouts/WebNavbar'
 
 export default function app(){
     useEffect(() => {
@@ -31,7 +31,8 @@ export default function app(){
     return (
        
         <Provider store={store}>
-            {/* <AdminSideNav /> */}
+            <WebNavbar/>
+            <AdminSideNav />
             <BrowserRouter>
             <Switch>
                 <Route exact path="/" component={LandPage}/>
