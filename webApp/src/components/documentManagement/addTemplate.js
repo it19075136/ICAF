@@ -49,7 +49,7 @@ class addTemplate extends Component {
 
 
         return (
-            <form className="main" onSubmit={this.handleUpload} >
+            <form className="main-form" onSubmit={this.handleUpload} >
                 {this.state.alert.open ? <Alert key="1" variant="success" className="container">
                     Record added successfully!
                 </Alert> : (null)}
