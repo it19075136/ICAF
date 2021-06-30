@@ -8,7 +8,7 @@ import '../admin.css';
 class updatePassword extends Component {
     state = {
         user: {
-            _id:jwt.decode(localStorage.getItem('updatePasswordDetails'))._id,
+            _id:'',
             password: '',
             code:''
         },
@@ -17,6 +17,16 @@ class updatePassword extends Component {
             text: "Record added successfully!"
         },
         originalPassword: ""
+    }
+    componentDidMount(){
+        const item = localStorage.getItem('updatePasswordDetails');
+        const decodeItem = jwt.decode(item);
+        console.log(decodeItem);
+        console.log(decodeItem._id);
+        this.setState({
+            ...this.state,
+            user:{...this.state.user,_id:decodeItem._id}
+        })
     }
     render() {
         const handleChange = (e) => {
@@ -60,7 +70,7 @@ class updatePassword extends Component {
                     })
                 }, 6000)
             }
-            else if(!passwordHash.verify(user.code,localStorage.getItem('updatePasswordDetails').code)){
+            else if(!passwordHash.verify(this.state.user.code,decodeItem.code)){
                 this.setState({
                     ...this.state,
                     alert: { ...this.state.alert, open: true, text: "code is  incorecct" }
@@ -76,7 +86,8 @@ class updatePassword extends Component {
                 this.props.addNewPassword(this.state.user).then(res => {
 
                     console.log('inside postuser action in singup component');
-                    if (res) {
+                    console.log(res.data);
+                    // if (res) {
                         console.log('Record added successfully!')
                         this.setState({
                             ...this.state,
@@ -88,22 +99,31 @@ class updatePassword extends Component {
                                 alert: { ...this.state.alert, open: false, text: "Record added successfully!" }
                             })
                         }, 6000)
-                    }
-                    else {
-                        this.setState({
-                            ...this.state,
-                            alert: { ...this.state.alert, open: true, text: "Record added Unsuccessfully!" }
-                        })
-                        setTimeout(() => {
-                            this.setState({
-                                ...this.state,
-                                alert: { ...this.state.alert, open: false, text: "Record added Unsuccessfully!" }
-                            })
-                        }, 6000)
-                    }
+                    // }
+                    // else {
+                    //     this.setState({
+                    //         ...this.state,
+                    //         alert: { ...this.state.alert, open: true, text: "Record added Unsuccessfully!" }
+                    //     })
+                    //     setTimeout(() => {
+                    //         this.setState({
+                    //             ...this.state,
+                    //             alert: { ...this.state.alert, open: false, text: "Record added Unsuccessfully!" }
+                    //         })
+                    //     }, 6000)
+                    // }
                     console.log(res)
                 }).catch((err) => {
-
+                    this.setState({
+                        ...this.state,
+                        alert: { ...this.state.alert, open: true, text: "Record added Unsuccessfully!" }
+                    })
+                    setTimeout(() => {
+                        this.setState({
+                            ...this.state,
+                            alert: { ...this.state.alert, open: false, text: "Record added Unsuccessfully!" }
+                        })
+                    }, 6000)
                     console.log(err)
                 })
             }

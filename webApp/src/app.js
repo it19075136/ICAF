@@ -38,12 +38,12 @@ export default function app(){
         <Provider store={store}>
             <WebNavbar/>
             {/* <AdminSideNav /> */}
-            <Homeslide/>
-            <WebSlider/>
-            
+            {/* <Homeslide/> */}
+            {/* <WebSlider/> */}
+         
             <BrowserRouter>
             <Switch>
-                <Route exact path="/" component={}/>
+                <Route exact path="/"/>
                 <Route exact path="/singup" component={singup} />
                 <Route exact path="/singin" component={singin} />
                 <Route exact path="/forgetPassword" component={forgetPassword} />

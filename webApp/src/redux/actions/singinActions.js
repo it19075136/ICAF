@@ -45,11 +45,19 @@ export const  findUser=(user)=>dispatch=>{
 }
 export const updatePassword=(email)=>dispatch=>{
     return new Promise((resolve,reject)=>{
-        axios.post('http://localhost:5000/user/getCode',email).then((res)=>{
+        console.log(email);
+        const user ={
+            email:email
+        }
+        axios.post('http://localhost:5000/user/getCode',user).then((res)=>{
             //localstorage ekati reducx ekati danna oneda
-            dispatch({type:'ADD_USER',payload:res.data});
+            const {token} =res.data;  
+            localStorage.setItem('updatePasswordDetails',token);
+        //    const  =jwt.decode(details);
+        //     dispatch({type:'ADD_USER',payload:res.data});
             console.log('action axios');
-            resolve(res)
+            console.log(token);
+            resolve(token)
         }).catch((err)=>{
             reject(err)
         })
@@ -60,7 +68,7 @@ export const addNewPassword=(user)=>dispatch=>{
     return new Promise((resolve,reject)=>{
         const password = passwordHash.generate(user.password);
         axios.post(`http://localhost:5000/user/update/${user._id}`,password).then((res)=>{
-            const token =res.data.token;    
+            const {token} =res.data;    
         if(token){
             localStorage.setItem('user',token);
             const userResponds = jwt.decode(token);
