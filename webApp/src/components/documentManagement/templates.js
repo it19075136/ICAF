@@ -38,12 +38,15 @@ class templates extends Component {
 
     return (
       <div className="main">
-        {this.props.documents ? this.props.documents.map(document => {
-          return (
-            <div className="row">
+
+        <div className="row">
+
+
+          {this.props.documents ? this.props.documents.map(document => {
+            return (
               <div className="column">
                 <div className="card">
-                  <Card className='root'>
+                  <Card>
                     <CardHeader
                       action={
                         <IconButton aria-label="settings">
@@ -81,10 +84,13 @@ class templates extends Component {
                   </Card>
                 </div>
               </div>
-            </div>
+            )
+          }) : (<h1>Loading...</h1>)}
 
-          )
-        }) : (<h1>Loading...</h1>)}
+
+        </div>
+
+
 
       </div>
     );
