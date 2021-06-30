@@ -34,6 +34,10 @@ class WebNavbar extends Component {
         const handleSingin = () => {
             window.location.href = '/singin';
         }
+        const handleLogOut=()=>{
+            localStorage.removeItem("user");
+            window.location.href = '/';
+        }
 
         return (
             <div> 
@@ -59,6 +63,9 @@ class WebNavbar extends Component {
                 </div>
                 <div className="btn-list">
                     <Button onclick={handleSingin}>Log In</Button>
+                </div>
+                <div className="btn-list">
+                    <Button onclick={handleLogOut}>Log Out</Button>
                 </div>
             </nav>:(null)}
             </div>
