@@ -29,7 +29,7 @@ export const  findUser=(user)=>dispatch=>{
                 dispatch({type:'ADD_USER',payload: userResponds})
                 localStorage.setItem('user',token);
                 console.log('in findUser');
-                resolve(token);
+                resolve(userResponds);
             }
             else{
                 console.log('in else');

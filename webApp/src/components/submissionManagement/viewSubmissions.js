@@ -104,7 +104,7 @@ class viewSubmissions extends Component {
                         <tbody>
                             {this.props.submissions.length != 0 && this.props.conferences.length != 0 ? this.props.submissions.map(submission => {
                                 return (<tr key={submission._id}>
-                                    <td>{this.props.conferences.find(conference => conference._id == submission.conferenceId).conferenceName}</td>
+                                    <td>{this.props.conferences.find(conference => conference._id == submission.conferenceId) ? this.props.conferences.find(conference => conference._id == submission.conferenceId).conferenceName : "no conference"}</td>
                                     <td>{submission.topic}</td>
                                     <td>{submission.deadline.split('T')[0]}</td>
                                     <td><Pencil className="actions" onClick={() => this.setState({

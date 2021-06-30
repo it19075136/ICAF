@@ -79,7 +79,7 @@ function adminSideNav(props) {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user.user != null && state.user.user != [] ? state.user.user : null
+  user: state.user.user ? state.user.user : null
 })
 
 export default connect(mapStateToProps,null)(adminSideNav)

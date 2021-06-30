@@ -1,6 +1,6 @@
 
 const initstate={
-    user:{}
+    user: null
 }
 export default function(state=initstate,action){
     switch(action.type){
