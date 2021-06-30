@@ -68,7 +68,7 @@ export default function adminSideNav() {
             },
             {
                 title: "My Profile",
-                itemId: "/profile"
+                itemId: "/userProfile"
             },
             {
                 title: "Login",

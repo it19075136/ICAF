@@ -29,6 +29,8 @@ class updatePassword extends Component {
         })
     }
     render() {
+        const item = localStorage.getItem('updatePasswordDetails');
+        const decodeItem = jwt.decode(item);
         const handleChange = (e) => {
             console.log(this.state);
             this.setState({
@@ -83,11 +85,12 @@ class updatePassword extends Component {
                 }, 6000)
             }
             else{
+                console.log('add new password');
                 this.props.addNewPassword(this.state.user).then(res => {
 
                     console.log('inside postuser action in singup component');
                     console.log(res.data);
-                    // if (res) {
+                    if (res) {
                         console.log('Record added successfully!')
                         this.setState({
                             ...this.state,
@@ -99,7 +102,7 @@ class updatePassword extends Component {
                                 alert: { ...this.state.alert, open: false, text: "Record added successfully!" }
                             })
                         }, 6000)
-                    // }
+                    }
                     // else {
                     //     this.setState({
                     //         ...this.state,

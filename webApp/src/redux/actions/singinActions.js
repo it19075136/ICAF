@@ -67,7 +67,9 @@ export const updatePassword=(email)=>dispatch=>{
 export const addNewPassword=(user)=>dispatch=>{
     return new Promise((resolve,reject)=>{
         const password = passwordHash.generate(user.password);
-        axios.post(`http://localhost:5000/user/update/${user._id}`,password).then((res)=>{
+        console.log('in promise in addNewPAssword')
+        axios.post(`http://localhost:5000/user/update/${user._id}`,{password}).then((res)=>{
+            console.log('in post');
             const {token} =res.data;    
         if(token){
             localStorage.setItem('user',token);
@@ -80,6 +82,7 @@ export const addNewPassword=(user)=>dispatch=>{
                 type : userResponds.type,
                 phoneNumber :userResponds.phoneNumber
             }
+            console.log(userDetails);
             dispatch({type:'ADD_USER',payload:userDetails});
             resolve(userDetails);
         }

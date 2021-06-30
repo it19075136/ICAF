@@ -27,7 +27,7 @@ import forgetPassword from './components/user-singup-login/forgetPassword';
 import updatePassword from './components/user-singup-login/updatePassword';
 import jwt from 'jsonwebtoken';
 import EditConferenceForm from './components/conferenceManagement/EditConferenceForm';
-
+import userProfile from './components/userProfileManagement/userProfile';
 
 export default function app(){
     useEffect(() => {
@@ -48,6 +48,8 @@ export default function app(){
                 <Route exact path="/forgetPassword" component={forgetPassword} />
                 <Route exact path="/updatePassword" component={updatePassword} />
                 <Route exact path="/submission/add" component={AddSubmissionForm} />
+                <Route exact path='/userProfile' component={userProfile} />
+
 
                 <Route exact path="/admin/dashboard" component={adminDashboard} />
 

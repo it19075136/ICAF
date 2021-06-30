@@ -80,6 +80,7 @@ class singup extends Component {
                                 alert: { ...this.state.alert, open: false, text: "Record added successfully!" }
                             })
                         }, 6000)
+                        window.location.href='/';
                     }
                     else {
                         this.setState({
@@ -209,10 +210,10 @@ class singup extends Component {
                             <Col sm={10} >
                                 <Form.Check
                                     type="radio"
-                                    label="reseracher"
+                                    label="researcher"
                                     name="type"
-                                    id="reseracher"
-                                    value="reseracher"
+                                    id="researcher"
+                                    value="researcher"
                                     onChange={handleChange}
                                 />
                                 <Form.Check

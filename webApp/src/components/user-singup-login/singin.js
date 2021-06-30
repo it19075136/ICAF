@@ -47,8 +47,23 @@ class singin extends Component {
                     })
                 },1000) 
                 console.log('in');
-                // window.location.href='/submission/add';
+                if( res.type === 'admin'){
+                    window.location.href='/admin/dashboard';
+                }else{
+                    window.location.href='/';
+                }
+                
             }).catch((err)=>{
+                this.setState({
+                    ...this.state,       
+                    alert:{...this.state.alert,open:true,text:"login unsuccessfull"}
+                })
+                setTimeout(()=>{
+                    this.setState({
+                        ...this.state,
+                        alert:{...this.state.alert,open:false,text:"login unsuccessfull"}
+                    })
+                },1000) 
                     console.log('err');
                     console.log(err);
             })
