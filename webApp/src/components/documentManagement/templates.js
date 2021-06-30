@@ -39,42 +39,51 @@ class templates extends Component {
     return (
       <div className="main">
         {this.props.documents ? this.props.documents.map(document => {
-          return (<Card className='root'>
-            <CardHeader
-              action={
-                <IconButton aria-label="settings">
-                  <MoreVertIcon />
-                </IconButton>
-              }
-              title={document.type == "TEMPLATE_RESEARCH" ? "Research Template" : "Proposal Template"}
-              subheader={document.createdAt.split('T')[0]}
-            />
-            <FileWord size={XLg} />
-            <CardActions disableSpacing>
-              <IconButton aria-label="download" >
-                <a href={document.fileUrl} target="_blank" download><Download /></a>
-              </IconButton>
-              <IconButton
-                onClick={() => this.SetShow(true, document.fileUrl)}
-              >View File</IconButton>
-            </CardActions>
-            <Modal
-              show={this.state.show}
-              onHide={() => this.SetShow(false, '')}
-              size="xl"
-            >
-              <Modal.Header closeButton>
-                <Modal.Title>Preview</Modal.Title>
-              </Modal.Header>
-              <Modal.Body >
-                <FilePreviewer file={{
-                  url: this.state.fileUrl
-                }}
-                />
-              </Modal.Body>
-            </Modal>
+          return (
+            <div className="row">
+              <div className="column">
+                <div className="card">
+                  <Card className='root'>
+                    <CardHeader
+                      action={
+                        <IconButton aria-label="settings">
+                          <MoreVertIcon />
+                        </IconButton>
+                      }
+                      title={document.type == "TEMPLATE_RESEARCH" ? "Research Template" : "Proposal Template"}
+                      subheader={document.createdAt.split('T')[0]}
+                    />
+                    <FileWord size={XLg} />
+                    <CardActions disableSpacing>
+                      <IconButton aria-label="download" >
+                        <a href={document.fileUrl} target="_blank" download><Download /></a>
+                      </IconButton>
+                      <IconButton
+                        onClick={() => this.SetShow(true, document.fileUrl)}
+                      >View File</IconButton>
+                    </CardActions>
+                    <Modal
+                      show={this.state.show}
+                      onHide={() => this.SetShow(false, '')}
+                      size="xl"
+                    >
+                      <Modal.Header closeButton>
+                        <Modal.Title>Preview</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body >
+                        <FilePreviewer file={{
+                          url: this.state.fileUrl
+                        }}
+                        />
+                      </Modal.Body>
+                    </Modal>
 
-          </Card>)
+                  </Card>
+                </div>
+              </div>
+            </div>
+
+          )
         }) : (<h1>Loading...</h1>)}
 
       </div>
