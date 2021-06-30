@@ -88,16 +88,22 @@ router.post('/update/:id', (req, res) => {
                 phoneNumber :user.phoneNumber
             },"jwtSecret")
             res.json(
-                token
+                {token}
             )
         })
 })
 
 router.post('/getCode',(req,res)=>{
-    console.log('router post')
-    getEmailAndPassCode(req.body).then(details=>{
+    console.log('router post');
+    console.log(req.body);
+    getEmailAndPassCode(req.body.email).then(details=>{
         console.log('router post in getEmail')
-        res.json(details);
+        const token = jsonwebtoken.sign({
+            _id:details._id,
+            email : details.email,
+            code:details.code
+        },"jwtSecret")
+        res.json({token});
     }).catch((err)=>{
         console.log('err');
         console.log(err);

@@ -100,30 +100,38 @@ var nodemailer = require('nodemailer');
      })
    })
  }
- function getEmailAndPassCode(email){
+ function getEmailAndPassCode(emails){
    return new Promise((resolve,reject)=>{
     console.log('in getEmailAndPassCode');
-    User.findOne({
-      email : email
-    }).then(user => {
+    User.findOne({email:emails}).then(user => {
       console.log('in then in get email passcode')
       if(user){
         console.log('in then in get email passcode in if')
+        console.log(user);
         // Math.floor((Math.random() * 100) + 1);
         const code =Math.floor(Math.random()*100000 +1);
+       console.log(code);
         const subject = 'veryfication code for Update password in ICAF';
+        console.log('below subject0')
         const body = `veryfication code - ${code}`;
-        code=passwordHash.generate(code);
+        console.log('below subject1')
+        // const codes=passwordHash.generate(code);
+        console.log('below subject2')
+        console.log(code);
+        const codes = passwordHash.generate(code.toString());
+        console.log(codes);
         const updatePasswordDetails = {
           _id:user._id,
           email:user.email,
-          code:code
+          code:codes
         }
+
+        console.log('updatePasswordDetails',updatePasswordDetails);
         var transporter = nodemailer.createTransport({
           service:'gmail',
           auth:{
             user:'tweb4172@gmail.com',
-            pass:'sliit1234'
+            pass:'#sliit1234'
           }
         })
         var mailOptions ={
@@ -136,18 +144,20 @@ var nodemailer = require('nodemailer');
         transporter.sendMail(mailOptions,function(error,info){
           if(error){
             console.log(error);
+            console.log('error in sendmail');
           }else{
             console.log('Email sent: ' + info.response);
             resolve(updatePasswordDetails)
           }
-        })
+        });
         
-      }else{
-        reject('email not in database')
-      } 
+      }
+      // else{
+      //   reject('email not in database')
+      // } 
     }).catch((err)=>{
-        console.log(err);
-        reject('err')
+        console.log('erros in catch');
+        reject('erros')
     })
 
    })

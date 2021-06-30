@@ -23,11 +23,12 @@ class forgetPassword extends Component {
             console.log('in in in');
             e.preventDefault();
             this.props.updatePassword(this.state.email).then((res)=>{
-                console.log('in in')
-                    if(res){
-                        localStorage.setItem('updatePasswordDetails',res);
+                console.log('in in');
+                    // if(res.data){
+                        // console.log(res);
+                        // localStorage.setItem('updatePasswordDetails',res.data);
                         window.location.href='/updatePassword';
-                    }
+                    // }
             }).catch((err)=>{
                 console.log(err);
             })
