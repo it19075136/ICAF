@@ -38,11 +38,12 @@ export default function app(){
         <Provider store={store}>
             <WebNavbar/>
             {/* <AdminSideNav /> */}
-            <Homeslide/>
-            <WebSlider/>
-            <Footer/>
+            {/* <Homeslide/> */}
+            {/* <WebSlider/> */}
+         
             <BrowserRouter>
             <Switch>
+                <Route exact path="/"/>
                 <Route exact path="/singup" component={singup} />
                 <Route exact path="/singin" component={singin} />
                 <Route exact path="/forgetPassword" component={forgetPassword} />
@@ -66,6 +67,7 @@ export default function app(){
                 <Route exact path="/conferences" component={EditConferenceForm}/>
             </Switch>
             </BrowserRouter>
+            <Footer/>
         </Provider>
     )
 }
