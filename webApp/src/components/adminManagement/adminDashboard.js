@@ -58,15 +58,17 @@ class adminDashboard extends Component {
     }
 
     approveOrRefuse(data) {
-        console.log('data approveOrRefuse: ', data);
         const { postDocumentApprove } = this.props;
         let values = {};
 
         values.id = data._id;
+        values.userId = data.userId;
+        values.type  = data.type;
+        values.activityId = data.activityId;
         values.status = 'APPROVED';
         postDocumentApprove(values);
         this.setShow(false, []);
-        window.location.reload();
+        // window.location.reload();
 
 
     }
@@ -82,7 +84,7 @@ class adminDashboard extends Component {
                 status: d.status,
                 type: d.type,
                 updatedAt: d.updatedAt,
-                userId: d.updatedAt,
+                userId: d.userId,
                 __v: d.__v,
                 _id: d._id,
                 name: users.map(u =>  u._id === d.userId ? u.name : null), 
