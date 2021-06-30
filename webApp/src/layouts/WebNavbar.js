@@ -15,8 +15,10 @@ class WebNavbar extends Component {
         if((this.props.user != null) && (item.title == 'Log in' || item.title == 'Sign up')){
             return false;
         }
-        else if((this.props.user == null) && item.title == 'User Profile')
+        else if((this.props.user == null) && (item.title == 'User Profile' || item.title == 'Submit Document' || item.title == 'My Submissions'))
             return false;
+        // else if(item.title == 'User Profile')
+        //     return true;
         else{
             return true;
         }
@@ -34,6 +36,10 @@ class WebNavbar extends Component {
         }
         const handleSingin = () => {
             window.location.href = '/singin';
+        }
+        const handleLogOut=()=>{
+            localStorage.removeItem("user");
+            window.location.href = '/';
         }
 
         return (
@@ -63,7 +69,9 @@ class WebNavbar extends Component {
                 <div className="btn-list">
                     <Button onclick={handleSingin}>Log In</Button>
                 </div> 
-                </div>: null}
+                </div>: <div className="btn-list">
+                    <Button onclick={handleLogOut}>Log Out</Button>
+                </div>}
             </nav>:(null)}
             </div>
 

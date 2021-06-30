@@ -46,8 +46,8 @@ class singin extends Component {
                         alert:{...this.state.alert,open:false,text:"login unsuccessfull"}
                     })
                 },1000) 
-                console.log('in');
-                if( res.type === 'admin'){
+                console.log(res.type,this.state.user.type);
+                if( res.type === 'ADMIN'){
                     window.location.href='/admin/dashboard';
                 }else{
                     window.location.href='/';

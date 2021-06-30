@@ -9,7 +9,7 @@ function adminSideNav(props) {
   console.log(props.user)
     return (
       <div>
-        {props.user && props.user.type != "ADMIN" ? <div className="sideSection">
+        {props.user && props.user.type == "ADMIN" ? <div className="sideSection">
       <Navigation
         className="select-nav"
         activeItemId={window.location.pathname}
