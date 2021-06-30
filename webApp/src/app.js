@@ -15,7 +15,8 @@ import WorkshopList from './components/workshopManagement/WorkshopList';
 import AddConferenceForm from './components/conferenceManagement/AddConferenceForm';
 import WebNavbar from './layouts/WebNavbar';
 import AdminSideNav from './layouts/AdminSideNav';
-import WebSlider from './layouts/WebSlider';
+import Homeslide from './layouts/HomeSlide';
+import WebSlider from './layouts/WebSlider'
 import './app.css';
 import ViewSubmissions from './components/submissionManagement/viewSubmissions';
 import SubmitDocument from './components/documentManagement/submitDocument';
@@ -37,6 +38,7 @@ export default function app(){
         <Provider store={store}>
             <WebNavbar/>
             {/* <AdminSideNav /> */}
+            <Homeslide/>
             <WebSlider/>
             <Footer/>
             <BrowserRouter>
