@@ -37,10 +37,10 @@ export default function app(){
        
         <Provider store={store}>
             <WebNavbar/>
-            {/* <AdminSideNav /> */}
-            <Homeslide/>
-            <WebSlider/>
-            <Footer/>
+            <AdminSideNav />
+            {/* <Homeslide/> */}
+            {/* <WebSlider/> */}
+            {/* <Footer/> */}
             <BrowserRouter>
             <Switch>
                 <Route exact path="/singup" component={singup} />
