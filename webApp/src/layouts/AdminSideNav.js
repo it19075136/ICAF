@@ -9,7 +9,7 @@ function adminSideNav(props) {
   console.log(props.user)
     return (
       <div>
-        {props.user && props.user.type == "ADMIN" ? <div className="sideSection">
+        {props.user && props.user.type != "ADMIN" ? <div className="sideSection">
       <Navigation
         className="select-nav"
         activeItemId={window.location.pathname}
@@ -79,7 +79,7 @@ function adminSideNav(props) {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user.user != null && state.user.user != [] ? state.user.user : null
+  user: state.user.user ? state.user.user : null
 })
 
 export default connect(mapStateToProps,null)(adminSideNav)

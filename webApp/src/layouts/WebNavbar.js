@@ -12,9 +12,11 @@ class WebNavbar extends Component {
     }
 
     filterByUser(item){
-        if((this.props.user != null || this.props.user != []) && (item.title == 'Log in' || item.title == 'Sign up')){
+        if((this.props.user != null) && (item.title == 'Log in' || item.title == 'Sign up')){
             return false;
         }
+        else if((this.props.user == null) && item.title == 'User Profile')
+            return false;
         else{
             return true;
         }
@@ -26,7 +28,6 @@ class WebNavbar extends Component {
     }
 
     render() {
-        console.log(this.props.user)
         const handleSingup = () => {
             // Window.href();
             window.location.href = '/singup';
@@ -37,7 +38,7 @@ class WebNavbar extends Component {
 
         return (
             <div> 
-                {(this.props.user && this.props.user.type != "ADMIN") || this.props.user == null  ?
+                {(this.props.user && this.props.user.type != "ADMIN") || this.props.user == null || this.props.user == {} ?
             <nav className="NavbarItems">
                 <h1 className="navbar-logo">ICAF</h1>
                 <div className="menu-icon" onClick={this.handleClick}>
@@ -54,12 +55,15 @@ class WebNavbar extends Component {
                         )
                     })}
                 </ul>
-                <div className="btn-list">
+                {this.props.user == null || this.props.user == {} ?
+                 <div>
+                 <div className="btn-list">
                     <Button onclick={handleSingup}>Sign Up</Button>
                 </div>
                 <div className="btn-list">
                     <Button onclick={handleSingin}>Log In</Button>
-                </div>
+                </div> 
+                </div>: null}
             </nav>:(null)}
             </div>
 
