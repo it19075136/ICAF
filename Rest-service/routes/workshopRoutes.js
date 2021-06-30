@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {addWorkshop, getAllWorkshops, getWorkshopById, updateWorkshopById, removeWorkshopById} = require('../api/workshop.api');
+const {addWorkshop, getAllWorkshops, getWorkshopById, updateWorkshopById, removeWorkshopById,updateWorkshopWorkforce} = require('../api/workshop.api');
 
 //** POST METHOD TO ADD WORKSHOP DETAILS USING 'addWorkshop' FUNCTION*/
 router.post('/', (req, res) => {
@@ -30,6 +30,7 @@ router.get('/:id', (req,res) => {
 
 //** PUT METHOD TO UPDATE WORKSHOP DETAILS USING 'updateWorkshopById' FUNCTION*/
 router.put('/:id', (req,res) => {
+    console.log(' UPDATE WORKSHOP DETAILS');
      updateWorkshopById(req.params.id,req.body).then((result) => {
          res.json(result);
      }).catch((err) => {
@@ -43,6 +44,15 @@ router.delete('/:id', (req, res) => {
         res.json(result);
     }).catch((err) => {
         console.log(err);
+    })
+})
+
+router.post('/update/workforce/:id', (req,res)=>{
+
+    updateWorkshopWorkforce(req.body,req.params.id).then((doc)=>{
+        res.json(doc)
+    }).catch((err)=>{
+        console.log(err)
     })
 })
 

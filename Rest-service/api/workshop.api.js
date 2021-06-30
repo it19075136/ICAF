@@ -93,5 +93,18 @@ function removeWorkshopById(id) {
     })
 }
 
+function updateWorkshopWorkforce(payload,id){
+    console.log('api updateWorkshopWorkforce id: ', id);
+    console.log('api updateWorkshopWorkforce payload: ', payload);
+    return new Promise((resolve,reject) => {
+        Workshop.findByIdAndUpdate(id).then(workshop => {
+            workshop.resourcePersons.push(payload.resourcePersons),
 
-module.exports = {addWorkshop, getAllWorkshops, getWorkshopById, updateWorkshopById, removeWorkshopById}
+            workshop.save().then((work) => resolve(work)).catch((err) => reject(err))
+        })
+    })
+
+}
+
+
+module.exports = {addWorkshop, getAllWorkshops, getWorkshopById, updateWorkshopById, removeWorkshopById ,updateWorkshopWorkforce}
