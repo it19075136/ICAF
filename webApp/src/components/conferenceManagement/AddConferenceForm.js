@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Alert } from 'react-bootstrap';
 import { addConference } from '../../redux/actions/conferenceActions'
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -59,7 +60,7 @@ class AddConferenceForm extends Component {
         const handleSubmit = (e) => {
             e.preventDefault();
             console.log(this.state.conference);
-            this.props.addWorkshop(this.state.conference);
+            this.props.addConference(this.state.conference);
             this.setState({ ...this.state, alert: { ...this.state.alert, open: true } });
             setTimeout(() => {
                 this.setState({
@@ -314,6 +315,7 @@ class AddConferenceForm extends Component {
                                 ADD CONFERENCE
                             </Button>
                         </form>
+                        <br/><br/><br/>
                     </div>
                 </Container>
             </div>
