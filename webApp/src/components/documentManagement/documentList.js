@@ -46,15 +46,15 @@ class templates extends Component {
                                 </IconButton>
                             }
                             title={document.type == RESEARCH ? "Research Paper" : "Workshop Proposal"}
-                            subheader={"Last Modified: " + document.updatedAt}
+                            subheader={"Last Modified: " + document.updatedAt.split('T')[0]}
                         />
                         <FileWord size={XLg} />
                         <h1 classname="center">
-                            <Badge bg="primary">{document.status}</Badge>
+                            <Badge bg="secondary">{document.status}</Badge>
                         </h1>
                         <CardActions disableSpacing>
                             <IconButton aria-label="download" >
-                                <a href={document.fileUrl} download><Download /></a>
+                                <a href={document.fileUrl} target="_blank" download><Download /></a>
                             </IconButton>
                             <IconButton
                                 onClick={() => this.SetShow(true, document.fileUrl)}
@@ -85,7 +85,8 @@ class templates extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    documents: state.document.documents.filter(doc => doc.userId == "test1")
+    user: state.user.user,
+    documents: state.document.documents.filter(doc => doc.userId == state.user.user._id)
 })
 
 export default connect(mapStateToProps, { getAllDocuments })(templates)

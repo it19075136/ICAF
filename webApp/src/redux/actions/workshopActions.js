@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { GET_ALL_WORKSHOPS, ADD_WORKSHOP } from '../constants';
+import { GET_ALL_WORKSHOPS, ADD_WORKSHOP, UPDATE_WORKSHOP } from '../constants';
 
 export const getAllWorkshops = () => dispatch => {
     axios.get('http://localhost:5000/workshop')
@@ -19,4 +19,13 @@ export const addWorkshop = (payload) => dispatch => {
             payload: res.data
         })
     })
+}
+
+export function updateWorkshopWorkforce(id,values){
+    axios.post(`http://localhost:5000/workshop/update/workforce/${id}`, values)
+            .then(res => {
+                console.log('res: ', res);
+            }).catch((err) => {
+                console.log(err);
+            })
 }
