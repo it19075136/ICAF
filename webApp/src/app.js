@@ -37,7 +37,7 @@ export default function app(){
        
         <Provider store={store}>
             <WebNavbar/>
-            {/* <AdminSideNav /> */}
+            <AdminSideNav />
             <Homeslide/>
             <WebSlider/>
             <Footer/>
