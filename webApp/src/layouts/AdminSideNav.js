@@ -20,8 +20,8 @@ function adminSideNav(props) {
         }}
         items={[
           {
-            title: "Home",
-            itemId: "/",
+            title: "Dashboard",
+            itemId: "/admin/dashboard"
             // Optional
           //   elemBefore: () => <Icon name="coffee" />
           },
@@ -59,32 +59,17 @@ function adminSideNav(props) {
             ]
           },
           {
-            title: "Workshop",
-            itemId: "/workshops",
-            subNav: [
-              {
-                title: "Add Workshop",
-                itemId: "/workshop/add"
-              }
-            ]
+            title: "Add Template",
+            itemId: "/template/upload"
           },
-          {
-              title: "My Profile",
-              itemId: "/profile"
-          },
+         props.user != null ? {
+              title: "Sign Out",
+              itemId: "/sign"
+          } : 
           {
               title: "Login",
               itemId: "/signIn"
-          },
-          {
-              title: "Sign Out",
-              itemId: "/sign"
-          },
-          {
-            title: "Dashboard",
-            itemId: "/admin/dashboard"
-        }
-
+          }
         ]}
       />
       </div>:null} 
