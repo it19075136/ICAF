@@ -1,22 +1,16 @@
 import React, {useState,useEffect} from 'react';
 import {BrowserRouter, Switch, Route } from 'react-router-dom'
 import {Provider} from 'react-redux';
-import {store} from './redux/store'
+import {store} from './redux/store';
+import AdminSideNav from './layouts/AdminSideNav'
 import AddSubmissionForm from './components/submissionManagement/AddSubmissionForm';
-
 import adminDashboard from './components/adminManagement/adminDashboard';
-
 import AddWorkshopForm from './components/workshopManagement/AddWorkshopForm';
 import SubmitDocumet from './components/documentManagement/submitDocument';
-import Footer from './layouts/Footer'
 import singup from './components/user-singup-login/singup';
 import singin from './components/user-singup-login/singin';
 import WorkshopList from './components/workshopManagement/WorkshopList';
 import AddConferenceForm from './components/conferenceManagement/AddConferenceForm';
-import WebNavbar from './layouts/WebNavbar';
-import AdminSideNav from './layouts/AdminSideNav';
-import Homeslide from './layouts/HomeSlide';
-import WebSlider from './layouts/WebSlider'
 import './app.css';
 import ViewSubmissions from './components/submissionManagement/viewSubmissions';
 import SubmitDocument from './components/documentManagement/submitDocument';
@@ -27,7 +21,8 @@ import forgetPassword from './components/user-singup-login/forgetPassword';
 import updatePassword from './components/user-singup-login/updatePassword';
 import jwt from 'jsonwebtoken';
 import EditConferenceForm from './components/conferenceManagement/EditConferenceForm';
-
+import LandPage from './layouts/LandPage';
+import WebNavbar from './layouts/WebNavbar'
 
 export default function app(){
     useEffect(() => {
@@ -38,11 +33,9 @@ export default function app(){
         <Provider store={store}>
             <WebNavbar/>
             <AdminSideNav />
-            <Homeslide/>
-            <WebSlider/>
-            <Footer/>
             <BrowserRouter>
             <Switch>
+                <Route exact path="/" component={LandPage}/>
                 <Route exact path="/singup" component={singup} />
                 <Route exact path="/singin" component={singin} />
                 <Route exact path="/forgetPassword" component={forgetPassword} />
