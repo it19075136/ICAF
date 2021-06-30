@@ -8,7 +8,7 @@ import adminDashboard from './components/adminManagement/adminDashboard';
 
 import AddWorkshopForm from './components/workshopManagement/AddWorkshopForm';
 import SubmitDocumet from './components/documentManagement/submitDocument';
-
+import Footer from './layouts/Footer'
 import singup from './components/user-singup-login/singup';
 import singin from './components/user-singup-login/singin';
 import WorkshopList from './components/workshopManagement/WorkshopList';
@@ -36,8 +36,9 @@ export default function app(){
        
         <Provider store={store}>
             <WebNavbar/>
-            <AdminSideNav />
-            {/* <WebSlider/> */}
+            {/* <AdminSideNav /> */}
+            <WebSlider/>
+            <Footer/>
             <BrowserRouter>
             <Switch>
                 <Route exact path="/singup" component={singup} />
