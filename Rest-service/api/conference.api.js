@@ -15,7 +15,7 @@ function addConference(payload) {
                 });
             }
             else
-                reject("Conference with same name exists");
+                resolve("Conference with same name exists");
         })
     });
 
@@ -40,6 +40,7 @@ function updateConferenceById(id, payload) {
             Conference.findOne({ conferenceName: payload.conferenceName }).then((doc) => {
                 if (doc == null || doc._id == id) {
                     Conference.findByIdAndUpdate(id, { $set: payload }).then((doc) => {
+                        console.log(doc)
                         resolve(doc);
                     }).catch((err) => {
                         reject(err);
@@ -53,7 +54,10 @@ function updateConferenceById(id, payload) {
         }
         else{
             Conference.findByIdAndUpdate(id, { $set: payload }).then((doc) => {
+                doc.status = 'Approved'
+                console.log(doc)
                 resolve(doc);
+                
             }).catch((err) => {
                 reject(err);
             });    

@@ -15,7 +15,7 @@ const {  createSubmission,
 //     }
 // }
 
-router.post('/add', (req, res) => {
+router.post('/', (req, res) => {
 
     createSubmission(req.body).then((newSub) => {
         res.json(newSub);
@@ -33,7 +33,7 @@ router.get('/', (req,res) => {
     })
 })
 
-router.post('/update/:id', (req,res) => {
+router.put('/:id', (req,res) => {
     
     req.body._id = req.params.id;
 
@@ -54,7 +54,8 @@ router.get('/:id', (req,res) => {
 
 router.delete('/:id' , (req,res) => {
     deleteSubmissionById(req.params.id).then((sub) => {
-        res.json(sub)
+        console.log(sub)
+        sub._id ? res.json(sub) : res.status(400).json(sub);
     }).catch((err) => {
         console.log(err);
     })

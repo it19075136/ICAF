@@ -1,4 +1,5 @@
 let Submission = require('../models/submissionModel');
+const {getAllDocuments} = require('./document.api');
 
 function createSubmission(body) {
 
@@ -38,8 +39,15 @@ function getSubmissionById(id) {
 
 function deleteSubmissionById(id) {
     return new Promise((resolve,reject) => {
-        Submission.findByIdAndDelete(id).then((sub) => {
-            resolve(sub)
+        Submission.findById(id).then((sub) => {
+          getAllDocuments().then((docs) => {
+            docs.filter(doc=> doc.type == "RESEARCH").find(d=> d.activityId == sub._id) ?
+            resolve('documents exist'):(
+              Submission.findByIdAndRemove(id).then((res) => {
+                resolve(res);
+              })
+            )
+          })
         }).catch((err) => {
             reject(err)
         })
@@ -50,22 +58,12 @@ function updateSubmissionById(body) {
     console.log("body: ", body);
  
     return new Promise((resolve, reject) => {
-      Submission.findByIdAndUpdate(body._id).then((sub) => {
-
-          sub.topic = body.topic,
-          sub.deadline = body.deadline,
-          sub.description = body.description,
-          sub.conferenceId = body.conferenceId
-          
-        sub
-          .save()
-          .then((sub) => {
-            resolve(sub);
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
+      Submission.findByIdAndUpdate(body._id,{$set: body}).then((sub) => {
+        console.log(sub);
+        resolve(sub);
+      }).catch((err) => {
+        resolve(err)
+      })
     });
   }
 

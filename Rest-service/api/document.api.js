@@ -1,16 +1,29 @@
-const Document = require('../models/documentModel')
-// const document = require('../models/documentModel')
+const Document = require('../models/documentModel');
+const cloudinary = require('../config/cloudinary');
 
 function addDocument(payload){
+
     return new Promise((resolve,reject)=>{
-        const document = new Document(payload);
+        let result = null;
+        let document = null;
+
         Document.findOne({userId:payload.userId,activityId:payload.activityId,type:payload.type}).then((res)=>{
             // reject('err')
-            res ? (resolve('error')):(document.save().then((document)=>{
-                resolve(document);
-            }).catch((err)=>{
-                reject(err)
-            }))
+            res && payload.activityId != "TEMPLATE" ? (resolve('file exist')):(result = cloudinary.uploader.upload(payload.file,{
+                upload_preset: 'ml_default',
+                resource_type: 'auto'
+            }).then((res) => {
+                console.log(res);
+                document = new Document({userId:payload.userId,activityId:payload.activityId,type:payload.type,status:"PENDING",fileUrl:res.secure_url})
+                console.log(document)
+                document.save().then((document)=>{
+                    resolve(document);
+                }).catch((err)=>{
+                    reject(err)
+                })
+            }).catch((err) => {
+                resolve(err);
+            }));
         }).catch((err)=>{
             reject(err)
         })
@@ -24,12 +37,23 @@ function updateDocument(payload,id){
             (payload.activityId ?(document.activityId = payload.activityId):null),
             (payload.type ? (document.type = payload.type):null),
             (payload.status ?(document.status = payload.status):null),
-            (payload.fileUrl?(document.fileUrl = payload.fileUrl ):null)
+            (payload.file?(document.file = payload.file.originalname ):null)
             document.save().then((doc)=>resolve(doc)).catch((err)=>reject(err))
         }).catch(err=>{
             reject(err)
         })
         })
+}
+
+function updateDocumentIsApprove(payload,id){
+    return new Promise((resolve,reject) => {
+        Document.findByIdAndUpdate(id).then((document)=>{
+          
+            (payload.status ?(document.status = payload.status):null),
+          
+            document.save().then((doc)=>resolve(doc)).catch((err)=>reject(err))
+        })
+    })
 }
 
 function deleteDocument(id){
@@ -52,5 +76,13 @@ function getDoucmentByUserId(id){
     })
 }
 
-module.exports={addDocument,updateDocument,deleteDocument,getDoucmentByUserId}
+function getAllDocuments() {
+    return new Promise((resolve, reject) => {
+      Document.find((err, docs) => {
+        err ? reject(err) : resolve(docs);
+      });
+    });
+  }
+
+module.exports={addDocument,updateDocument,deleteDocument,getDoucmentByUserId,getAllDocuments,updateDocumentIsApprove}
 
